@@ -3,6 +3,9 @@
     "version": "1.0.0",
     "description": "React hook for plug&play use of any cloud platform",
     "main": "dist/index.js",
+    "files": [
+        "dist"
+    ],
     "repository": "https://github.com/marinater/useCloudFS.git",
     "author": "Samarth Patel <samarthxpatel@gmail.com>",
     "license": "GPL-3.0-or-later",
