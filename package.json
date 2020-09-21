@@ -1,31 +1,36 @@
 {
-	"name": "usecloudfs",
-	"version": "1.0.0",
-	"description": "React hook for plug&play use of any cloud platform",
-	"main": "dist/index.js",
-	"repository": "https://github.com/marinater/useCloudFS.git",
-	"author": "Samarth Patel <samarthxpatel@gmail.com>",
-	"license": "GPL-3.0-or-later",
-	"private": false,
-	"devDependencies": {
-		"@types/react": "^16.9.49",
-		"@types/react-dom": "^16.9.8",
-		"babel-core": "^6.26.3",
-		"babel-runtime": "^6.26.0",
-		"react": "^16.13.1",
-		"react-dom": "^16.13.1",
-		"rollup": "^2.27.1",
-		"rollup-plugin-sass": "^1.2.2",
-		"rollup-plugin-typescript2": "^0.27.2",
-		"typescript": "^4.0.3"
-	},
-	"peerDependencies": {
-		"react": "^16.9.0",
-		"react-dom": "^16.9.0"
-	},
-	"scripts": {
-		"build": "rollup -c",
-		"start": "rollup -c -w"
-	},
-	"dependencies": {}
+    "name": "usecloudfs",
+    "version": "1.0.0",
+    "description": "React hook for plug&play use of any cloud platform",
+    "main": "dist/index.js",
+    "repository": "https://github.com/marinater/useCloudFS.git",
+    "author": "Samarth Patel <samarthxpatel@gmail.com>",
+    "license": "GPL-3.0-or-later",
+    "private": false,
+    "devDependencies": {
+        "@types/react": "^16.9.49",
+        "@types/react-dom": "^16.9.8",
+        "@typescript-eslint/eslint-plugin": "^4.1.1",
+        "@typescript-eslint/parser": "^4.1.1",
+        "babel-core": "^6.26.3",
+        "babel-runtime": "^6.26.0",
+        "eslint": "^7.9.0",
+        "eslint-plugin-react": "^7.20.6",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "rollup": "^2.27.1",
+        "rollup-plugin-sass": "^1.2.2",
+        "rollup-plugin-typescript2": "^0.27.2",
+        "typescript": "^4.0.3"
+    },
+    "peerDependencies": {
+        "react": "^16.9.0",
+        "react-dom": "^16.9.0"
+    },
+    "scripts": {
+        "build": "rollup -c",
+        "start": "rollup -c -w",
+        "check-style": "eslint ./src --ext .js,.jsx,.ts,.tsx"
+    },
+    "dependencies": {}
 }
