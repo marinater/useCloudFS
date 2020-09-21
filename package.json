@@ -8,6 +8,8 @@
     "license": "GPL-3.0-or-later",
     "private": false,
     "devDependencies": {
+        "@testing-library/react-hooks": "^3.4.1",
+        "@types/jest": "^26.0.14",
         "@types/react": "^16.9.49",
         "@types/react-dom": "^16.9.8",
         "@typescript-eslint/eslint-plugin": "^4.1.1",
@@ -16,11 +18,14 @@
         "babel-runtime": "^6.26.0",
         "eslint": "^7.9.0",
         "eslint-plugin-react": "^7.20.6",
+        "jest": "^26.4.2",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
+        "react-test-renderer": "^16.13.1",
         "rollup": "^2.27.1",
         "rollup-plugin-sass": "^1.2.2",
         "rollup-plugin-typescript2": "^0.27.2",
+        "ts-jest": "^26.4.0",
         "typescript": "^4.0.3"
     },
     "peerDependencies": {
@@ -30,7 +35,8 @@
     "scripts": {
         "build": "rollup -c",
         "start": "rollup -c -w",
-        "check-style": "eslint ./src --ext .js,.jsx,.ts,.tsx"
+        "check-style": "eslint ./src --ext .js,.jsx,.ts,.tsx",
+        "test": "jest --coverage"
     },
     "dependencies": {}
 }
