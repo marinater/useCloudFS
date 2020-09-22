@@ -1,3 +1,5 @@
-test('return true', () => {
-	expect(true).toBe(true)
+import { useCloudFS } from './useCloudFS'
+
+test('index exports useCloudFS', () => {
+	expect(useCloudFS).toBeDefined()
 })
