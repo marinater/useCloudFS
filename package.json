@@ -33,7 +33,9 @@
 	},
 	"peerDependencies": {
 		"react": "^16.9.0",
-		"react-dom": "^16.9.0"
+		"react-dom": "^16.9.0",
+		"firebase": "^7.21.0",
+		"reactfire": "^2.0.3"
 	},
 	"scripts": {
 		"build": "rollup -c",
@@ -41,8 +43,5 @@
 		"check-style": "eslint ./src --ext .js,.jsx,.ts,.tsx",
 		"test": "jest --coverage"
 	},
-	"dependencies": {
-		"firebase": "^7.21.0",
-		"reactfire": "^2.0.3"
-	}
+	"dependencies": {}
 }
