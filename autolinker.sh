@@ -1,5 +1,10 @@
 read -p 'Path to demo app: ' dirpath
 
+yarn link
+pushd $dirpath
+yarn link usecloudfs
+popd
+
 pushd $dirpath/node_modules/react
 yarn link
 popd
