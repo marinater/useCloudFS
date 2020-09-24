@@ -39,7 +39,9 @@
 		"build": "rollup -c",
 		"start": "rollup -c -w",
 		"check-style": "eslint ./src --ext .js,.jsx,.ts,.tsx",
-		"test": "jest --coverage"
+		"test": "jest --coverage",
+		"autolink": "./autolink.sh",
+		"autounlink": "./autounlink.sh"
 	},
 	"dependencies": {}
 }
