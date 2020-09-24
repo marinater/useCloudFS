@@ -1,3 +1,3 @@
 # useCloudFS Demo
 
-This folder will contain a Create React App website demonstrating our hook in use!
+This folder contains a demo app showing the useCloudFS hook in use.
