@@ -1,48 +1,53 @@
 import { fsOps_T, useCloudFSController_T } from './useCloudFSTypes'
 
-const ROOT_NAME = 'useCloudFS'
-
-const useAmplifyController: useCloudFSController_T<{username: string}> = () => {
-	const isAuthenticated = false as boolean
-
-	if (isAuthenticated) {
+const useAmplifyController: useCloudFSController_T<{ isAuthenticated: boolean, username?: string }> = () => {
+	if (false as boolean) {
 		return { signedIn: false }
 	}
 
 	const createFolder: fsOps_T['createFolder'] = async (folderName) => {
-		return
+		console.info(`createFolder: ${folderName}`)
+		return Promise.reject('not implemented')
 	}
 
 	const renameFolder: fsOps_T['renameFolder'] = async (oldName, newName) => {
-		return
+		console.info(`renameFolder: ${oldName} -> ${newName}`)
+		return Promise.reject('not implemented')
 	}
 
 	const deleteFolder: fsOps_T['deleteFolder'] = async (folderName) => {
-		return
+		console.info(`deleteFolder: ${folderName}`)
+		return Promise.reject('not implemented')
 	}
+
 	const uploadFile: fsOps_T['uploadFile'] = async (folderName, file) => {
-		return
+		console.info(`uploadFile: ${folderName}/${file.name}`)
+		return Promise.reject('not implemented')
 	}
 
 	const renameFile: fsOps_T['renameFile'] = async (oldName, newName) => {
-		return
+		console.info(`renameFile: ${oldName} -> ${newName}`)
+		return Promise.reject('not implemented')
 	}
 
 	const deleteFile: fsOps_T['deleteFile'] = async (fileName) => {
-		return
+		console.info(`deleteFile: ${fileName}`)
+		return Promise.reject('not implemented')
 	}
 
 	const getDownloadURL: fsOps_T['getDownloadURL'] = async (fileName) => {
-		return 'https://www.improgrammer.net/wp-content/uploads/2016/02/16-1.gif'
+		console.info(`getDownloadURL: ${fileName}`)
+		return Promise.reject('not implemented')
 	}
 
 	const setAutoDelete: fsOps_T['setAutoDelete'] = async (folderName) => {
-		return
+		console.info(`setAutoDelete: ${folderName}`)
+		return Promise.reject('not implemented')
 	}
 
 	return {
 		signedIn: true,
-		user: { username: 'some-username' },
+		user: { isAuthenticated: true, username: 'some-username'},
 		fsOps: {
 			createFolder,
 			renameFolder,
