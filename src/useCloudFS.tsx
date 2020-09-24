@@ -6,7 +6,7 @@ const useCloudFS = <GenericUser_T extends {}>(useCloudFSController: useCloudFSCo
 	const controller = useCloudFSController()
 
 	if (!controller.signedIn) {
-		return { signedIn: false }
+		return { signedIn: false as const }
 	}
 
 	return { ...controller }

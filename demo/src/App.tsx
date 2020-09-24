@@ -1,12 +1,18 @@
-import React from 'react';
-import { useCloudFS } from 'usecloudfs';
+import React, { useEffect } from 'react';
+import { useCloudFS, useFirebaseController } from 'usecloudfs';
 import './App.css';
 import logo from './logo.svg';
 
 function App() {
-    const x = useCloudFS
+    const cloudFS = useCloudFS(useFirebaseController)
 
-    console.log(x)
+    useEffect(() => {
+        console.log(`useCloudFS.signedIn: ${cloudFS.signedIn}`)
+        if (cloudFS.signedIn) {
+            console.log(`useCloudFS.user: ${cloudFS.user}`)
+            cloudFS.fsOps.uploadFile('folder-a', new File([], 'file-1.txt'))
+        }
+    }, [cloudFS.signedIn])
 
     return (
         <div className="App">
