@@ -41,7 +41,8 @@
 		"check-style": "eslint ./src --ext .js,.jsx,.ts,.tsx",
 		"test": "jest --coverage",
 		"autolink": "./autolink.sh",
-		"autounlink": "./autounlink.sh"
+		"autounlink": "./autounlink.sh",
+		"clean": "rm ./dist/* -r"
 	},
 	"dependencies": {}
 }

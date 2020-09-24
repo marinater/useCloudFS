@@ -1,10 +1,10 @@
 import React from 'react';
-import { useCloudFS, useFirebaseController } from 'usecloudfs';
+import { useCloudFS } from 'usecloudfs';
 import './App.css';
 import logo from './logo.svg';
 
 function App() {
-    const x = useCloudFS(useFirebaseController)
+    const x = useCloudFS
 
     console.log(x)
 

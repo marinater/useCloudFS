@@ -16,7 +16,7 @@ export default {
 	],
 	plugins: [
 		// sass({ insert: true }),
-		typescript({})
+		typescript({ exclude: '*.test.tsx' })
 	],
 	external: ['react', 'react-dom']
 }
