@@ -1,9 +1,9 @@
-read -p 'Path to demo app: ' dirpath
+#!/bin/bash
 
+# read -p 'Path to demo app: ' dirpath
+dirpath='./demo'
+echo $dirpath
 yarn link
-pushd $dirpath
-yarn link usecloudfs
-popd
 
 pushd $dirpath/node_modules/react
 yarn link
@@ -21,7 +21,12 @@ pushd $dirpath/node_modules/reactfire
 yarn link
 popd
 
+pushd $dirpath
+yarn link usecloudfs
+popd
+
 yarn link react
 yarn link react-dom
 yarn link firebase
 yarn link reactfire
+
