@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # read -p 'Path to demo app: ' dirpath
-$dirpath = './demo'
-
+dirpath='./demo'
+echo $dirpath
 yarn link
 
 pushd $dirpath/node_modules/react
@@ -29,3 +29,4 @@ yarn link react
 yarn link react-dom
 yarn link firebase
 yarn link reactfire
+

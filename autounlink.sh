@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # read -p 'Path to demo app: ' dirpath
-$dirpath = './demo'
+dirpath='./demo'
 
 pushd $dirpath
 yarn unlink usecloudfs
