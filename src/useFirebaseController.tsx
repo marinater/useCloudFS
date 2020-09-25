@@ -1,15 +1,21 @@
 import 'firebase/auth'
 import 'firebase/database'
 import 'firebase/storage'
-import { useAuth } from 'reactfire'
+import { useAuth, useDatabase } from 'reactfire'
 import { fsOps_T, useCloudFSController_T } from './useCloudFSTypes'
 
 const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 	const auth = useAuth()
 
+	
 	if (!auth.currentUser) {
 		return { signedIn: false }
 	}
+
+	const db = useDatabase().ref("useCloudFS")
+
+	console.log(db.toString())
+
 
 	const createFolder: fsOps_T['createFolder'] = async (folderName) => {
 		console.info(`createFolder: ${folderName}`)
@@ -27,8 +33,18 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 	}
 
 	const uploadFile: fsOps_T['uploadFile'] = async (folderName, file) => {
-		console.info(`uploadFile: ${folderName}/${file.name}`)
-		return Promise.reject('not implemented')
+		let filelocref = db.child(`${folderName}/files`)
+
+		
+		const result = filelocref.set({
+			[file.name]: true
+		});
+
+		return result
+
+		//console.info(`uploadFile: ${folderName}/${file.name}`)
+		//return Promise.reject('not implemented')
+
 	}
 
 	const renameFile: fsOps_T['renameFile'] = async (oldName, newName) => {
