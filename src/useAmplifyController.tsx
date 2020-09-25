@@ -1,4 +1,6 @@
 import { fsOps_T, useCloudFSController_T } from './useCloudFSTypes'
+import { Storage } from 'aws-amplify';
+
 
 const useAmplifyController: useCloudFSController_T<{ isAuthenticated: boolean, username?: string }> = () => {
 	if (false as boolean) {
@@ -22,7 +24,10 @@ const useAmplifyController: useCloudFSController_T<{ isAuthenticated: boolean, u
 
 	const uploadFile: fsOps_T['uploadFile'] = async (folderName, file) => {
 		console.info(`uploadFile: ${folderName}/${file.name}`)
-		return Promise.reject('not implemented')
+		Storage.put('test.txt', 'Hello')
+    .then (result => console.log(result)) // {key: "test.txt"}
+    .catch(err => console.log('ERROR', err));
+		// return Promise.reject('not implemented')
 	}
 
 	const renameFile: fsOps_T['renameFile'] = async (oldName, newName) => {

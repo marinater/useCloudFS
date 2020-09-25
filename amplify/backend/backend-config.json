@@ -1,6 +1,6 @@
 {
   "auth": {
-    "usecloudfse89f1df5": {
+    "usecloudfs98fb10fb": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -8,7 +8,7 @@
     }
   },
   "storage": {
-    "s3deffcbb9": {
+    "s3e40e1269": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
     }

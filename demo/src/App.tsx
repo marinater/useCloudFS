@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import { useAmplifyController, useCloudFS } from 'usecloudfs';
 import './App.css';
 import logo from './logo.svg';
+import Amplify, { Storage } from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
 
 function App() {
     const cloudFS = useCloudFS(useAmplifyController)
