@@ -18,6 +18,7 @@
 		"@typescript-eslint/eslint-plugin": "^4.1.1",
 		"@typescript-eslint/parser": "^4.1.1",
 		"aws-amplify": "^3.3.2",
+		"aws-amplify-react": "^4.2.6",
 		"babel-core": "^6.26.3",
 		"babel-runtime": "^6.26.0",
 		"eslint": "^7.9.0",

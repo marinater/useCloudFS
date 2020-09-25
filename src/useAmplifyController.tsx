@@ -1,6 +1,8 @@
-import { fsOps_T, useCloudFSController_T } from './useCloudFSTypes'
-import { Storage } from 'aws-amplify';
-
+import { fsOps_T, useCloudFSController_T } from './useCloudFSTypes';
+import Amplify, { Storage } from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
+//import { Storage } from 'aws-amplify';
 
 const useAmplifyController: useCloudFSController_T<{ isAuthenticated: boolean, username?: string }> = () => {
 	if (false as boolean) {
@@ -23,11 +25,17 @@ const useAmplifyController: useCloudFSController_T<{ isAuthenticated: boolean, u
 	}
 
 	const uploadFile: fsOps_T['uploadFile'] = async (folderName, file) => {
+		// If folderName does not currently exist in the S3 bucket, a new
+		// folder: folderName is created with the file inside of it
 		console.info(`uploadFile: ${folderName}/${file.name}`)
-		Storage.put('test.txt', 'Hello')
-    .then (result => console.log(result)) // {key: "test.txt"}
-    .catch(err => console.log('ERROR', err));
-		// return Promise.reject('not implemented')
+		Storage.put(`${folderName}/${file.name}`, 'sdsdsd')
+			.then (result => {
+				// {key: "fileName.txt"}
+				console.log(result);
+			})
+			.catch(err => {
+				console.error(err);
+			});
 	}
 
 	const renameFile: fsOps_T['renameFile'] = async (oldName, newName) => {

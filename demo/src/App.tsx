@@ -2,9 +2,6 @@ import React, { useEffect } from 'react';
 import { useAmplifyController, useCloudFS } from 'usecloudfs';
 import './App.css';
 import logo from './logo.svg';
-import Amplify, { Storage } from 'aws-amplify';
-import awsconfig from './aws-exports';
-Amplify.configure(awsconfig);
 
 function App() {
     const cloudFS = useCloudFS(useAmplifyController)
@@ -13,7 +10,7 @@ function App() {
         console.log(`useCloudFS.signedIn: ${cloudFS.signedIn}`)
         if (cloudFS.signedIn) {
             console.log(`useCloudFS.user: ${cloudFS.user.username}`)
-            cloudFS.fsOps.uploadFile('folder-a', new File([], 'file-1.txt'))
+            cloudFS.fsOps.uploadFile('folder-b', new File([], 'file-1.txt'))
         }
     }, [cloudFS.signedIn])
 

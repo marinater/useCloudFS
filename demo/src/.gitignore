@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 
+aws-exports.js
+file-1.txt
 # testing
 /coverage
 
