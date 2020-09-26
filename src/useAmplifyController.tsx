@@ -1,8 +1,9 @@
 import { fsOps_T, useCloudFSController_T } from './useCloudFSTypes';
+
+// Setup code for AWS Amplify and Amplify Storage
 import Amplify, { Storage } from 'aws-amplify';
 import awsconfig from './aws-exports';
 Amplify.configure(awsconfig);
-//import { Storage } from 'aws-amplify';
 
 const useAmplifyController: useCloudFSController_T<{ isAuthenticated: boolean, username?: string }> = () => {
 	if (false as boolean) {
@@ -28,10 +29,18 @@ const useAmplifyController: useCloudFSController_T<{ isAuthenticated: boolean, u
 		// If folderName does not currently exist in the S3 bucket, a new
 		// folder: folderName is created with the file inside of it
 		console.info(`uploadFile: ${folderName}/${file.name}`)
-		Storage.put(`${folderName}/${file.name}`, 'sdsdsd')
-			.then (result => {
-				// {key: "fileName.txt"}
-				console.log(result);
+		
+		// Reads the content of the file using the promise
+		file.text()
+			.then(text => {
+				Storage.put(`${folderName}/${file.name}`, text)
+					.then (result => {
+						// {key: "fileName.txt"}
+						console.log(result);
+					})
+					.catch(err => {
+						console.error(err);
+					});
 			})
 			.catch(err => {
 				console.error(err);
