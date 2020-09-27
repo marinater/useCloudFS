@@ -10,6 +10,8 @@ function App() {
 
     if (cloudFS.signedIn) {
         cloudFS.fsOps.createFolder('folder-e')
+        cloudFS.fsOps.deleteFolder('folder-e')
+        cloudFS.fsOps.deleteFile('file-1.txt')
     }
 
     const inputRef = useRef<HTMLInputElement>(null)

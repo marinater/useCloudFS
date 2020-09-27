@@ -30,7 +30,18 @@ const useAmplifyController: useCloudFSController_T<{ isAuthenticated: boolean, u
 
 	const deleteFolder: fsOps_T['deleteFolder'] = async (folderName) => {
 		console.info(`deleteFolder: ${folderName}`)
-		return Promise.reject('not implemented')
+		// Deletes a folder by calling Storage.remove with just folder name
+		// TODO: Does not work for non-empty folders, make recursive
+		// if current folder length == 0 : remove(folderName)
+		// else : Storage.remove(folderName/nextFolder)
+		Storage.remove(`${folderName}/`, '')
+			.then (result => {
+				// {key: "folderName/"}
+				console.log(result);
+			})
+			.catch(err => {
+				console.error(err);
+			});
 	}
 
 	const uploadFile: fsOps_T['uploadFile'] = async (folderName, file) => {
@@ -61,8 +72,15 @@ const useAmplifyController: useCloudFSController_T<{ isAuthenticated: boolean, u
 	}
 
 	const deleteFile: fsOps_T['deleteFile'] = async (fileName) => {
+		// Deletes a single file
 		console.info(`deleteFile: ${fileName}`)
-		return Promise.reject('not implemented')
+		Storage.remove(`${fileName}`)
+			.then (result => {
+				console.log(result);
+			})
+			.catch(err => {
+				console.error(err);
+			});
 	}
 
 	const getDownloadURL: fsOps_T['getDownloadURL'] = async (fileName) => {
