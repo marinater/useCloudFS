@@ -31,10 +31,14 @@ const useAmplifyController: useCloudFSController_T<{ isAuthenticated: boolean, u
 	const deleteFolder: fsOps_T['deleteFolder'] = async (folderName) => {
 		console.info(`deleteFolder: ${folderName}`)
 		// Deletes a folder by calling Storage.remove with just folder name
-		// TODO: Does not work for non-empty folders, make recursive
 		// if current folder length == 0 : remove(folderName)
 		// else : Storage.remove(folderName/nextFolder)
-		Storage.remove(`${folderName}/`, '')
+
+		// Returns a list of files & folders in the current directory
+		const storedFiles = await Storage.list(`${folderName}/`);
+		console.log(storedFiles);
+		const removeEmptyFolder: any = async (folderName: string) => {
+			Storage.remove(`${folderName}/`, '')
 			.then (result => {
 				// {key: "folderName/"}
 				console.log(result);
@@ -42,6 +46,21 @@ const useAmplifyController: useCloudFSController_T<{ isAuthenticated: boolean, u
 			.catch(err => {
 				console.error(err);
 			});
+		};
+		// Base Case: If no more folders or files in current directory
+		if (storedFiles.length === 0) {
+			removeEmptyFolder(folderName);
+		} else {
+			for (let i : number = 0; i < storedFiles.length; i++) {
+				if (storedFiles[i][storedFiles[i].length - 1] === '/') {
+					// Currently, looking in a folder -> recurse on folder
+					deleteFolder(storedFiles[i].key.slice(-1));
+				} else {
+					// Currently, looking in a file -> delete the file
+					deleteFile(storedFiles[i].key);
+				}
+			}
+		}
 	}
 
 	const uploadFile: fsOps_T['uploadFile'] = async (folderName, file) => {
