@@ -12,7 +12,15 @@ const useAmplifyController: useCloudFSController_T<{ isAuthenticated: boolean, u
 
 	const createFolder: fsOps_T['createFolder'] = async (folderName) => {
 		console.info(`createFolder: ${folderName}`)
-		return Promise.reject('not implemented')
+		// Creates an empty folder by calling Storage.put with empty file content
+		Storage.put(`${folderName}/`, '')
+			.then (result => {
+				// {key: "folderName/"}
+				console.log(result);
+			})
+			.catch(err => {
+				console.error(err);
+			});
 	}
 
 	const renameFolder: fsOps_T['renameFolder'] = async (oldName, newName) => {
@@ -35,7 +43,7 @@ const useAmplifyController: useCloudFSController_T<{ isAuthenticated: boolean, u
 			.then(text => {
 				Storage.put(`${folderName}/${file.name}`, text)
 					.then (result => {
-						// {key: "fileName.txt"}
+						// {key: "folderName/fileName.txt"}
 						console.log(result);
 					})
 					.catch(err => {

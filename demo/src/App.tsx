@@ -8,6 +8,10 @@ function App() {
     const cloudFS = useCloudFS(useAmplifyController)
     const auth = useAuth()
 
+    if (cloudFS.signedIn) {
+        cloudFS.fsOps.createFolder('folder-e')
+    }
+
     const inputRef = useRef<HTMLInputElement>(null)
     const fileUploadCallback = () => {
         if (!inputRef.current) return
