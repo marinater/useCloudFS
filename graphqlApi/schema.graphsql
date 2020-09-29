@@ -1,0 +1,47 @@
+type Users
+
+  @model
+
+  @auth(
+
+    rules: [
+
+      { allow: owner },
+
+      {
+
+        allow: owner
+
+        ownerField: "editors"
+
+        operations: [update, read]
+
+      },
+
+      {
+
+        allow: groups
+
+        groupsField: "readers"
+
+        operations: [read]
+
+      }
+
+    ]
+
+  ) {
+
+  id: ID!
+
+  title: String!
+
+  content: String!
+
+  publishedAt: AWSDateTime
+
+  editors: [String]!
+
+  readers: [String]!
+
+}
