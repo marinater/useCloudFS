@@ -21,6 +21,7 @@ function App() {
         auth.onAuthStateChanged(function(user) {
             if (user) {
                 console.log(auth.currentUser)
+                login(true)
             } else {
               console.log("no user")
             }
@@ -29,11 +30,12 @@ function App() {
         console.log(`useCloudFS.signedIn: ${cloudFS.signedIn}`)
         if (cloudFS.signedIn) {
             console.log(`useCloudFS.user: ${cloudFS.user}`)
-            cloudFS.fsOps.uploadFile('bucket1-a', new File([], 'file-1.txt'))
+            cloudFS.fsOps.uploadFile('bucket1-a', new File([], 'file-1:txt'))
         }
     }, [cloudFS.signedIn])
 
     const [filename,updateName] = useState("")
+    const [signedIn, login] = useState(false)
 
     return (
         <div className="App">

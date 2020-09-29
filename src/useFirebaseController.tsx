@@ -15,6 +15,7 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 	const db = useDatabase().ref("useCloudFS")
 
 	console.log(db.toString())
+	
 
 
 	const createFolder: fsOps_T['createFolder'] = async (folderName) => {
@@ -33,6 +34,9 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 	}
 
 	const uploadFile: fsOps_T['uploadFile'] = async (folderName, file) => {
+
+		console.log(auth.currentUser)
+
 		let filelocref = db.child(`${folderName}/files`)
 
 		
