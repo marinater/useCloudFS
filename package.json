@@ -43,7 +43,11 @@
 		"test": "jest --coverage",
 		"autolink": "./autolink.sh",
 		"autounlink": "./autounlink.sh",
-		"clean": "rm ./dist/* -r"
+		"clean": "rm ./dist/* -r",
+		"config:amplify": "yarn add global amplify-cli && amplify init && amplify add database && amplify add storage && amplify add api && rsync ./config/amplify ./amplify"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"amplify-cli": "^1.0.0",
+		"global": "^4.4.0"
+	}
 }
