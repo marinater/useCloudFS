@@ -11,11 +11,13 @@ yarn unlink react
 yarn unlink react-dom
 yarn unlink
 
-pushd $dirpath/node_modules/react
-yarn unlink
-popd
-
-pushd $dirpath/node_modules/react-dom
-yarn unlink
-popd
-
+if [ -d $dirpath/node_modules/firebase ]; then
+    pushd $dirpath/node_modules/firebase
+    yarn unlink
+    popd
+fi
+if [ -d $dirpath/node_modules/reactfire ]; then
+    pushd $dirpath/node_modules/reactfire
+    yarn unlink
+    popd
+fi
