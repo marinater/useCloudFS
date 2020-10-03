@@ -13,22 +13,20 @@ pushd $dirpath/node_modules/react-dom
 yarn link
 popd
 
-if [ -d $dirpath/node_modules/firebase ]; then
-    pushd $dirpath/node_modules/firebase
-    yarn link
-    popd
-fi
-if [ -d $dirpath/node_modules/reactfire ]; then
-    pushd $dirpath/node_modules/reactfire
-    yarn link
-    popd
-fi
+pushd $dirpath/node_modules/firebase
+yarn link
+popd
+
+pushd $dirpath/node_modules/reactfire
+yarn link
+popd
+
+pushd $dirpath
+yarn link usecloudfs
+popd
 
 yarn link react
 yarn link react-dom
-if [ -d $dirpath/node_modules/firebase ]; then
-    yarn link firebase
-fi
-if [ -d $dirpath/node_modules/reactfire ]; then
-    yarn link reactfire
-fi
+yarn link firebase
+yarn link reactfire
+
