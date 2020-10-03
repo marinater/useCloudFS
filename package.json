@@ -38,7 +38,7 @@
 		"reactfire": "^2.0.3"
 	},
 	"scripts": {
-		"install": "cd ./demo && yarn install && cd .. && ./autolink.sh",
+		"install:dev": "cd ./demo && yarn install && cd .. && ./autolink.sh",
 		"build": "rollup -c",
 		"start": "rollup -c -w",
 		"check-style": "eslint ./src --ext .js,.jsx,.ts,.tsx",
