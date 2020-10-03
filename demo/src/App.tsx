@@ -30,10 +30,7 @@ function App() {
         console.log(`useCloudFS.signedIn: ${cloudFS.signedIn}`)
         if (cloudFS.signedIn) {
             console.log(`useCloudFS.user: ${cloudFS.user}`)
-            //cloudFS.fsOps.deleteFile('bucket1/helloagain2.txt')
-            //cloudFS.fsOps.uploadFile('bucket1', new File([], 'file-1.txt'))
-            //cloudFS.fsOps.deleteFile('bucket1/file-1.txt')
-            //cloudFS.fsOps.renameFile('bucket1/file-1.txt','renamedfile.txt')
+            cloudFS.fsOps.uploadFile('bucket1-a', new File([], 'file-1:txt'))
         }
     }, [cloudFS.signedIn])
 
