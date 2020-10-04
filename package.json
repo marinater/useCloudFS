@@ -17,6 +17,7 @@
 		"@types/react-dom": "^16.9.8",
 		"@typescript-eslint/eslint-plugin": "^4.1.1",
 		"@typescript-eslint/parser": "^4.1.1",
+		"aws-amplify": "^3.3.3",
 		"babel-core": "^6.26.3",
 		"babel-runtime": "^6.26.0",
 		"eslint": "^7.9.0",
@@ -44,7 +45,7 @@
 		"autolink": "./autolink.sh",
 		"autounlink": "./autounlink.sh",
 		"clean": "rm ./dist/* -r",
-		"config:amplify": "yarn add global amplify-cli && amplify init && amplify add database && amplify add storage && amplify add api && rsync ./config/amplify ./amplify"
+		"config:amplify": "yarn add global amplify-cli && amplify init && amplify add database && amplify add storage && amplify add api && cp -r ./config/amplify ./amplify"
 	},
 	"dependencies": {
 		"amplify-cli": "^1.0.0",
