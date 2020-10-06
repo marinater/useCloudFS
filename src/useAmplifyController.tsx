@@ -1,4 +1,8 @@
 import { fsOps_T, useCloudFSController_T } from './useCloudFSTypes'
+import { renameFile } from './graphql/queries';
+import awsconfig from './aws-exports';
+import { API, graphqlOperation } from 'aws-amplify';
+API.configure(awsconfig);
 
 const ROOT_NAME = 'useCloudFS'
 
@@ -25,7 +29,9 @@ const useAmplifyController: useCloudFSController_T<{username: string}> = () => {
 	}
 
 	const renameFile: fsOps_T['renameFile'] = async (oldName, newName) => {
-		return
+		const args = {oldName, newName};
+		const data = await API.graphql(graphqlOperation(renameFile, args));
+		return data;
 	}
 
 	const deleteFile: fsOps_T['deleteFile'] = async (fileName) => {

@@ -4,6 +4,7 @@
       "queryType" : {
         "name" : "Query"
       },
+<<<<<<< HEAD
       "mutationType" : {
         "name" : "Mutation"
       },
@@ -3802,12 +3803,61 @@
           "defaultValue" : null
         } ],
         "interfaces" : null,
+=======
+      "mutationType" : null,
+      "subscriptionType" : null,
+      "types" : [ {
+        "kind" : "OBJECT",
+        "name" : "Query",
+        "description" : null,
+        "fields" : [ {
+          "name" : "renameFile",
+          "description" : null,
+          "args" : [ {
+            "name" : "oldName",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "newName",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "inputFields" : null,
+        "interfaces" : [ ],
+>>>>>>> 40aa8d858754fe03aa4f08e0f68e5d75689ea645
         "enumValues" : null,
         "possibleTypes" : null
       }, {
         "kind" : "SCALAR",
+<<<<<<< HEAD
         "name" : "Float",
         "description" : "Built-in Float",
+=======
+        "name" : "String",
+        "description" : "Built-in String",
+>>>>>>> 40aa8d858754fe03aa4f08e0f68e5d75689ea645
         "fields" : null,
         "inputFields" : null,
         "interfaces" : null,
@@ -4285,6 +4335,18 @@
         "enumValues" : null,
         "possibleTypes" : null
       }, {
+<<<<<<< HEAD
+=======
+        "kind" : "SCALAR",
+        "name" : "Boolean",
+        "description" : "Built-in Boolean",
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+>>>>>>> 40aa8d858754fe03aa4f08e0f68e5d75689ea645
         "kind" : "OBJECT",
         "name" : "__EnumValue",
         "description" : null,
@@ -4605,6 +4667,26 @@
         "onFragment" : false,
         "onField" : false
       }, {
+<<<<<<< HEAD
+=======
+        "name" : "deprecated",
+        "description" : null,
+        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
+        "args" : [ {
+          "name" : "reason",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : "\"No longer supported\""
+        } ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+>>>>>>> 40aa8d858754fe03aa4f08e0f68e5d75689ea645
         "name" : "aws_publish",
         "description" : "Tells the service which subscriptions will be published to when this mutation is called. This directive is deprecated use @aws_susbscribe directive instead.",
         "locations" : [ "FIELD_DEFINITION" ],
@@ -4668,6 +4750,7 @@
         "onFragment" : false,
         "onField" : false
       }, {
+<<<<<<< HEAD
         "name" : "deprecated",
         "description" : null,
         "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
@@ -4685,6 +4768,8 @@
         "onFragment" : false,
         "onField" : false
       }, {
+=======
+>>>>>>> 40aa8d858754fe03aa4f08e0f68e5d75689ea645
         "name" : "aws_api_key",
         "description" : "Tells the service this field/object has access authorized by an API key.",
         "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
