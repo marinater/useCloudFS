@@ -5,8 +5,6 @@ import { useAuth, useDatabase } from 'reactfire'
 import { fsOps_T, useCloudFSController_T } from './useCloudFSTypes'
 
 
-
-
 const parseFileName = (fileName: string) => {
 	const path = fileName.split('/')
 	const filename = path.pop()!.replace(/\./g,'*')
@@ -17,14 +15,13 @@ const parseFileName = (fileName: string) => {
 
 const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 	const auth = useAuth()
+	const database = useDatabase()
 
 	if (!auth.currentUser) {
 		return { signedIn: false }
 	}
 
-	const db = useDatabase().ref("useCloudFS")
-
-	console.log(db.toString())
+	const db = database.ref('useCloudFS')
 
 	const createFolder: fsOps_T['createFolder'] = async (folderName) => {
 		console.info(`createFolder: ${folderName}`)
@@ -42,20 +39,20 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 	}
 
 	const uploadFile: fsOps_T['uploadFile'] = async (folderName, file) => {
-        console.log(auth.currentUser)
+		console.log(auth.currentUser)
 
-        let filelocref = db.child(`${folderName}/files/${file.name.replace(/\./g, '*')}`)
+		const fileRef = db.child(`${folderName}/files/${file.name.replace(/\./g, '*')}`)
 
-        return filelocref.transaction(() => true)
+		return fileRef.transaction(() => true)
 	}
 
 	const renameFile: fsOps_T['renameFile'] = async (oldName, newName) => {
 		console.info(`renameFile: ${oldName} -> ${newName}`)
 
-        const [folderName, oldFileName] = parseFileName(oldName)
-		let filelocref = db.child(`${folderName}/files/${oldFileName}`)
+		const [folderName, oldFileName] = parseFileName(oldName)
+		const fileRef = db.child(`${folderName}/files/${oldFileName}`)
 
-		return filelocref.transaction( () =>{
+		return fileRef.transaction( () =>{
 			uploadFile(folderName, new File([], newName))
 			return null
 		})
@@ -65,12 +62,12 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 		console.info(`deleteFile: ${path}`)
 
 		const [folderName,fileName] = parseFileName(path)
-		let filelocref = db.child(`${folderName}/files/${fileName}`)
+		const fileRef = db.child(`${folderName}/files/${fileName}`)
 
 		console.log(folderName)
 		console.log(fileName)
 
-		return filelocref.transaction( () => null)
+		return fileRef.transaction(() => null)
 	}
 
 	const getDownloadURL: fsOps_T['getDownloadURL'] = async (fileName) => {
