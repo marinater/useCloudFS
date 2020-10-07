@@ -68,9 +68,10 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 		return err || undefined
 	}
 
-	const renameFolder: fsOps_T['renameFolder'] = async (oldName, newName) => {
-		console.info(`renameFolder: ${oldName} -> ${newName}`)
-		return Promise.reject('not implemented')
+	const renameFolder: fsOps_T['renameFolder'] = async () => {
+		if (!auth.currentUser)
+			return Promise.reject('User not signed in to Firebase')
+		return Promise.reject('RenameFolderError: Rename folder is not supported for Firebase RealtimeDB at the moment')
 	}
 
 	const deleteFolder: fsOps_T['deleteFolder'] = async (folderPath) => {
