@@ -1,0 +1,8 @@
+{
+  "database": {
+    "rules": "config/firebaseDB/database.rules.json"
+  },
+  "storage": {
+    "rules": "config/firebaseDB/storage.rules"
+  }
+}

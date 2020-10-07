@@ -1,6 +1,6 @@
 import 'firebase/auth'
 import 'firebase/database'
-import 'firebase/storage'
+// import 'firebase/storage'
 import { useAuth, useDatabase } from 'reactfire'
 import { fsOps_T, useCloudFSController_T } from './useCloudFSTypes'
 
@@ -17,12 +17,14 @@ const splitPath = (fileName: string) => {
 const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 	const auth = useAuth()
 	const database = useDatabase()
+	// const storageRoot = useStorage()
 
 	if (!auth.currentUser) {
 		return { signedIn: false }
 	}
 
 	const db = database.ref('useCloudFS')
+	// const storage = storageRoot.ref('useCloudFS')
 
 	const createFolder: fsOps_T['createFolder'] = async (folderPath) => {
 		console.info(`createFolder: ${folderPath}`)
@@ -90,23 +92,40 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 	}
 
 	const uploadFile: fsOps_T['uploadFile'] = async (folderName, file) => {
-		console.log(auth.currentUser)
+		if (!auth.currentUser)
+			return Promise.reject('User not signed in to Firebase')
 
+		// const storageRef = storage.ref(folderName)
 		const fileRef = db.child(`${folderName}/files/${file.name.replace(/\./g, '*')}`)
 
 		return fileRef.transaction(() => true)
 	}
 
-	const renameFile: fsOps_T['renameFile'] = async (oldName, newName) => {
-		console.info(`renameFile: ${oldName} -> ${newName}`)
+	const renameFile: fsOps_T['renameFile'] = async (oldPath, newPath) => {
+		console.info(`renameFile: ${oldPath} -> ${newPath}`)
 
-		const [folderName, oldFileName] = splitPath(oldName)
-		const fileRef = db.child(`${folderName}/files/${oldFileName}`)
-
-		return fileRef.transaction( () =>{
-			uploadFile(folderName, new File([], newName))
-			return null
+		const token = await auth.currentUser!.getIdToken(false)
+		const headers = new Headers({
+			'Authorization': `Bearer ${token}`,
+			'Content-Type': 'application/json'
 		})
+
+		const body = JSON.stringify({
+			oldPath,
+			newPath
+		})
+
+		const requestOptions = {
+			method: 'POST',
+			headers,
+			body
+		}
+
+		const res = await fetch('http://localhost:5000/use-storage/us-central1/app/renameFile', requestOptions)
+		if (res.status != 200)
+			return Promise.reject(await res.text())
+
+		return
 	}
 
 	const deleteFile: fsOps_T['deleteFile'] = async (path) => {

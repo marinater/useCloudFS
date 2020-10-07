@@ -15,7 +15,7 @@
 				"metadata": {
 					".validate": "
 						newData.hasChildren(['parentFolder', 'name', 'createdOn'
-					]) &&
+						]) &&
 						!newData.child('name').val().contains(':') &&
 						newData.child('parentFolder').val() == '' ? (
 							$folder == newData.child('name').val()
