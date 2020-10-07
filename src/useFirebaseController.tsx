@@ -58,16 +58,7 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 			}
 		}
 
-		let err
-		await db.child(folderPath).transaction(folder => {
-			if (folder !== null) {
-				err = Promise.reject('CreateFolderError: Folder already exists')
-				return
-			}
-			return folderData
-		})
-
-		return err || undefined
+		return db.child(folderPath).set(folderData).catch(() => Promise.reject('CreateFolderError: Folder already exists'))
 	}
 
 	const renameFolder: fsOps_T['renameFolder'] = async () => {
@@ -95,10 +86,25 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 		if (!auth.currentUser)
 			return Promise.reject('User not signed in to Firebase')
 
-		// const storageRef = storage.ref(folderName)
-		const fileRef = db.child(`${folderName}/files/${file.name.replace(/\./g, '*')}`)
+		// @ts-ignore
+		const [_, fileName] = splitPath(`${folderName}/${file.name}`)
+		let err: string | undefined
 
-		return fileRef.transaction(() => true)
+		db.child(folderName).child('files').transaction(data => {
+			if (data === null) return null
+
+			if (fileName in data) {
+				err = 'UploadFileError: File with same name exists in the folder'
+				return
+			}
+
+			data[fileName] = true
+
+			console.log(data)
+			return data
+		}).catch(error => err = error)
+
+		return err ? Promise.reject(err) : undefined
 	}
 
 	const renameFile: fsOps_T['renameFile'] = async (oldPath, newPath) => {
