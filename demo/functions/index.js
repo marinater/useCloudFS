@@ -1,16 +1,15 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
-// admin.initializeApp(functions.config().firebase)
 admin.initializeApp()
 const express = require('express')
 const cookieParser = require('cookie-parser')()
 const cors = require('cors')({origin: true})
 const app = express()
 const renameFile = require('./renameFile')
-// Express middleware that validates Firebase ID Tokens passed in the Authorization HTTP header.
-// The Firebase ID token needs to be passed as a Bearer token in the Authorization HTTP header like this:
-// `Authorization: Bearer <Firebase ID Token>`.
-// when decoded successfully, the ID Token content will be added as `req.user`.
+const getDownloadURL = require('./getDownloadURL')
+const getUploadURL = require('./getUploadURL')
+
+
 const validateFirebaseIdToken = async (req, res, next) => {
 	console.log('Check if request is authorized with Firebase ID token');
 
@@ -56,10 +55,7 @@ app.use(cors);
 app.use(cookieParser);
 app.use(validateFirebaseIdToken);
 app.use('/renameFile', renameFile);
+app.use('/getDownloadURL', getDownloadURL);
+app.use('/getUploadURL', getUploadURL);
 
-// This HTTPS endpoint can only be accessed by your Firebase Users.
-// Requests need to be authorized by providing an `Authorization` HTTP header
-// with value `Bearer <Firebase ID Token>`.
 exports.app = functions.https.onRequest(app);
-
-// -----------------------------------------------------------------------------------------------------------------------------------------------
