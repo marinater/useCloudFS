@@ -5,13 +5,14 @@ import { useAuth, useDatabase } from 'reactfire'
 import { fsOps_T, useCloudFSController_T } from './useCloudFSTypes'
 
 
-const parseFileName = (fileName: string) => {
-	const path = fileName.split('/')
-	const filename = path.pop()!.replace(/\./g,'*')
-	const foldername = path.join(':')
-	return [foldername,filename]
-}
+const splitPath = (fileName: string) => {
+	if (!fileName) return ['', '']
 
+	const path = fileName.split('/')
+	const tail = path.pop()!.replace(/\./g,'*')
+	const head = path.join(':')
+	return [head, tail]
+}
 
 const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 	const auth = useAuth()
@@ -23,9 +24,48 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 
 	const db = database.ref('useCloudFS')
 
-	const createFolder: fsOps_T['createFolder'] = async (folderName) => {
-		console.info(`createFolder: ${folderName}`)
-		return Promise.reject('not implemented')
+	const createFolder: fsOps_T['createFolder'] = async (folderPath) => {
+		console.info(`createFolder: ${folderPath}`)
+		if (!auth.currentUser)
+			return Promise.reject('User not signed in to Firebase')
+
+		const uid = auth.currentUser.uid
+		const [parentFolder, name] = splitPath(folderPath)
+
+		const folderData = {
+			files: {
+				'__useCloudFS__': true
+			},
+			metadata: {
+				createdOn: Date.now(),
+				name,
+				parentFolder
+			},
+			permissions: {
+				autoDelete: 0,
+				owner: uid,
+				read: {
+					[uid] : true
+				},
+				write: {
+					[uid] : true
+				}
+			},
+			subFolders: {
+				'__useCloudFS__': true
+			}
+		}
+
+		let err
+		await db.child(folderPath).transaction(folder => {
+			if (folder !== null) {
+				err = Promise.reject('CreateFolderError: Folder already exists')
+				return
+			}
+			return folderData
+		})
+
+		return err || undefined
 	}
 
 	const renameFolder: fsOps_T['renameFolder'] = async (oldName, newName) => {
@@ -49,7 +89,7 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 	const renameFile: fsOps_T['renameFile'] = async (oldName, newName) => {
 		console.info(`renameFile: ${oldName} -> ${newName}`)
 
-		const [folderName, oldFileName] = parseFileName(oldName)
+		const [folderName, oldFileName] = splitPath(oldName)
 		const fileRef = db.child(`${folderName}/files/${oldFileName}`)
 
 		return fileRef.transaction( () =>{
@@ -61,7 +101,7 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 	const deleteFile: fsOps_T['deleteFile'] = async (path) => {
 		console.info(`deleteFile: ${path}`)
 
-		const [folderName,fileName] = parseFileName(path)
+		const [folderName,fileName] = splitPath(path)
 		const fileRef = db.child(`${folderName}/files/${fileName}`)
 
 		console.log(folderName)
