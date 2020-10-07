@@ -73,9 +73,19 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 		return Promise.reject('not implemented')
 	}
 
-	const deleteFolder: fsOps_T['deleteFolder'] = async (folderName) => {
-		console.info(`deleteFolder: ${folderName}`)
-		return Promise.reject('not implemented')
+	const deleteFolder: fsOps_T['deleteFolder'] = async (folderPath) => {
+		if (!auth.currentUser)
+			return Promise.reject('User not signed in to Firebase')
+
+		let existed = false
+		await db.child(folderPath).transaction(folder => {
+			if (folder !== null)
+				existed = true
+
+			return null
+		})
+
+		return existed ? undefined : Promise.reject('DeleteFolderError: Folder does not exist')
 	}
 
 	const uploadFile: fsOps_T['uploadFile'] = async (folderName, file) => {
