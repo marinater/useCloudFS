@@ -3,6 +3,7 @@ const admin = require('firebase-admin')
 
 const router = new Router()
 const db = admin.database()
+const storage = admin.storage()
 
 const splitPath = (fileName) => {
 	if (!fileName) return ['', '']
@@ -66,10 +67,25 @@ router.post('/', async (req, res) => {
 		err = `RenameFileError: Forwarded Firebase Error -> ${err}`
 	})
 
-	if (!exists)
-		res.send('RenameFileError: Folder does not exist')
-	else
-		res.status(err ? 405 : 200).send(err || 'success')
+	if (!exists) {
+		res.status(405).send('RenameFileError: Folder does not exist')
+		return
+	}
+	if (err) {
+		res.status(405).send(err)
+		return
+	}
+
+	const newFileRef = storage.bucket().file(`useCloudFS/${newPath}`)
+	const oldFileRef = storage.bucket().file(`useCloudFS/${oldPath}`)
+
+	await oldFileRef.move(newFileRef).catch(error => err = error)
+	if (err) {
+		res.status(405).send(err)
+		return
+	}
+
+	res.status(200).send('success')
 })
 
 module.exports = router

@@ -25,7 +25,7 @@ function App() {
             // cloudFS.fsOps.uploadFile('bucket1', new File([], 'test-upload2.txt')).catch(err => console.info(err) )
             // cloudFS.fsOps.getDownloadURL('bucket1/hw1.c').catch(err => console.info(err))
             // cloudFS.fsOps.deleteFile('bucket1/test-upload.txt').catch(err => console.info(err) )
-            // cloudFS.fsOps.renameFile('bucket1/renamedfile2.txt','bucket1/renamedfile.txt').catch(err => console.info(err) )
+            cloudFS.fsOps.renameFile('bucket1/test-upload2.txt','bucket1/test-upload3.txt').catch(err => console.info(err) )
         }
     }, [cloudFS.signedIn])
 
