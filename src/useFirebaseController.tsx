@@ -79,7 +79,19 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 			}
 		}
 
-		return db.child(escapePath(folderPath)).set(folderData).catch(() => Promise.reject('CreateFolderError: Folder already exists'))
+		const escapedPath = escapePath(folderPath)
+		let err = null
+		await db.child(escapedPath).set(folderData).catch(error => err = `CreateFolderError: Folder probably already exists. Forwarded Firebase Error -> ${error}`)
+		if (err)
+			return Promise.reject(err)
+
+		if (parentFolder) {
+			await db.child(parentFolder).child('subFolders').update({ [escapedPath]: true }).catch(error => err = `CreateFolderError: Forwarded Firebase Error -> ${error}`)
+			if (err) {
+				db.child(escapedPath).remove()
+				return Promise.reject(err)
+			}
+		}
 	}
 
 	// works reliably
