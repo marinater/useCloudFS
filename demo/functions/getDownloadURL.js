@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
 	let err = false
 
 	await parentRef.once('value').then(data => {
-		if (!(req.user.uid in data?.permissions?.read)) {
+		if (!(req.user.uid in data.permissions.read)) {
 			err = 'GetDownloadURLError: User does not have read permissions for this folder'
 			return
 		}

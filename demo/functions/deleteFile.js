@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
 	await parentRef.transaction(data => {
 		if (data === null) return null;
 		exists = true
-		if (!(req.user.uid in data?.permissions?.read) || !(req.user.uid in data?.permissions?.write)) {
+		if (!(req.user.uid in data.permissions.read) || !(req.user.uid in data.permissions.write)) {
 			err = 'DeleteFileError: User does not have read and write permissions to the parent folder'
 			return
 		}

@@ -9,6 +9,8 @@ const renameFile = require('./renameFile')
 const getDownloadURL = require('./getDownloadURL')
 const getUploadURL = require('./getUploadURL')
 const deleteFile = require('./deleteFile')
+const deleteFolderTrigger = require('./deleteFolder')
+const { database } = require('firebase-admin')
 
 const validateFirebaseIdToken = async (req, res, next) => {
 	console.log('Check if request is authorized with Firebase ID token');
@@ -60,3 +62,4 @@ app.use('/getUploadURL', getUploadURL);
 app.use('/deleteFile', deleteFile);
 
 exports.app = functions.https.onRequest(app);
+exports.deleteFolderTrigger = deleteFolderTrigger

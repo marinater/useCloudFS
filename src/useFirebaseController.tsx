@@ -108,7 +108,6 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 		if (!auth.currentUser)
 			return Promise.reject('DeleteFolderError: User not signed in to Firebase')
 
-
 		let existed = false
 		let err = null
 		await db.child(folderPath).transaction(folder => {

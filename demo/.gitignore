@@ -24,3 +24,5 @@ yarn-error.log*
 
 config/firebaseDB/service-key.json
 firebase-debug.log
+database-debug.log
+ui-debug.log
