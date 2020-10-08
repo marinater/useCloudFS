@@ -82,12 +82,12 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 		console.info(`renameFolder: ${folderPath}`)
 		if (!auth.currentUser)
 			return Promise.reject('User not signed in to Firebase')
+
 		return Promise.reject('RenameFolderError: Rename folder is not supported for Firebase RealtimeDB at the moment')
 	}
 
 	const deleteFolder: fsOps_T['deleteFolder'] = async (folderPath) => {
 		console.info(`deleteFolder: ${folderPath}`)
-
 		if (!auth.currentUser)
 			return Promise.reject('User not signed in to Firebase')
 
@@ -161,6 +161,9 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 
 	const renameFile: fsOps_T['renameFile'] = async (oldPath, newPath) => {
 		console.info(`renameFile: ${oldPath} -> ${newPath}`)
+		if (!auth.currentUser)
+			return Promise.reject('UploadFileError: User not signed in to Firebase')
+
 		const res = await makeFunctionRequest('POST', 'renameFile', { oldPath, newPath })
 
 		if (res.status != 200)
@@ -170,6 +173,8 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 
 	const deleteFile: fsOps_T['deleteFile'] = async (path) => {
 		console.info(`deleteFile: ${path}`)
+		if (!auth.currentUser)
+			return Promise.reject('UploadFileError: User not signed in to Firebase')
 
 		const [folderName,fileName] = splitPath(path)
 		const fileRef = db.child(`${folderName}/files/${fileName}`)
@@ -179,6 +184,9 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 
 	const getDownloadURL: fsOps_T['getDownloadURL'] = async (path) => {
 		console.info(`getDownloadURL: ${path}`)
+		if (!auth.currentUser)
+			return Promise.reject('UploadFileError: User not signed in to Firebase')
+
 		const res = await makeFunctionRequest('POST', 'getDownloadURL', { path })
 
 		if (res.status != 200)
@@ -189,7 +197,8 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 
 	const setAutoDelete: fsOps_T['setAutoDelete'] = async (folderName) => {
 		console.info(`setAutoDelete: ${folderName}`)
-		return Promise.reject('not implemented')
+		if (!auth.currentUser)
+			return Promise.reject('UploadFileError: User not signed in to Firebase')
 	}
 
 	return {
