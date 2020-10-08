@@ -51,13 +51,15 @@ router.post('/', async (req, res) => {
 		return
 	}
 
-    storage.bucket().file(`useCloudFS/${path}`).getSignedUrl({action: 'write', expires: '10-08-2020', version: 'v4', contentType })
-    .then(url => {
-        res.status(200).send(url[0])
-    })
-    .catch(err =>
-        res.status(405).send(`GetUploadURLError: Could not generate upload link -> ${err}`)
-    )
+	const expDate = new Date();
+	expDate.setMinutes( expDate.getMinutes() + 1 );
+	storage.bucket().file(`useCloudFS/${path}`).getSignedUrl({action: 'write', expires: expDate.valueOf(), version: 'v4', contentType })
+	.then(url => {
+		res.status(200).send(url[0])
+	})
+	.catch(err =>
+		res.status(405).send(`GetUploadURLError: Could not generate upload link -> ${err}`)
+	)
 })
 
 module.exports = router

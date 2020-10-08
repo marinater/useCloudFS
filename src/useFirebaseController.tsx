@@ -4,14 +4,17 @@ import 'firebase/database'
 import { useAuth, useDatabase } from 'reactfire'
 import { fsOps_T, useCloudFSController_T } from './useCloudFSTypes'
 
-
+const escapePath = (path: string) => {
+	return path.replace(/\./g, '*').replace(/\//g, ':')
+}
 const splitPath = (fileName: string) => {
 	if (!fileName) return ['', '']
+	fileName = escapePath(fileName)
 
-	const path = fileName.split('/')
-	const tail = path.pop()!.replace(/\./g,'*')
+	const path = fileName.split(':')
+	const tail = path.pop()
 	const head = path.join(':')
-	return [head, tail]
+	return [head, tail as string]
 }
 
 const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
@@ -43,10 +46,11 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 		return fetch('http://localhost:5000/use-storage/us-central1/app/' + path, requestOptions)
 	}
 
+	// works reliably
 	const createFolder: fsOps_T['createFolder'] = async (folderPath) => {
 		console.info(`createFolder: ${folderPath}`)
 		if (!auth.currentUser)
-			return Promise.reject('User not signed in to Firebase')
+			return Promise.reject('CreateFolderError: User not signed in to Firebase')
 
 		const uid = auth.currentUser.uid
 		const [parentFolder, name] = splitPath(folderPath)
@@ -75,9 +79,10 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 			}
 		}
 
-		return db.child(folderPath).set(folderData).catch(() => Promise.reject('CreateFolderError: Folder already exists'))
+		return db.child(escapePath(folderPath)).set(folderData).catch(() => Promise.reject('CreateFolderError: Folder already exists'))
 	}
 
+	// works reliably
 	const renameFolder: fsOps_T['renameFolder'] = async (folderPath) => {
 		console.info(`renameFolder: ${folderPath}`)
 		if (!auth.currentUser)
@@ -89,7 +94,7 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 	const deleteFolder: fsOps_T['deleteFolder'] = async (folderPath) => {
 		console.info(`deleteFolder: ${folderPath}`)
 		if (!auth.currentUser)
-			return Promise.reject('User not signed in to Firebase')
+			return Promise.reject('DeleteFolderError: User not signed in to Firebase')
 
 
 		let existed = false
@@ -107,6 +112,7 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 		return err ? Promise.reject(err) : undefined
 	}
 
+	// works reliably
 	const uploadFile: fsOps_T['uploadFile'] = async (folderPath, file) => {
 		console.log(`uploadFile: ${folderPath} ${file.name}`)
 		if (!auth.currentUser)
@@ -159,10 +165,11 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 		return err ? Promise.reject(err) : undefined
 	}
 
+	// works reliably
 	const renameFile: fsOps_T['renameFile'] = async (oldPath, newPath) => {
 		console.info(`renameFile: ${oldPath} -> ${newPath}`)
 		if (!auth.currentUser)
-			return Promise.reject('UploadFileError: User not signed in to Firebase')
+			return Promise.reject('RenameFileError: User not signed in to Firebase')
 
 		const res = await makeFunctionRequest('POST', 'renameFile', { oldPath, newPath })
 
@@ -171,21 +178,24 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 		return
 	}
 
+	// works reliably
 	const deleteFile: fsOps_T['deleteFile'] = async (path) => {
 		console.info(`deleteFile: ${path}`)
 		if (!auth.currentUser)
-			return Promise.reject('UploadFileError: User not signed in to Firebase')
+			return Promise.reject('DeleteFileError: User not signed in to Firebase')
 
-		const [folderName,fileName] = splitPath(path)
-		const fileRef = db.child(`${folderName}/files/${fileName}`)
+		const res = await makeFunctionRequest('POST', 'deleteFile', { path })
+		if (res.status != 200)
+			return Promise.reject(await res.text())
 
-		return fileRef.set(null).catch(() => Promise.reject('DeleteFileError: File does not exist or you do not have write priveledges'))
+		return
 	}
 
+	// works reliably
 	const getDownloadURL: fsOps_T['getDownloadURL'] = async (path) => {
 		console.info(`getDownloadURL: ${path}`)
 		if (!auth.currentUser)
-			return Promise.reject('UploadFileError: User not signed in to Firebase')
+			return Promise.reject('GetDownloadURLError: User not signed in to Firebase')
 
 		const res = await makeFunctionRequest('POST', 'getDownloadURL', { path })
 
@@ -195,10 +205,14 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 		return await res.text()
 	}
 
-	const setAutoDelete: fsOps_T['setAutoDelete'] = async (folderName) => {
+
+	const setAutoDelete: fsOps_T['setAutoDelete'] = async (folderName, date) => {
 		console.info(`setAutoDelete: ${folderName}`)
 		if (!auth.currentUser)
-			return Promise.reject('UploadFileError: User not signed in to Firebase')
+			return Promise.reject('SetAutoDeleteError: User not signed in to Firebase')
+
+		await db.child(escapePath(folderName)).child('permissions').update({ 'autoDelete': date.valueOf() })
+			.catch(err => Promise.reject(`UploadFileError: Forwarded Firebase Error -> ${err}`))
 	}
 
 	return {

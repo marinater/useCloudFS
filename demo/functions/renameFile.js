@@ -1,18 +1,10 @@
 const Router = require('express-promise-router')
 const admin = require('firebase-admin')
+const splitPath = require('./splitPath')
 
 const router = new Router()
 const db = admin.database()
 const storage = admin.storage()
-
-const splitPath = (fileName) => {
-	if (!fileName) return ['', '']
-
-	const path = fileName.split('/')
-	const tail = path.pop().replace(/\./g,'*')
-	const head = path.join(':')
-	return [head, tail]
-}
 
 router.post('/', async (req, res) => {
 	const { oldPath, newPath } = req.body

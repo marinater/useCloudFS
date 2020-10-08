@@ -1,18 +1,10 @@
 const Router = require('express-promise-router')
 const admin = require('firebase-admin')
+const splitPath = require('./splitPath')
 
 const router = new Router()
 const db = admin.database()
 const storage = admin.storage()
-
-const splitPath = (fileName) => {
-	if (!fileName) return ['', '']
-
-	const path = fileName.split('/')
-	const tail = path.pop().replace(/\./g,'*')
-	const head = path.join(':')
-	return [head, tail]
-}
 
 router.post('/', async (req, res) => {
 	const { path } = req.body
@@ -40,7 +32,7 @@ router.post('/', async (req, res) => {
 			err = 'GetDownloadURLError: User does not have read permissions for this folder'
 			return
 		}
-        console.log(data)
+		console.log(data)
 		if (!(fileName in data.files)) {
 			err = 'GetDownloadURLError: File does not exist'
 			return
@@ -55,8 +47,16 @@ router.post('/', async (req, res) => {
 		return
 	}
 
-	await storage.bucket().file(`useCloudFS/${path}`).delete()
-	res.send('success')
+	const expDate = new Date();
+	expDate.setMinutes( expDate.getMinutes() + 1 );
+
+	storage.bucket().file(`useCloudFS/${path}`).getSignedUrl({action: 'read', expires: expDate.valueOf(), version: 'v4'})
+	.then(url => {
+		res.status(200).send(url[0])
+	})
+	.catch(err =>
+		res.status(405).send(`GetUploadURLError: Could not generate upload link -> ${err}`)
+	)
 })
 
 module.exports = router

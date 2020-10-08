@@ -9,7 +9,7 @@ export interface fsOps_T {
 	renameFile: (oldName: fsPath_T, newName: fsPath_T) => Promise<void>
 	deleteFile: (fileName: fsPath_T) => Promise<void>
 	getDownloadURL: (fileName: fsPath_T) => Promise<string>
-	setAutoDelete: (folderName: fsPath_T) => Promise<void>
+	setAutoDelete: (folderName: fsPath_T, date: Date) => Promise<void>
 }
 
 export interface fsFile_T {

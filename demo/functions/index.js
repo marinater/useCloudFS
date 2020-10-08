@@ -8,7 +8,7 @@ const app = express()
 const renameFile = require('./renameFile')
 const getDownloadURL = require('./getDownloadURL')
 const getUploadURL = require('./getUploadURL')
-
+const deleteFile = require('./deleteFile')
 
 const validateFirebaseIdToken = async (req, res, next) => {
 	console.log('Check if request is authorized with Firebase ID token');
@@ -57,5 +57,6 @@ app.use(validateFirebaseIdToken);
 app.use('/renameFile', renameFile);
 app.use('/getDownloadURL', getDownloadURL);
 app.use('/getUploadURL', getUploadURL);
+app.use('/deleteFile', deleteFile);
 
 exports.app = functions.https.onRequest(app);

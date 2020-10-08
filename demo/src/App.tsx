@@ -19,13 +19,14 @@ function App() {
         });
 
         if (cloudFS.signedIn) {
-            // cloudFS.fsOps.createFolder('bucket2').catch(err => console.info(err) )
+            cloudFS.fsOps.createFolder('bucket2').catch(err => console.info(err) )
             // cloudFS.fsOps.renameFolder('bucket1','bucket1').catch(err => console.info(err))
             // cloudFS.fsOps.deleteFolder('bucket2').catch( err => console.info(err) )
+        //    // cloudFS.fsOps.setAutoDelete('bucket1', new Date()).catch( err => console.info(err) )
             // cloudFS.fsOps.uploadFile('bucket1', new File([], 'test-upload2.txt')).catch(err => console.info(err) )
-            // cloudFS.fsOps.getDownloadURL('bucket1/hw1.c').catch(err => console.info(err))
-            // cloudFS.fsOps.deleteFile('bucket1/test-upload.txt').catch(err => console.info(err) )
-            cloudFS.fsOps.renameFile('bucket1/test-upload2.txt','bucket1/test-upload3.txt').catch(err => console.info(err) )
+            // cloudFS.fsOps.renameFile('bucket1/Team Deliverable (1).pdf','bucket1/TeamDeliverable1.pdf').catch(err => console.info(err) )
+            // cloudFS.fsOps.getDownloadURL('bucket1/TeamDeliverable1.pdf').catch(err => console.info(err)).then(url => console.log(url))
+            // cloudFS.fsOps.deleteFile('bucket1/Team Deliverable1.pdf').catch(err => console.info(err) )
         }
     }, [cloudFS.signedIn])
 
