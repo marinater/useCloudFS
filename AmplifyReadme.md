@@ -12,3 +12,5 @@ aws-export.js
 mutations.js
 queries.js
 subscriptions.js
+
+yarn test
