@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# read -p 'Path to demo app: ' dirpath
-dirpath='./demo'
+dirpath='./firebase-demo'
 
 # Make the local usecloudfs available for other use
 yarn link
