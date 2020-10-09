@@ -24,21 +24,17 @@ popd
 # Add react-dom to usecloudfs
 yarn link react-dom
 
-# # Autolink firebase only if demo app uses it
-# if [ -d $dirpath/node_modules/firebase ]; then
-    # Make the demo app's firebase package available for use
-    pushd $dirpath/node_modules/firebase
-    yarn link
-    popd
-    # Add firebase to usecloudfs
-    yarn link firebase
-# fi
-# Autolink reactfire only if demo app uses it
-# if [ -d $dirpath/node_modules/reactfire ]; then
-    # Make the demo app's reactfire package available for use
-    pushd $dirpath/node_modules/reactfire
-    yarn link
-    popd
-    # Add reactfire to usecloudfs
-    yarn link reactfire
-# fi
+# Make the demo app's firebase package available for use
+pushd $dirpath/node_modules/firebase
+yarn link
+popd
+# Add firebase to usecloudfs
+yarn link firebase
+
+# Make the demo app's reactfire package available for use
+pushd $dirpath/node_modules/reactfire
+yarn link
+popd
+# Add reactfire to usecloudfs
+yarn link reactfire
+
