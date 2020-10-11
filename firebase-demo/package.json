@@ -15,7 +15,8 @@
 		"react-dom": "^16.13.1",
 		"react-scripts": "3.4.3",
 		"reactfire": "^2.0.3",
-		"typescript": "~3.7.2"
+		"typescript": "~3.7.2",
+		"usecloudfs": "^1.0.0"
 	},
 	"scripts": {
 		"start": "SKIP_PREFLIGHT_CHECK=true react-scripts start",

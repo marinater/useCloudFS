@@ -1,0 +1,11 @@
+{
+    "database": {
+        "rules": "./node_modules/usecloudfs/config/firebase/database.rules.json"
+    },
+    "storage": {
+        "rules": "./node_modules/usecloudfs/config/firebase/storage.rules"
+    },
+    "functions": {
+        "source": "./node_modules/usecloudfs/config/firebase/functions"
+    }
+}
