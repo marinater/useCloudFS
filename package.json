@@ -43,10 +43,10 @@
 		"react-dom": "^16.9.0"
 	},
 	"scripts": {
-		"install:firebase-dev": "install:link-firebase-demo && install:firebase",
-		"install:link-firebase-demo": "./config/firebase/link-firebase.sh",
-		"install:unlink-firebase-demo": "./config/firebase/unlink-firebase.sh",
-		"install:firebase": "node config/firebase/setup.js",
+		"setup:firebase-dev": "install:link-firebase-demo && install:firebase",
+		"setup:link-firebase-demo": "./config/firebase/link-firebase.sh",
+		"setup:unlink-firebase-demo": "./config/firebase/unlink-firebase.sh",
+		"setup:firebase": "node config/firebase/setup.js",
 		"build": "rollup -c",
 		"start": "rollup -c -w",
 		"check-style": "eslint ./src --ext .js,.jsx,.ts,.tsx",
