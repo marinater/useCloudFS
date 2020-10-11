@@ -71,9 +71,9 @@ const runSetup = async () => {
 	divider()
 
 	log('Deployment Steps: ')
-	log(quote('yarn global add firebase-cli' + ' to install the Firebase CLI'))
-	log(quote('firebase login' + ' to authenticate yourself'))
-	log(quote('firebase deploy' + ' to push Functions, Storage, and Database Rules to your Firebase project'))
+	log(quote('yarn global add firebase-cli') + ' to install the Firebase CLI')
+	log(quote('firebase login') + ' to authenticate yourself')
+	log(quote('firebase deploy') + ' to push Functions, Storage, and Database Rules to your Firebase project')
 }
 
 module.exports = runSetup
