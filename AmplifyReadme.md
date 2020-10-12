@@ -13,4 +13,9 @@ mutations.js
 queries.js
 subscriptions.js
 
-yarn test
+# Test Queries
+
+- run command amplify mock api
+
+# Requires Debugging
+- yarn test
