@@ -45,7 +45,7 @@
 		"autolink": "./autolink.sh",
 		"autounlink": "./autounlink.sh",
 		"clean": "rm ./dist/* -r",
-		"config:amplify": "yarn add global amplify-cli && amplify init && amplify add database && amplify add storage && amplify add api && cp -r ./config/amplify ./amplify"
+		"config:amplify": "yarn add global amplify-cli && amplify init && amplify add database && amplify add storage && amplify add api && aws-amplify-react && cp -r ./config/amplify ./amplify"
 	},
 	"dependencies": {
 		"amplify-cli": "^1.0.0",

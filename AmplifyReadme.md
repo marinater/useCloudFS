@@ -19,3 +19,5 @@ subscriptions.js
 
 # Requires Debugging
 - yarn test
+
+aws-amplify-react
