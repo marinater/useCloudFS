@@ -21,3 +21,5 @@ subscriptions.js
 - yarn test
 
 aws-amplify-react
+
+noUnusedLocals": false in tsconfig

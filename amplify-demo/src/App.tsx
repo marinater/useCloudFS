@@ -1,12 +1,17 @@
 import React from 'react';
-import { useCloudFS } from 'usecloudfs';
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+// import { useCloudFS } from 'usecloudfs';
 import './App.css';
 import logo from './logo.svg';
+import Amplify from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
 
 function App() {
-    const x = useCloudFS
+    // const x = useCloudFS
 
-    console.log(x)
+    // console.log(x)
+
 
     return (
         <div className="App">
@@ -24,8 +29,12 @@ function App() {
                     Learn React
                 </a>
             </header>
+            <div>
+                <AmplifySignOut />
+                My App
+            </div>
         </div>
-  );
+    );
 }
 
-export default App;
+export default withAuthenticator(App);

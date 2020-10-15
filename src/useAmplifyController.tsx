@@ -1,11 +1,8 @@
 import { fsOps_T, useCloudFSController_T } from './useCloudFSTypes'
 //import { renameFile } from './graphql/queries';
 import awsconfig from './aws-exports';
+import { API } from 'aws-amplify';
 API.configure(awsconfig);
-
-import React from 'react'
-import Amplify, { Auth, API } from 'aws-amplify';
-import { withAuthenticator } from 'aws-amplify-react';
 
 //const ROOT_NAME = 'useCloudFS'
 
