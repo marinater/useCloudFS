@@ -1,8 +1,9 @@
 import 'firebase/auth'
 import 'firebase/database'
+import { useEffect, useRef, useState } from 'react'
 // import 'firebase/storage'
 import { useAuth, useDatabase } from 'reactfire'
-import { fsOps_T, useCloudFSController_T } from './useCloudFSTypes'
+import { fsFileTree_T, fsOps_T } from './useCloudFSTypes'
 
 const escapePath = (path: string) => {
 	return path.replace(/\./g, '*').replace(/\//g, ':')
@@ -17,14 +18,77 @@ const splitPath = (fileName: string) => {
 	return [head, tail as string]
 }
 
-const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
+const useFirebaseController = (rootDir: string) => {
 	const auth = useAuth()
 	const database = useDatabase()
-
 	// const storageRoot = useStorage()
 
+	const fileCache = useRef<{ [key: string]: { subFolders: string[], files: string[] } | undefined }>({})
+	const [fileTree, setFileTree] = useState<fsFileTree_T | null>(null)
+
+	const cacheToFileTree = (path: string) => {
+		if (!fileCache.current[path]) return null
+
+		const fileTree: fsFileTree_T = {
+			subFolders: {},
+			files: [...fileCache.current[path]!.files]
+		}
+
+		for (const subFolder in fileCache.current[path]!.subFolders) {
+			fileTree.subFolders[subFolder] = cacheToFileTree(subFolder) || undefined
+		}
+
+		return fileTree
+	}
+
+	const recursivelySubscribeToFolders = (path: string) => {
+		path = escapePath(path)
+		db.child(path).on('value', snapshot => {
+			if (!snapshot.exists()) {
+				db.child(path).off()
+				if (!(path in fileCache.current)) console.error(path + ' not found inside file cache')
+				delete fileCache.current[path]
+				return null
+			}
+			else {
+				const newData = snapshot.val()
+				const oldData = fileCache.current[path] || null
+				fileCache.current[path] = { subFolders: newData.subFolders, files: Object.keys(newData.files) }
+
+				for (const subFolder in newData.subFolders) {
+					if ((!oldData || !(subFolder in oldData)) && subFolder !== '__useCloudFS__') {
+						recursivelySubscribeToFolders(subFolder)
+					}
+				}
+
+				setFileTree(cacheToFileTree(rootDir))
+				return oldData
+			}
+		})
+	}
+
+	const signInOptions = {
+		signInAnonymously: auth.signInAnonymously,
+		signInWithCredential: auth.signInWithCredential,
+		signInWithCustomToken: auth.signInWithCustomToken,
+		signInWithEmailAndPassword: auth.signInWithEmailAndPassword,
+		signInWithEmailLink: auth.signInWithEmailLink,
+		signInWithPhoneNumber: auth.signInWithPhoneNumber,
+		signInWithPopup: auth.signInWithPopup,
+		signInWithRedirect: auth.signInWithRedirect
+	}
+
+	useEffect(() => {
+		if (auth.currentUser) {
+			recursivelySubscribeToFolders(rootDir)
+		}
+	}, [auth.currentUser])
+
 	if (!auth.currentUser) {
-		return { signedIn: false }
+		return {
+			signedIn: false as const,
+			signInOptions
+		}
 	}
 
 	const db = database.ref('useCloudFS')
@@ -161,18 +225,6 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 
 		await db.child(folderName).child('files').update({ [fileName]: true })
 			.catch(error => err = error)
-		// await db.child(folderName).child('files').transaction(data => {
-		// 	if (data === null) return null
-
-		// 	if (fileName in data) {
-		// 		err = 'UploadFileError: File with same name exists in the folder'
-		// 		return
-		// 	}
-
-		// 	data[fileName] = true
-
-		// 	return data
-		// }).catch(error => err = error)
 
 		return err ? Promise.reject(err) : undefined
 	}
@@ -217,7 +269,7 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 		return await res.text()
 	}
 
-
+	// works reliably
 	const setAutoDelete: fsOps_T['setAutoDelete'] = async (folderName, date) => {
 		console.info(`setAutoDelete: ${folderName}`)
 		if (!auth.currentUser)
@@ -228,7 +280,8 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 	}
 
 	return {
-		signedIn: true,
+		signedIn: true as const,
+		signInOptions,
 		user: auth.currentUser,
 		fsOps: {
 			createFolder,
@@ -239,7 +292,8 @@ const useFirebaseController: useCloudFSController_T<firebase.User> = () => {
 			deleteFile,
 			getDownloadURL,
 			setAutoDelete
-		} as fsOps_T
+		} as fsOps_T,
+		fileTree: fileTree as fsFileTree_T
 	}
 }
 

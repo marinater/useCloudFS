@@ -5,7 +5,7 @@ import './App.css';
 import logo from './logo.svg';
 
 function App() {
-    const cloudFS = useCloudFS(useFirebaseController)
+    const cloudFS = useCloudFS('bucket2', useFirebaseController)
     const auth = useAuth()
     const inputRef = useRef<HTMLInputElement>(null)
     const [signedIn, setSignedIn] = useState(false)
@@ -35,6 +35,9 @@ function App() {
             // cloudFS.fsOps.deleteFile('bucket1/Team Deliverable1.pdf').catch(err => console.info(err) )
         }
     }, [cloudFS.signedIn])
+
+    if (cloudFS.signedIn)
+        console.log(cloudFS.fileTree)
 
     const uploadFile = () => {
         if (!cloudFS.signedIn || !inputRef.current?.files)

@@ -1,12 +1,14 @@
 import { useCloudFSController_T } from './useCloudFSTypes'
 
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-const useCloudFS = <GenericUser_T extends {}>(useCloudFSController: useCloudFSController_T<GenericUser_T>) => {
-	const controller = useCloudFSController()
+const useCloudFS = <GenericUser_T, SignInOptions_T>(rootDir: string, useCloudFSController: useCloudFSController_T<GenericUser_T, SignInOptions_T>) => {
+	const controller = useCloudFSController(rootDir)
 
 	if (!controller.signedIn) {
-		return { signedIn: false as const }
+		return {
+			signedIn: false as const,
+			signInOptions: controller.signInOptions
+		}
 	}
 
 	return { ...controller }

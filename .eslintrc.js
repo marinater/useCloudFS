@@ -38,6 +38,7 @@ module.exports = {
 			'error',
 			'never'
 		],
+		'@typescript-eslint/no-non-null-assertion': 'off',
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
 		'no-multiple-empty-lines': ['error', { 'max': 2, 'maxBOF': 0, 'maxEOF': 0}]
 	}

@@ -39,8 +39,8 @@ export interface fsFolder_T {
 		read: fsUserID_T[]
 		write: fsUserID_T[]
 	},
-	files: { [key: string]: fsFile_T }
-	folders: { [key: string]: fsFolder_T }
+	files: { [key: string]: fsFile_T | undefined }
+	folders: { [key: string]: fsFolder_T | undefined }
 
 	createSubFolder: () => Promise<void>
 	renameFolder: () => Promise<void>
@@ -49,10 +49,18 @@ export interface fsFolder_T {
 	setAutoDelete: () => Promise<void>
 }
 
-export type useCloudFSController_T<FSUser_T> = () => ({
-	signedIn: true
+export interface fsFileTree_T {
+	files: string[],
+	subFolders: { [key: string]: fsFileTree_T | undefined }
+}
+
+export type useCloudFSController_T<FSUser_T, SignInOptions_T> = (rootDir: string) => ({
+    signedIn: true,
+    signInOptions: SignInOptions_T,
 	user: FSUser_T
 	fsOps: fsOps_T
+	fileTree: fsFileTree_T | null
 } | {
-	signedIn: false
+    signedIn: false,
+    signInOptions: SignInOptions_T
 })
