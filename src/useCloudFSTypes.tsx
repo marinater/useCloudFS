@@ -13,8 +13,8 @@ export interface fsOps_T {
 }
 
 interface fsFileMethods_T {
-	downloadLink: () => Promise<string> | string
-	rename: () => Promise<void>
+	getDownloadURL: () => Promise<string> | string
+	rename: (newName: string) => Promise<void>
 	delete: () => Promise<void>
 }
 
@@ -32,11 +32,12 @@ export interface fsFileData_T {
 export type fsFile_T = fsFileData_T & fsFileMethods_T
 
 interface fsFolderMethods_T {
-    createSubFolder: () => Promise<void>
-	renameFolder: () => Promise<void>
-	deleteFolder: () => Promise<void>
+    createSubFolder: (name: string) => Promise<void>
+	renameFolder: (newName: string) => Promise<void>
+    deleteFolder: () => Promise<void>
+    uploadFile: (file: File) => Promise<void>
 	downloadLink: () => Promise<string>
-	setAutoDelete: () => Promise<void>
+	setAutoDelete: (date: Date) => Promise<void>
 }
 
 
