@@ -29,7 +29,7 @@ export interface fsFileData_T {
 	}
 }
 
-export type fsFile_T = fsFileData_T &  fsFileData_T
+export type fsFile_T = fsFileData_T &  fsFileMethods_T
 
 interface fsFolderMethods_T {
     createSubFolder: (name: string) => Promise<void>
@@ -54,7 +54,7 @@ export interface fsFolderData_T {
 		write: fsUserID_T[]
 	},
 	files: { [key: string]: fsFileData_T | undefined }
-	folders: { [key: string]: fsFileData_T | undefined }
+	folders: { [key: string]: fsFolderData_T | undefined }
 }
 
 interface __recursiveFilesAndFolders {
