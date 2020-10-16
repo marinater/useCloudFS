@@ -29,7 +29,7 @@ export interface fsFileData_T {
 	}
 }
 
-export type fsFile_T = fsFileData_T & fsFileMethods_T
+export type fsFile_T = fsFileData_T &  fsFileData_T
 
 interface fsFolderMethods_T {
     createSubFolder: (name: string) => Promise<void>
@@ -39,7 +39,6 @@ interface fsFolderMethods_T {
 	downloadLink: () => Promise<string>
 	setAutoDelete: (date: Date) => Promise<void>
 }
-
 
 export interface fsFolderData_T {
 	metadata: {
@@ -55,10 +54,15 @@ export interface fsFolderData_T {
 		write: fsUserID_T[]
 	},
 	files: { [key: string]: fsFileData_T | undefined }
-	folders: { [key: string]: fsFolderData_T | undefined }
+	folders: { [key: string]: fsFileData_T | undefined }
 }
 
-export type fsFolder_T = fsFolderData_T & fsFolderMethods_T
+interface __recursiveFilesAndFolders {
+    files: { [key: string]: fsFile_T | undefined },
+    folders: { [key: string]: fsFolder_T | undefined }
+}
+
+export type fsFolder_T = fsFolderMethods_T & Exclude<Exclude<fsFolderData_T, 'files'>, 'folders'> & __recursiveFilesAndFolders
 
 export type useCloudFSController_T<FSUser_T, SignInOptions_T> = (rootDir: string) => ({
     signedIn: true,

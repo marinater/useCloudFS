@@ -1,6 +1,7 @@
 import 'firebase/auth'
 import 'firebase/database'
-import { useEffect, useRef, useState } from 'react'
+import cloneDeep from 'lodash.clonedeep'
+import { useEffect, useState } from 'react'
 import { useAuth, useDatabase } from 'reactfire'
 import { fsFolderData_T, fsOps_T } from './useCloudFSTypes'
 
@@ -22,20 +23,18 @@ const useFirebaseController = (rootDir: string) => {
 	const auth = useAuth()
 	const database = useDatabase()
 
-	const fileCache = useRef<{
-        [key: string]: fsFolderData_T | undefined
-    }>({ })
-	const [fileTree, setFileTree] = useState<fsFolderData_T | null>(null)
+	const [fileCache, setFileCache] = useState<{ [key: string]: fsFolderData_T | undefined }>({})
 
 	const cacheToFileTree = (path: string): fsFolderData_T | null => {
-		if (!fileCache.current[path])
+		if (!fileCache[path]) {
+			// console.log(path + ' is empty!')
 			return null
+		}
 
-		const fileTree = fileCache.current[path]!
+		const fileTree = fileCache[path]!
 
 		const folders = {}
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore
+
 		for (const folderName in fileTree.folders) {
 			if (folderName == '__useCloudFS__') continue
 			folders[folderName] = cacheToFileTree(folderName)
@@ -52,19 +51,25 @@ const useFirebaseController = (rootDir: string) => {
 			if (!snapshot.exists()) {
 				db.child(path).off()
 
-				if (!(path in fileCache.current))
+				if (!(path in fileCache))
 					console.error(path + ' not found inside file cache')
 
-				delete fileCache.current[path]
+				setFileCache(fileCache => {
+					const newCache = cloneDeep(fileCache)
+					delete newCache[path]
+					return newCache
+				})
+
 				return null
 			}
 			else {
 				const newData = snapshot.val()
-				const oldData = fileCache.current[path] || null
+				const oldData = fileCache[path] || null
 
 				const files = {} as fsFolderData_T['files']
 				for (const fileName in newData.files) {
 					if (fileName === '__useCloudFS__') continue
+
 					files[fileName] = {
 						metadata: {
 							parentFolder: path,
@@ -83,16 +88,16 @@ const useFirebaseController = (rootDir: string) => {
 					}
 				}
 
-				fileCache.current[path] = {
-					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-					// @ts-ignore
-					folders: newData.subFolders,
-					files,
-					metadata: newData.metadata,
-					permissions: newData.permissions
-				}
-
-				setFileTree(cacheToFileTree(rootDir))
+				setFileCache(fileCache => {
+					const newCache = cloneDeep(fileCache)
+					newCache[path] = {
+						folders: newData.subFolders,
+						files,
+						metadata: newData.metadata,
+						permissions: newData.permissions
+					}
+					return newCache
+				})
 				return oldData
 			}
 		})
@@ -324,7 +329,7 @@ const useFirebaseController = (rootDir: string) => {
 			getDownloadURL,
 			setAutoDelete
 		} as fsOps_T,
-		fileTree
+		fileTree: cacheToFileTree(rootDir)
 	}
 }
 
