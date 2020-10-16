@@ -143,7 +143,7 @@ const useFirebaseController = (rootDir: string) => {
 			body: JSON.stringify(data)
 		}
 
-		return fetch('http://localhost:5000/use-storage/us-central1/app/' + path, requestOptions)
+		return fetch('https://us-central1-use-storage.cloudfunctions.net/app/' + path, requestOptions)
 	}
 
 	// works reliably
