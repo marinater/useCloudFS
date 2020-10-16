@@ -12,21 +12,35 @@ export interface fsOps_T {
 	setAutoDelete: (folderName: fsPath_T, date: Date) => Promise<void>
 }
 
-export interface fsFile_T {
-	metadata: {
-		parentFolder: fsFolder_T
-		path: fsPath_T
-		name: string
-		createdOn: string
-		mimeType: string
-		size: number
-	},
+interface fsFileMethods_T {
 	downloadLink: () => Promise<string> | string
 	rename: () => Promise<void>
 	delete: () => Promise<void>
 }
 
-export interface fsFolder_T {
+export interface fsFileData_T {
+	metadata: {
+		parentFolder: string
+		path: fsPath_T
+		name: string
+		createdOn: string
+		mimeType: string
+		size: number
+	}
+}
+
+export type fsFile_T = fsFileData_T & fsFileMethods_T
+
+interface fsFolderMethods_T {
+    createSubFolder: () => Promise<void>
+	renameFolder: () => Promise<void>
+	deleteFolder: () => Promise<void>
+	downloadLink: () => Promise<string>
+	setAutoDelete: () => Promise<void>
+}
+
+
+export interface fsFolderData_T {
 	metadata: {
 		parentFolder: fsFolder_T | null
 		path: fsPath_T
@@ -39,27 +53,18 @@ export interface fsFolder_T {
 		read: fsUserID_T[]
 		write: fsUserID_T[]
 	},
-	files: { [key: string]: fsFile_T | undefined }
-	folders: { [key: string]: fsFolder_T | undefined }
-
-	createSubFolder: () => Promise<void>
-	renameFolder: () => Promise<void>
-	deleteFolder: () => Promise<void>
-	downloadLink: () => Promise<string>
-	setAutoDelete: () => Promise<void>
+	files: { [key: string]: fsFileData_T | undefined }
+	folders: { [key: string]: fsFolderData_T | undefined }
 }
 
-export interface fsFileTree_T {
-	files: string[],
-	subFolders: { [key: string]: fsFileTree_T | undefined }
-}
+export type fsFolder_T = fsFolderData_T & fsFolderMethods_T
 
 export type useCloudFSController_T<FSUser_T, SignInOptions_T> = (rootDir: string) => ({
     signedIn: true,
     signInOptions: SignInOptions_T,
 	user: FSUser_T
 	fsOps: fsOps_T
-	fileTree: fsFileTree_T | null
+	fileTree: fsFolderData_T | null
 } | {
     signedIn: false,
     signInOptions: SignInOptions_T

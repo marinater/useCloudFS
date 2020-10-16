@@ -11,6 +11,9 @@ const useCloudFS = <GenericUser_T, SignInOptions_T>(rootDir: string, useCloudFSC
 		}
 	}
 
+	// const { fileTree: rawFileTree, fsOps } = controller
+	// const fileTree: fsFolder_T | null = null
+
 	return { ...controller }
 }
 

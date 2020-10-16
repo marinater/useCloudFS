@@ -1,9 +1,9 @@
 import 'firebase/auth'
 import 'firebase/database'
 import { useEffect, useRef, useState } from 'react'
-// import 'firebase/storage'
 import { useAuth, useDatabase } from 'reactfire'
-import { fsFileTree_T, fsOps_T } from './useCloudFSTypes'
+import { fsFolderData_T, fsOps_T } from './useCloudFSTypes'
+
 
 const escapePath = (path: string) => {
 	return path.replace(/\./g, '*').replace(/\//g, ':')
@@ -21,44 +21,75 @@ const splitPath = (fileName: string) => {
 const useFirebaseController = (rootDir: string) => {
 	const auth = useAuth()
 	const database = useDatabase()
-	// const storageRoot = useStorage()
 
-	const fileCache = useRef<{ [key: string]: { subFolders: string[], files: string[] } | undefined }>({})
-	const [fileTree, setFileTree] = useState<fsFileTree_T | null>(null)
+	const fileCache = useRef<{
+        [key: string]: fsFolderData_T | undefined
+    }>({ })
+	const [fileTree, setFileTree] = useState<fsFolderData_T | null>(null)
 
-	const cacheToFileTree = (path: string) => {
-		if (!fileCache.current[path]) return null
+	const cacheToFileTree = (path: string): fsFolderData_T | null => {
+		if (!fileCache.current[path])
+			return null
 
-		const fileTree: fsFileTree_T = {
-			subFolders: {},
-			files: [...fileCache.current[path]!.files]
+		const fileTree = fileCache.current[path]!
+
+		const folders = {}
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		for (const folderName in fileTree.folders) {
+			if (folderName == '__useCloudFS__') continue
+			folders[folderName] = cacheToFileTree(folderName)
 		}
-
-		for (const subFolder in fileCache.current[path]!.subFolders) {
-			fileTree.subFolders[subFolder] = cacheToFileTree(subFolder) || undefined
-		}
+		fileTree.folders = folders
 
 		return fileTree
 	}
 
 	const recursivelySubscribeToFolders = (path: string) => {
 		path = escapePath(path)
+
 		db.child(path).on('value', snapshot => {
 			if (!snapshot.exists()) {
 				db.child(path).off()
-				if (!(path in fileCache.current)) console.error(path + ' not found inside file cache')
+
+				if (!(path in fileCache.current))
+					console.error(path + ' not found inside file cache')
+
 				delete fileCache.current[path]
 				return null
 			}
 			else {
 				const newData = snapshot.val()
 				const oldData = fileCache.current[path] || null
-				fileCache.current[path] = { subFolders: newData.subFolders, files: Object.keys(newData.files) }
 
-				for (const subFolder in newData.subFolders) {
-					if ((!oldData || !(subFolder in oldData)) && subFolder !== '__useCloudFS__') {
-						recursivelySubscribeToFolders(subFolder)
+				const files = {} as fsFolderData_T['files']
+				for (const fileName in newData.files) {
+					if (fileName === '__useCloudFS__') continue
+					files[fileName] = {
+						metadata: {
+							parentFolder: path,
+							path: `${path}/${fileName}`,
+							name: fileName,
+							createdOn: '---',
+							mimeType: '---',
+							size: -1
+						}
 					}
+				}
+
+				for (const folder in newData.subFolders) {
+					if ((!oldData || !(folder in oldData)) && folder !== '__useCloudFS__') {
+						recursivelySubscribeToFolders(folder)
+					}
+				}
+
+				fileCache.current[path] = {
+					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+					// @ts-ignore
+					folders: newData.subFolders,
+					files,
+					metadata: newData.metadata,
+					permissions: newData.permissions
 				}
 
 				setFileTree(cacheToFileTree(rootDir))
@@ -94,7 +125,7 @@ const useFirebaseController = (rootDir: string) => {
 	const db = database.ref('useCloudFS')
 	// const storage = storageRoot.ref('useCloudFS')
 
-	const makeFunctionRequest = async (method: 'GET' | 'PUT' | 'POST', path: string, data: any) => {
+	const makeFunctionRequest = async (method: 'GET' | 'PUT' | 'POST', path: string, data: unknown) => {
 		const token = await auth.currentUser!.getIdToken(false)
 		const headers = new Headers({
 			'Authorization': `Bearer ${token}`,
@@ -293,7 +324,7 @@ const useFirebaseController = (rootDir: string) => {
 			getDownloadURL,
 			setAutoDelete
 		} as fsOps_T,
-		fileTree: fileTree as fsFileTree_T
+		fileTree
 	}
 }
 
