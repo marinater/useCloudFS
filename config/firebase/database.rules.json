@@ -1,0 +1,93 @@
+{
+	"rules": {
+		".read": true,
+		".write": true,
+		"useCloudFS": {
+			".read": false,
+			".write": false,
+			"$folder": {
+				".read": "auth.uid != null && data.child('permissions').child('read').hasChild(auth.uid)",
+				".write": "auth.uid != null && ((!newData.exists() && auth.uid == data.child('permissions').child('owner').val()
+				) || (
+					!data.exists() && auth.uid == newData.child('permissions').child('owner').val()
+				))",
+				".validate": "newData.hasChildren(['metadata', 'permissions', 'files', 'subFolders'])",
+				"metadata": {
+					".validate": "
+						newData.hasChildren(['parentFolder', 'name', 'createdOn'
+						]) &&
+						!newData.child('name').val().contains(':') &&
+						newData.child('parentFolder').val() == '' ? (
+							$folder == newData.child('name').val()
+						) : (
+							data.parent().parent().hasChild(newData.child('parentFolder').val()) &&
+							$folder == newData.child('parentFolder').val() + ':' + newData.child('name').val()
+						)
+					",
+					"parentFolder": {
+						".validate": "newData.isString() && (!data.exists() || data.val() == newData.val()) "
+					},
+					"name": {
+						".validate": "newData.isString() && (!data.exists() || data.val() == newData.val())"
+					},
+					"createdOn": {
+						".validate": "newData.isNumber() && (!data.exists() || data.val() == newData.val())"
+					},
+					// disallow any other fields
+					"$other": {
+						".validate": "false"
+					}
+				},
+				"permissions": {
+					".write": "auth.uid == data.child('owner').val()",
+					".validate": "
+						newData.hasChildren(['owner', 'autoDelete', 'read', 'write']) &&
+						newData.child('read').hasChild(newData.child('owner').val()) &&
+						newData.child('write').hasChild(newData.child('owner').val())
+					",
+					"owner": {
+						".validate": "newData.isString()"
+					},
+					"autoDelete": {
+						".validate": "newData.isNumber()"
+					},
+					"read": {
+						"$user": {
+							".validate": "newData.val() == true"
+						}
+					},
+					"write": {
+						"$user": {
+							".validate": "newData.val() == true"
+						}
+					},
+					// disallow any other fields
+					"$other": {
+						".validate": "false"
+					}
+				},
+				"files": {
+					".write": "data.parent().child('permissions').child('write').hasChild(auth.uid)",
+					".validate": "newData.child('__useCloudFS__').val() == true",
+					"$file": {
+						".validate": "newData.val() == true"
+					}
+				},
+				"subFolders": {
+					".write": "data.parent().child('permissions').child('write').hasChild(auth.uid)",
+					".validate": "newData.hasChild('__useCloudFS__')",
+					"__useCloudFS__": {
+						".validate": true
+					},
+					"$subFolder": {
+						".validate": "newData.val() == true && data.parent().parent().parent().hasChild($subFolder) && $subFolder != $folder"
+					}
+				},
+				// disallow any other fields
+				"$other": {
+					".validate": "false"
+				}
+			}
+		}
+	}
+}

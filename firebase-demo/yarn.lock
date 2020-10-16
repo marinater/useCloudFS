@@ -10895,6 +10895,14 @@ use@^3.1.0:
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
   integrity sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==
 
+usecloudfs@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/usecloudfs/-/usecloudfs-1.0.0.tgz#e2b619f3600f6ec34e1bb93d3319473da8a82144"
+  integrity sha512-j9LHD29mDw4Dlh4zwpttJX3Tmkhkxk3GqHdbv11G0wkFteX7bcAh+413x2OpQ/5Svv4dQk99tgDB1si5FwzuMg==
+  optionalDependencies:
+    firebase "^7.21.0"
+    reactfire "^2.0.3"
+
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
