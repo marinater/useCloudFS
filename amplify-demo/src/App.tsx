@@ -1,11 +1,48 @@
-import React from 'react';
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+
+import React, { } from "react";
+//import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 // import { useCloudFS } from 'usecloudfs';
 import './App.css';
 import logo from './logo.svg';
 import Amplify from 'aws-amplify';
 import awsconfig from './aws-exports';
+
+//import * as queries from './graphql/queries';
+// import * as mutations from './graphql/mutations';
+// import * as subscriptions from './graphql/subscriptions';
+//import { API } from 'aws-amplify';
 Amplify.configure(awsconfig);
+
+
+// class App extends Component {
+//     // async function signIn() {
+//     //     try {
+//     //         const user = await Auth.signIn("test-email", "test-password");
+//     //     } catch (error) {
+//     //         console.log('error signing in', error);
+//     //     }
+//     // }
+
+//     listBuckets = async () => {
+//         console.log('listing buckets');
+//         try {
+//             const buckets = await API.graphql({ query: queries.listBuckets });
+//             alert(JSON.stringify(buckets))
+//         } catch (error) {
+//             console.log('error listing buckets', error);
+//         }
+//     };
+//     render() {
+//         return (
+//             <div className="App">
+//                 <AmplifySignOut />
+//                 <p> Click a button </p>
+//                 <button onClick={this.listBuckets}>GraphQL Query</button>
+//             </div>
+//         );
+//     }
+// }
+
 
 function App() {
     // const x = useCloudFS
@@ -19,7 +56,7 @@ function App() {
                 <img src={logo} className="App-logo" alt="logo" />
                 <p>
                     Edit <code>src/App.tsx</code> and save to reload.
-                </p>
+                    </p>
                 <a
                     className="App-link"
                     href="https://reactjs.org"
@@ -27,14 +64,14 @@ function App() {
                     rel="noopener noreferrer"
                 >
                     Learn React
-                </a>
+                    </a>
             </header>
-            <div>
-                <AmplifySignOut />
-                My App
-            </div>
+
         </div>
     );
 }
 
-export default withAuthenticator(App);
+
+
+
+export default App;
