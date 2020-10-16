@@ -46,7 +46,7 @@
 		"setup:firebase-dev": "cd ./firebase-demo && yarn install && cd ../ && yarn setup:link-firebase-demo && yarn setup:firebase",
 		"setup:link-firebase-demo": "./config/firebase/link-firebase.sh",
 		"setup:unlink-firebase-demo": "./config/firebase/unlink-firebase.sh",
-		"setup:firebase": "cd ./firebase-demo && node ../config/usecloudfs-setup.js",
+		"setup:firebase": "cd ./config/firebase/functions && yarn --ignore-engines && cd ../../../firebase-demo && node ../config/usecloudfs-setup.js",
 		"build": "rollup -c",
 		"start": "rollup -c -w",
 		"check-style": "eslint ./src --ext .js,.jsx,.ts,.tsx",
