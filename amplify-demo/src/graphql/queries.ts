@@ -1,3 +1,4 @@
+/* tslint:disable */
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
@@ -5,13 +6,13 @@ export const getBucket = /* GraphQL */ `
   query GetBucket($id: ID!) {
     getBucket(id: $id) {
       id
-      counter
       bucketFiles {
         items {
           id
           name
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -22,6 +23,7 @@ export const getBucket = /* GraphQL */ `
           name
           parentFolder
           updatedAt
+          owner
         }
         nextToken
       }
@@ -41,11 +43,10 @@ export const getBucket = /* GraphQL */ `
           name
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
-      editors
-      readers
       createdAt
       updatedAt
       owner
@@ -61,7 +62,6 @@ export const listBuckets = /* GraphQL */ `
     listBuckets(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        counter
         bucketFiles {
           nextToken
         }
@@ -74,8 +74,6 @@ export const listBuckets = /* GraphQL */ `
         bucketSubFolders {
           nextToken
         }
-        editors
-        readers
         createdAt
         updatedAt
         owner
@@ -91,7 +89,6 @@ export const getFiles = /* GraphQL */ `
       name
       bucket {
         id
-        counter
         bucketFiles {
           nextToken
         }
@@ -104,14 +101,13 @@ export const getFiles = /* GraphQL */ `
         bucketSubFolders {
           nextToken
         }
-        editors
-        readers
         createdAt
         updatedAt
         owner
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -127,15 +123,13 @@ export const listFiless = /* GraphQL */ `
         name
         bucket {
           id
-          counter
-          editors
-          readers
           createdAt
           updatedAt
           owner
         }
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -150,7 +144,6 @@ export const getMetadata = /* GraphQL */ `
       parentFolder
       bucket {
         id
-        counter
         bucketFiles {
           nextToken
         }
@@ -163,13 +156,12 @@ export const getMetadata = /* GraphQL */ `
         bucketSubFolders {
           nextToken
         }
-        editors
-        readers
         createdAt
         updatedAt
         owner
       }
       updatedAt
+      owner
     }
   }
 `;
@@ -187,14 +179,12 @@ export const listMetadatas = /* GraphQL */ `
         parentFolder
         bucket {
           id
-          counter
-          editors
-          readers
           createdAt
           updatedAt
           owner
         }
         updatedAt
+        owner
       }
       nextToken
     }
@@ -208,7 +198,6 @@ export const getPermissions = /* GraphQL */ `
       owner
       bucket {
         id
-        counter
         bucketFiles {
           nextToken
         }
@@ -221,8 +210,6 @@ export const getPermissions = /* GraphQL */ `
         bucketSubFolders {
           nextToken
         }
-        editors
-        readers
         createdAt
         updatedAt
         owner
@@ -245,9 +232,6 @@ export const listPermissionss = /* GraphQL */ `
         owner
         bucket {
           id
-          counter
-          editors
-          readers
           createdAt
           updatedAt
           owner
@@ -266,7 +250,6 @@ export const getSubFolders = /* GraphQL */ `
       name
       bucket {
         id
-        counter
         bucketFiles {
           nextToken
         }
@@ -279,14 +262,13 @@ export const getSubFolders = /* GraphQL */ `
         bucketSubFolders {
           nextToken
         }
-        editors
-        readers
         createdAt
         updatedAt
         owner
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -302,15 +284,13 @@ export const listSubFolderss = /* GraphQL */ `
         name
         bucket {
           id
-          counter
-          editors
-          readers
           createdAt
           updatedAt
           owner
         }
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }

@@ -1,3 +1,4 @@
+/* tslint:disable */
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
@@ -8,13 +9,13 @@ export const createBucket = /* GraphQL */ `
   ) {
     createBucket(input: $input, condition: $condition) {
       id
-      counter
       bucketFiles {
         items {
           id
           name
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -25,6 +26,7 @@ export const createBucket = /* GraphQL */ `
           name
           parentFolder
           updatedAt
+          owner
         }
         nextToken
       }
@@ -44,11 +46,10 @@ export const createBucket = /* GraphQL */ `
           name
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
-      editors
-      readers
       createdAt
       updatedAt
       owner
@@ -62,13 +63,13 @@ export const updateBucket = /* GraphQL */ `
   ) {
     updateBucket(input: $input, condition: $condition) {
       id
-      counter
       bucketFiles {
         items {
           id
           name
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -79,6 +80,7 @@ export const updateBucket = /* GraphQL */ `
           name
           parentFolder
           updatedAt
+          owner
         }
         nextToken
       }
@@ -98,11 +100,10 @@ export const updateBucket = /* GraphQL */ `
           name
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
-      editors
-      readers
       createdAt
       updatedAt
       owner
@@ -116,13 +117,13 @@ export const deleteBucket = /* GraphQL */ `
   ) {
     deleteBucket(input: $input, condition: $condition) {
       id
-      counter
       bucketFiles {
         items {
           id
           name
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -133,6 +134,7 @@ export const deleteBucket = /* GraphQL */ `
           name
           parentFolder
           updatedAt
+          owner
         }
         nextToken
       }
@@ -152,11 +154,10 @@ export const deleteBucket = /* GraphQL */ `
           name
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
-      editors
-      readers
       createdAt
       updatedAt
       owner
@@ -173,7 +174,6 @@ export const createFiles = /* GraphQL */ `
       name
       bucket {
         id
-        counter
         bucketFiles {
           nextToken
         }
@@ -186,14 +186,13 @@ export const createFiles = /* GraphQL */ `
         bucketSubFolders {
           nextToken
         }
-        editors
-        readers
         createdAt
         updatedAt
         owner
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -207,7 +206,6 @@ export const updateFiles = /* GraphQL */ `
       name
       bucket {
         id
-        counter
         bucketFiles {
           nextToken
         }
@@ -220,14 +218,13 @@ export const updateFiles = /* GraphQL */ `
         bucketSubFolders {
           nextToken
         }
-        editors
-        readers
         createdAt
         updatedAt
         owner
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -241,7 +238,6 @@ export const deleteFiles = /* GraphQL */ `
       name
       bucket {
         id
-        counter
         bucketFiles {
           nextToken
         }
@@ -254,14 +250,13 @@ export const deleteFiles = /* GraphQL */ `
         bucketSubFolders {
           nextToken
         }
-        editors
-        readers
         createdAt
         updatedAt
         owner
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -277,7 +272,6 @@ export const createMetadata = /* GraphQL */ `
       parentFolder
       bucket {
         id
-        counter
         bucketFiles {
           nextToken
         }
@@ -290,13 +284,12 @@ export const createMetadata = /* GraphQL */ `
         bucketSubFolders {
           nextToken
         }
-        editors
-        readers
         createdAt
         updatedAt
         owner
       }
       updatedAt
+      owner
     }
   }
 `;
@@ -312,7 +305,6 @@ export const updateMetadata = /* GraphQL */ `
       parentFolder
       bucket {
         id
-        counter
         bucketFiles {
           nextToken
         }
@@ -325,13 +317,12 @@ export const updateMetadata = /* GraphQL */ `
         bucketSubFolders {
           nextToken
         }
-        editors
-        readers
         createdAt
         updatedAt
         owner
       }
       updatedAt
+      owner
     }
   }
 `;
@@ -347,7 +338,6 @@ export const deleteMetadata = /* GraphQL */ `
       parentFolder
       bucket {
         id
-        counter
         bucketFiles {
           nextToken
         }
@@ -360,13 +350,12 @@ export const deleteMetadata = /* GraphQL */ `
         bucketSubFolders {
           nextToken
         }
-        editors
-        readers
         createdAt
         updatedAt
         owner
       }
       updatedAt
+      owner
     }
   }
 `;
@@ -381,7 +370,6 @@ export const createPermissions = /* GraphQL */ `
       owner
       bucket {
         id
-        counter
         bucketFiles {
           nextToken
         }
@@ -394,8 +382,6 @@ export const createPermissions = /* GraphQL */ `
         bucketSubFolders {
           nextToken
         }
-        editors
-        readers
         createdAt
         updatedAt
         owner
@@ -416,7 +402,6 @@ export const updatePermissions = /* GraphQL */ `
       owner
       bucket {
         id
-        counter
         bucketFiles {
           nextToken
         }
@@ -429,8 +414,6 @@ export const updatePermissions = /* GraphQL */ `
         bucketSubFolders {
           nextToken
         }
-        editors
-        readers
         createdAt
         updatedAt
         owner
@@ -451,7 +434,6 @@ export const deletePermissions = /* GraphQL */ `
       owner
       bucket {
         id
-        counter
         bucketFiles {
           nextToken
         }
@@ -464,8 +446,6 @@ export const deletePermissions = /* GraphQL */ `
         bucketSubFolders {
           nextToken
         }
-        editors
-        readers
         createdAt
         updatedAt
         owner
@@ -485,7 +465,6 @@ export const createSubFolders = /* GraphQL */ `
       name
       bucket {
         id
-        counter
         bucketFiles {
           nextToken
         }
@@ -498,14 +477,13 @@ export const createSubFolders = /* GraphQL */ `
         bucketSubFolders {
           nextToken
         }
-        editors
-        readers
         createdAt
         updatedAt
         owner
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -519,7 +497,6 @@ export const updateSubFolders = /* GraphQL */ `
       name
       bucket {
         id
-        counter
         bucketFiles {
           nextToken
         }
@@ -532,14 +509,13 @@ export const updateSubFolders = /* GraphQL */ `
         bucketSubFolders {
           nextToken
         }
-        editors
-        readers
         createdAt
         updatedAt
         owner
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -553,7 +529,6 @@ export const deleteSubFolders = /* GraphQL */ `
       name
       bucket {
         id
-        counter
         bucketFiles {
           nextToken
         }
@@ -566,14 +541,13 @@ export const deleteSubFolders = /* GraphQL */ `
         bucketSubFolders {
           nextToken
         }
-        editors
-        readers
         createdAt
         updatedAt
         owner
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
