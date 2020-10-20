@@ -1,7 +1,8 @@
 import { fsOps_T, useCloudFSController_T } from './useCloudFSTypes';
 
 // Setup code for AWS Amplify and Amplify Storage
-import Amplify, { Storage } from 'aws-amplify';
+import Amplify, { API, graphqlOperation, Storage } from 'aws-amplify';
+import { createFile } from './graphql/mutations';
 import awsconfig from './aws-exports';
 Amplify.configure(awsconfig);
 
@@ -68,21 +69,34 @@ const useAmplifyController: useCloudFSController_T<{ isAuthenticated: boolean, u
 		// folder: folderName is created with the file inside of it
 		console.info(`uploadFile: ${folderName}/${file.name}`)
 		
-		// Reads the content of the file using the promise
-		file.text()
-			.then(text => {
-				Storage.put(`${folderName}/${file.name}`, text)
-					.then (result => {
-						// {key: "folderName/fileName.txt"}
-						console.log(result);
-					})
-					.catch(err => {
-						console.error(err);
-					});
-			})
-			.catch(err => {
-				console.error(err);
-			});
+		// TODO: Work on
+		// Link 1: https://dev.to/dabit3/graphql-tutorial-how-to-manage-image-file-uploads-downloads-with-aws-appsync-aws-amplify-hga
+		// Link 2: https://medium.com/javascript-in-plain-english/how-to-build-a-crud-app-with-amplify-and-aws-appsync-a31ecbad58a7
+		try {
+			// Constructs file object data based off graphql schema
+			const fileObject = {
+				bucket: 'amplify-usecloudfs-dev-182044-deployment',
+				region: 'us-east-1',
+				key: file.name
+			};
+
+			const inputData = {
+				name: file.name,
+				path: `${folderName}/${file.name}`,
+				file: fileObject
+			};
+
+			// Call graphql mutation for creating file
+			const result = API.graphql(
+				graphqlOperation(createFile, {
+					input: inputData
+				}));
+
+			console.log('Successful grahql file upload:', result);
+			
+		} catch (err) {
+			console.error("Error uploading file");
+		}
 	}
 
 	const renameFile: fsOps_T['renameFile'] = async (oldName, newName) => {

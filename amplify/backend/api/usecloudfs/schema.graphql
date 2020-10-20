@@ -1,0 +1,12 @@
+type File @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  name: String!
+  path: String!
+  fileObject: S3Object
+}
+
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String!
+}

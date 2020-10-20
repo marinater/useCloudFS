@@ -10,7 +10,7 @@ function App() {
 
     if (cloudFS.signedIn) {
         cloudFS.fsOps.createFolder('folder-e')
-        cloudFS.fsOps.deleteFolder('folder-a')
+        // cloudFS.fsOps.deleteFolder('folder-a')
         cloudFS.fsOps.deleteFile('file-1.txt')
     }
 

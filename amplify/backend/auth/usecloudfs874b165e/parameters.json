@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "usecloudfs8e6b93d0_identitypool_8e6b93d0",
+    "identityPoolName": "usecloudfs874b165e_identitypool_874b165e",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "useclo8e6b93d0",
-    "userPoolName": "usecloudfs8e6b93d0_userpool_8e6b93d0",
+    "resourceNameTruncated": "useclo874b165e",
+    "userPoolName": "usecloudfs874b165e_userpool_874b165e",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "useclo8e6b93d0_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "useclo874b165e_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "8e6b93d0",
-    "resourceName": "usecloudfs8e6b93d0",
+    "sharedId": "874b165e",
+    "resourceName": "usecloudfs874b165e",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [

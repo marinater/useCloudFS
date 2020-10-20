@@ -1,16 +1,27 @@
 {
   "auth": {
-    "usecloudfs8e6b93d0": {
+    "usecloudfs874b165e": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false
     }
   },
-  "storage": {
-    "s381bc695a": {
-      "service": "S3",
-      "providerPlugin": "awscloudformation"
+  "api": {
+    "usecloudfs": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authusecloudfs874b165e"
+            }
+          },
+          "additionalAuthenticationProviders": []
+        }
+      }
     }
   }
 }
