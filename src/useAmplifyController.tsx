@@ -8,7 +8,6 @@ API.configure(awsconfig);
 
 const useAmplifyController: useCloudFSController_T<{ username: string }> = () => {
 	const isAuthenticated = false as boolean
-
 	if (isAuthenticated) {
 		return { signedIn: false }
 	}

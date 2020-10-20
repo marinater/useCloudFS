@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
-// import { useCloudFS } from 'usecloudfs';
+import { useCloudFS, useAmplifyController } from 'usecloudfs';
 import './App.css';
 //import logo from './logo.svg';
 import Amplify from 'aws-amplify';
@@ -15,6 +15,11 @@ Amplify.configure(awsconfig);
 
 
 class App extends Component {
+
+    constructor(props: any) {
+        super(props);
+        const x = useCloudFS(useAmplifyController);
+    }
     // async function signIn() {
     //     try {
     //         const user = await Auth.signIn("test-email", "test-password");
