@@ -33,10 +33,10 @@
 		"typescript": "^4.0.3"
 	},
 	"peerDependencies": {
-		"react": "^16.9.0",
-		"react-dom": "^16.9.0",
 		"@aws-amplify/ui-react": "^0.2.23",
-		"aws-amplify-react": "^4.2.7"
+		"aws-amplify-react": "^4.2.7",
+		"react": "^16.9.0",
+		"react-dom": "^16.9.0"
 	},
 	"scripts": {
 		"install": "cd ./demo && yarn install && cd .. && ./autolink.sh",
@@ -50,6 +50,7 @@
 		"config:amplify": "yarn add global amplify-cli && amplify init && amplify add database && amplify add storage && amplify add api && aws-amplify-react && amplify add auth && cp -r ./config/amplify ./amplify"
 	},
 	"dependencies": {
-		"amplify-cli": "^1.0.0"
+		"amplify-cli": "^1.0.0",
+		"global": "^4.4.0"
 	}
 }
