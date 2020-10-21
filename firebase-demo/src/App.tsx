@@ -4,6 +4,7 @@ import { useCloudFS, useFirebaseController } from 'usecloudfs';
 import { fsFolder_T } from '../../dist/useCloudFSTypes';
 import './App.css';
 import logo from './logo.svg';
+import FirebaseTester from './Firebase-tester'
 
 interface TreeView_T {
 	indent: number,
@@ -86,6 +87,7 @@ function App() {
 					cloudFS.signedIn && <TreeView indent={1} data={cloudFS.fileTree} />
 				}
 				</div>
+				<FirebaseTester cloudFS={cloudFS}/>
 			</header>
 		</div>
   );
