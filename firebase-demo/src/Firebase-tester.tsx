@@ -9,6 +9,7 @@ function FirebaseTester(props: any) {
     const [test4, setTest4] = useState(true);
     const [test5, setTest5] = useState(true);
     const [test6, setTest6] = useState(true);
+    const [test7, setTest7] = useState(true);
     const [downUrl, setUrl] = useState("");
 
 
@@ -35,8 +36,10 @@ function FirebaseTester(props: any) {
 			            props.cloudFS.fsOps.createFolder('bucket3/subBucket2').catch((err:any) => {console.info(err);setTest5(false);})
 			        }
                 )
-                
-            props.cloudFS.fsOps.deleteFolder('bucket3').catch( (err:any) =>{console.info(err);setTest6(false);} )
+            const testDate = new Date();
+            testDate.setDate(testDate.getDate() + 1);
+            props.cloudFS.fsOps.setAutoDelete('bucket3',testDate).catch( (err:any) =>{console.info(err);setTest6(false);} )
+            props.cloudFS.fsOps.deleteFolder('bucket3').catch( (err:any) =>{console.info(err);setTest7(false);} )
            
         }
         
@@ -58,7 +61,8 @@ function FirebaseTester(props: any) {
             <div>
                 <h2>Folder Operations Test Suite</h2>
                 <div>Create Folder Test Passed:<span> {`${test5}`}</span></div>
-                <div>Delete Folder Test Passed:<span> {`${test6}`}</span></div>
+                <div>Set Auto Delete Test Passed <span>{`${test6}`}</span></div>
+                <div>Delete Folder Test Passed:<span> {`${test7}`}</span></div>
             </div>
         </div>
 
