@@ -11,7 +11,7 @@ function App() {
     if (cloudFS.signedIn) {
         cloudFS.fsOps.createFolder('folder-e')
         // cloudFS.fsOps.deleteFolder('folder-a')
-        cloudFS.fsOps.deleteFile('file-1.txt')
+        // cloudFS.fsOps.deleteFile('file-1.txt')
     }
 
     const inputRef = useRef<HTMLInputElement>(null)
@@ -26,7 +26,7 @@ function App() {
         console.log(`useCloudFS.signedIn: ${cloudFS.signedIn}`)
         if (cloudFS.signedIn) {
             console.log(`useCloudFS.user: ${cloudFS.user.username}`)
-            cloudFS.fsOps.uploadFile('folder-a', files[0])
+            // cloudFS.fsOps.uploadFile('folder-a', files[0])
         }
     }
 

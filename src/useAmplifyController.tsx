@@ -1,7 +1,7 @@
 import { fsOps_T, useCloudFSController_T } from './useCloudFSTypes'
-//import { renameFile } from './graphql/queries';
+import { createFolder as createFolder2 } from './graphql/mutations';
 import awsconfig from './aws-exports';
-import { API } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 API.configure(awsconfig);
 
 //const ROOT_NAME = 'useCloudFS'
@@ -14,8 +14,18 @@ const useAmplifyController: useCloudFSController_T<{ username: string }> = () =>
 
 	const createFolder: fsOps_T['createFolder'] = async (folderName) => {
 		console.log(folderName);
-		return
+		// Call graphql mutation for createFile (contains createFile lambda)
+		const inputData = {
+			"folderName": folderName
+		};
 
+		const result = API.graphql(
+			graphqlOperation(createFolder2, {
+				input: inputData
+			})
+		);
+		console.log('SUCCESS: createFolder LAMBDA', result);
+		return
 	}
 
 	const renameFolder: fsOps_T['renameFolder'] = async (oldName, newName) => {
