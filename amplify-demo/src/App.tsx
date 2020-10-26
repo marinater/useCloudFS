@@ -3,6 +3,7 @@ import { useAuth } from 'reactfire';
 import { useAmplifyController, useCloudFS } from 'usecloudfs';
 import './App.css';
 import logo from './logo.svg';
+import { Storage } from 'aws-amplify';
 
 function App() {
     const cloudFS = useCloudFS(useAmplifyController)
@@ -30,6 +31,27 @@ function App() {
         }
     }
 
+    state = { fileUrl: '', file: '', filename: '' }
+    handleChange = e => {
+        const file = e.target.files[0]
+        this.setState({
+            fileUrl: URL.createObjectURL(file),
+            file,
+            filename: file.name
+        })
+    }
+
+    saveFile = () => {
+        Storage.put(this.state.filename, this.state.file)
+            .then(() => {
+                console.log('Successfully saved file!')
+                this.setState({ fileUrl: '', file: '', filename: '' })
+            })
+            .catch(err => {
+                console.log('error uploading file!', err)
+            })
+    }
+
     return (
         <div className="App">
             <header className="App-header">
@@ -38,7 +60,7 @@ function App() {
                     Edit <code>src/App.tsx</code> and save to reload.
                 </p>
 
-                <input type="file" ref={inputRef} onChange={fileUploadCallback}/>
+                <input type="file" ref={inputRef} onChange={fileUploadCallback} />
 
                 <a
                     className="App-link"
@@ -50,7 +72,7 @@ function App() {
                 </a>
             </header>
         </div>
-  );
+    );
 }
 
 export default App;
