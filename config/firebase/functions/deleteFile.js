@@ -1,7 +1,7 @@
 const Router = require('express-promise-router')
 const admin = require('firebase-admin')
 const splitPath = require('./splitPath')
-
+const unescapePath = require('./unescapePath')
 const router = new Router()
 const db = admin.database()
 const storage = admin.storage()
@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
 	let exists = false
 
 	await parentRef.transaction(data => {
-		if (data === null) return null;
+		if (data === null) return null
 		exists = true
 		if (!(req.user.uid in data.permissions.read) || !(req.user.uid in data.permissions.write)) {
 			err = 'DeleteFileError: User does not have read and write permissions to the parent folder'
@@ -43,9 +43,9 @@ router.post('/', async (req, res) => {
 		delete data.files[fileName]
 		return data
 	})
-	.catch(err => {
-		err = `DeleteFileError: Forwarded Firebase Error -> ${err}`
-	})
+		.catch(err => {
+			err = `DeleteFileError: Forwarded Firebase Error -> ${err}`
+		})
 
 	if (!exists) {
 		res.status(405).send('DeleteFileError: Folder does not exist')
@@ -56,7 +56,7 @@ router.post('/', async (req, res) => {
 		return
 	}
 
-	const fileRef = storage.bucket().file(`useCloudFS/${path}`)
+	const fileRef = storage.bucket().file(`useCloudFS/${unescapePath(path)}`)
 
 	await fileRef.delete().catch(error => err = error)
 	if (err) {

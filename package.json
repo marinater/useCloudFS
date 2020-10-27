@@ -6,6 +6,7 @@
 	"files": [
 		"dist"
 	],
+	"types": "dist/index.d.ts",
 	"repository": "https://github.com/marinater/useCloudFS.git",
 	"author": "Samarth Patel <samarthxpatel@gmail.com>",
 	"license": "GPL-3.0-or-later",

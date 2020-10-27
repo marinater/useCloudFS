@@ -5,10 +5,14 @@ import { useEffect, useState } from 'react'
 import { useAuth, useDatabase } from 'reactfire'
 import { fsFolderData_T, fsOps_T } from './useCloudFSTypes'
 
+export const unescapePath = (path: string) => {
+	return path.replace(/\*/g, '.').replace(/:/g, '/')
+}
 
-const escapePath = (path: string) => {
+export const escapePath = (path: string) => {
 	return path.replace(/\./g, '*').replace(/\//g, ':')
 }
+
 const splitPath = (fileName: string) => {
 	if (!fileName) return ['', '']
 	fileName = escapePath(fileName)
@@ -51,9 +55,6 @@ const useFirebaseController = (rootDir: string) => {
 			if (!snapshot.exists()) {
 				db.child(path).off()
 
-				if (!(path in fileCache))
-					console.error(path + ' not found inside file cache')
-
 				setFileCache(fileCache => {
 					const newCache = cloneDeep(fileCache)
 					delete newCache[path]
@@ -93,7 +94,12 @@ const useFirebaseController = (rootDir: string) => {
 					newCache[path] = {
 						folders: newData.subFolders,
 						files,
-						metadata: newData.metadata,
+						metadata: {
+							owner: newData.permissions.owner,
+							autoDelete: newData.permissions.autoDelete,
+							path: newData.metadata.parentFolder ? `${newData.metadata.parentFolder}/${newData.metadata.name}` : newData.metadata.name,
+							...newData.metadata
+						},
 						permissions: newData.permissions
 					}
 					return newCache
@@ -208,19 +214,12 @@ const useFirebaseController = (rootDir: string) => {
 		console.info(`deleteFolder: ${folderPath}`)
 		if (!auth.currentUser)
 			return Promise.reject('DeleteFolderError: User not signed in to Firebase')
+		folderPath = escapePath(folderPath)
+		console.log(folderPath)
 
-		let existed = false
 		let err = null
-		await db.child(folderPath).transaction(folder => {
-			if (folder !== null) {
-				existed = true
-			}
+		await db.child(folderPath).remove().catch(error => err = 'DeleteFolderError: User does not have permissions to delete folder -> ' + error)
 
-			return null
-		}).catch(() => err = 'DeleteFolderError: User does not have permissions to delete folder')
-
-		if (!existed)
-			return Promise.reject('DeleteFolderError: Folder does not exist')
 		return err ? Promise.reject(err) : undefined
 	}
 

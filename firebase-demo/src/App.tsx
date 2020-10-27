@@ -1,34 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useAuth } from 'reactfire';
 import { useCloudFS, useFirebaseController } from 'usecloudfs';
-import { fsFolder_T } from '../../dist/useCloudFSTypes';
 import './App.css';
 import logo from './logo.svg';
-
-interface TreeView_T {
-	indent: number,
-	data: fsFolder_T | null
-}
-
-const TreeView = ({ indent, data }: TreeView_T) => {
-	if (!data) return <div/>
-
-	return (
-		<div style={{ paddingLeft: `${indent * 25}px`, textAlign: 'left' }}>
-			<div> 📁 { data.metadata.name } </div>
-			{
-				Object.values(data.files).map(file => (
-					<div key={file!.metadata.path} style={{ paddingLeft: `${(indent + 1) * 25}px`, textAlign: 'left' }}>
-						📎 {file!.metadata.path}
-					</div>
-				))
-			}
-			{
-				Object.values(data.folders).filter(x => !!x).map(folder => <TreeView key={folder!.metadata.name} indent={indent + 1} data={folder || null} />)
-			}
-		</div>
-	)
-}
+import { TreeView } from './TreeView';
 
 function App() {
 	const cloudFS = useCloudFS('bucket2', useFirebaseController)
@@ -45,13 +20,13 @@ function App() {
 		});
 
 		if (cloudFS.signedIn) {
-			// cloudFS.fsOps.createFolder('bucket2').catch(err => console.info(err))
-			//     .then(
-			//         () => {
-			//             cloudFS.fsOps.createFolder('bucket2/subBucket1').catch(err => console.info(err))
-			//             cloudFS.fsOps.createFolder('bucket2/subBucket2').catch(err => console.info(err))
-			//         }
-			//     )
+			cloudFS.fsOps.createFolder('bucket2').catch(err => console.info(err))
+			    .then(
+			        () => {
+			            cloudFS.fsOps.createFolder('bucket2/subBucket1').catch(err => console.info(err))
+			            cloudFS.fsOps.createFolder('bucket2/subBucket2').catch(err => console.info(err))
+			        }
+			    )
 			// cloudFS.fsOps.renameFolder('bucket1','bucket1').catch(err => console.info(err))
 			// cloudFS.fsOps.deleteFolder('bucket2').catch( err => console.info(err) )
 		//    // cloudFS.fsOps.setAutoDelete('bucket1', new Date()).catch( err => console.info(err) )
@@ -73,7 +48,7 @@ function App() {
 		if (!file)
 			return
 
-		cloudFS.fsOps.uploadFile('bucket2', file).catch(err => console.info(err))
+		cloudFS.fsOps.uploadFile('bucket2/subBucket2', file).catch(err => console.info(err))
 	}
 
 	return (

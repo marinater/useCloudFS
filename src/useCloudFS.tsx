@@ -24,7 +24,7 @@ const useCloudFS = <GenericUser_T, SignInOptions_T>(rootDir: string, useCloudFSC
 			files[fileName] = {
 				...fileMeta,
 				getDownloadURL: () => fsOps.getDownloadURL(fullPath),
-				rename: (newName: string) => fsOps.renameFile(fullPath, newName),
+				rename: (newName: string) => fsOps.renameFile(fullPath, `${fileMeta.metadata.parentFolder}/${newName}`),
 				delete: () => fsOps.deleteFile(fullPath)
 			}
 		}
@@ -41,9 +41,9 @@ const useCloudFS = <GenericUser_T, SignInOptions_T>(rootDir: string, useCloudFSC
 			files,
 			folders,
 			createSubFolder: (name: string) => fsOps.createFolder(`${folderPath}/${name}`),
-			renameFolder: (newName: string) => fsOps.renameFolder(folderPath, newName),
-			deleteFolder: () => fsOps.deleteFolder(folderPath),
-			downloadLink: () => fsOps.getDownloadURL(folderPath),
+			rename: (newName: string) => fsOps.renameFolder(folderPath, `${tree.metadata.parentFolder}/${newName}`),
+			delete: () => fsOps.deleteFolder(folderPath),
+			getDownloadURL: () => fsOps.getDownloadURL(folderPath),
 			setAutoDelete: (date: Date) => fsOps.setAutoDelete(folderPath, date),
 			uploadFile: (file: File) => fsOps.uploadFile(folderPath, file)
 		}

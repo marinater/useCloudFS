@@ -1,6 +1,7 @@
 const Router = require('express-promise-router')
 const admin = require('firebase-admin')
 const splitPath = require('./splitPath')
+const unescapePath = require('./unescapePath')
 
 const router = new Router()
 const db = admin.database()
@@ -34,7 +35,7 @@ router.post('/', async (req, res) => {
 	let exists = false
 
 	await parentRef.transaction(data => {
-		if (data === null) return null;
+		if (data === null) return null
 		exists = true
 		if (!(req.user.uid in data.permissions.read) || !(req.user.uid in data.permissions.write)) {
 			err = 'RenameFileError: User does not have read write permissions to the parent folder'
@@ -55,9 +56,9 @@ router.post('/', async (req, res) => {
 		data.files[newFileName] = true
 		return data
 	})
-	.catch(err => {
-		err = `RenameFileError: Forwarded Firebase Error -> ${err}`
-	})
+		.catch(err => {
+			err = `RenameFileError: Forwarded Firebase Error -> ${err}`
+		})
 
 	if (!exists) {
 		res.status(405).send('RenameFileError: Folder does not exist')
@@ -68,8 +69,8 @@ router.post('/', async (req, res) => {
 		return
 	}
 
-	const newFileRef = storage.bucket().file(`useCloudFS/${newPath}`)
-	const oldFileRef = storage.bucket().file(`useCloudFS/${oldPath}`)
+	const newFileRef = storage.bucket().file(`useCloudFS/${unescapePath(newPath)}`)
+	const oldFileRef = storage.bucket().file(`useCloudFS/${unescapePath(oldPath)}`)
 
 	await oldFileRef.move(newFileRef).catch(error => err = error)
 	if (err) {
