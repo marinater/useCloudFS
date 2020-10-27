@@ -6,7 +6,6 @@ import './App.css';
 //import logo from './logo.svg';
 import Amplify from 'aws-amplify';
 import awsconfig from './aws-exports';
-
 import * as queries from './graphql/queries';
 // import * as mutations from './graphql/mutations';
 // import * as subscriptions from './graphql/subscriptions';
