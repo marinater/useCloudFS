@@ -6,7 +6,7 @@ const awsmobile = {
     "aws_cognito_identity_pool_id": "us-east-1:acd989d0-7fbf-477b-b700-a1cea9e7b461",
     "aws_cognito_region": "us-east-1",
     "aws_user_pools_id": "us-east-1_zapQtheG4",
-    "aws_user_pools_web_client_id": "41n25e46bks45vdk0hv7iuvfu2",
+    "aws_user_pools_web_client_id": "2lvdqdns19t173cen2a5e5r731",
     "oauth": {},
     "aws_user_files_s3_bucket": "usecloud-dev",
     "aws_user_files_s3_bucket_region": "us-east-1",
