@@ -61,6 +61,7 @@ function App() {
 					cloudFS.signedIn && <TreeView indent={1} data={cloudFS.fileTree} />
 				}
 				</div>
+				<FirebaseTester cloudFS={cloudFS}/>
 			</header>
 		</div>
   );
