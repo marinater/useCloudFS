@@ -3,15 +3,20 @@ import { createFolder as createFolder2 } from './graphql/mutations';
 import awsconfig from './aws-exports';
 import { Auth } from '@aws-amplify/auth';
 import { API, graphqlOperation } from 'aws-amplify';
+import axios from 'axios';
 API.configure(awsconfig);
 Auth.configure(awsconfig);
 
+
 //const ROOT_NAME = 'useCloudFS'
-async function signUp(username: string, password: string) {
+async function signUp() {
 	try {
 			const { user } = await Auth.signUp({
-					username,
-					password,
+					username: 'test-email2',
+					password: 'test-password',
+					attributes: {
+							email: 'omarlcobas@gmail.com' // optional
+					}
 			});
 			console.log(user);
 	} catch (error) {
@@ -19,9 +24,17 @@ async function signUp(username: string, password: string) {
 	}
 }
 
-async function signIn(username: string, password: string) {
+async function confirmSignUp() {
 	try {
-			const user = await Auth.signIn(username, password);
+		await Auth.confirmSignUp('test-email2', '985319');
+	} catch (error) {
+			console.log('error confirming sign up', error);
+	}
+}
+
+async function signIn() {
+	try {
+			const user = await Auth.signIn('test-email3', 'test-password');
 	} catch (error) {
 			console.log('error signing in', error);
 	}
@@ -34,10 +47,26 @@ const useAmplifyController: useCloudFSController_T<{ username: string }> = () =>
 	}
 
 	const createFolder: fsOps_T['createFolder'] = async (folderName) => {
-		console.log('signedUp', await signUp("test-email2@gmail.com", "test-password2"), folderName);
-		// console.log('signedIn', await signIn("test-email", "test-password"), folderName);
-		// console.log(folderName);
-		// // Call graphql mutation for createFile (contains createFile lambda)
+		// console.log('signedUp', await signUp(), folderName);
+		// console.log('confirmSignUp', await confirmSignUp(), folderName);
+		console.log('signedIn', await signIn(), folderName);
+		const link = "https://cors-anywhere.herokuapp.com/" +
+			"https://7twfkdp9rj.execute-api.us-east-1.amazonaws.com/default/createFolder";
+		const bucketName = "amplify-usecloudfs-dev-182044-deployment";
+		try {
+			const response = await axios.post(link, null, {
+				params: {
+					folderName,
+					bucketName
+				}
+			});
+			console.log('CreateFolder: AXIOS Post Request Success.', response);
+		} catch (err) {
+			console.error('CreateFolder: AXIOS Post Request Failed.');
+		}
+		// axios.post('API GATEWAY API/createFolder/folderName')
+		console.log(folderName);
+		// Call graphql mutation for createFile (contains createFile lambda)
 		// const inputData = {
 		// 	"folderName": folderName
 		// };

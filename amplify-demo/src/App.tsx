@@ -9,7 +9,7 @@ function App() {
     const auth = useAuth()
 
     if (cloudFS.signedIn) {
-        cloudFS.fsOps.createFolder('folder-e')
+        cloudFS.fsOps.createFolder('didITWORK-e')
         // cloudFS.fsOps.deleteFolder('folder-a')
         // cloudFS.fsOps.deleteFile('file-1.txt')
     }
