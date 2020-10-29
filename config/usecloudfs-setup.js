@@ -3,6 +3,7 @@
 
 const Confirm = require('prompt-confirm')
 const runFirebaseSetup = require('./firebase/runSetup')
+const runAmplifySetup = require('./amplify/runSetup')
 const {quote, action, info, question, log, divider} = require('./dialog-utils')
 
 const runSetup = async () => {
@@ -17,9 +18,14 @@ const runSetup = async () => {
 	}
 
 	const runFirebaseSetupPrompt = new Confirm('Would you like to run Firebase setup?')
-	const shouldRunFirebaseSetup = await runFirebaseSetupPrompt.run()
-	if (shouldRunFirebaseSetup) {
+    const runAmplifySetupPrompt = new Confirm('Would you like to run Amplify setup?')
+
+	if (await runFirebaseSetupPrompt.run()) {
 		await runFirebaseSetup()
+    }
+
+	if (await runAmplifySetupPrompt.run()) {
+		await runAmplifySetup()
 	}
 }
 
