@@ -30,9 +30,9 @@ pushd $dirpath/node_modules/aws-amplify
 yarn unlink
 popd
 
-# Remove usecloudfs's use of @aws-amplify/react-ui
-yarn unlink @aws-amplify/react-ui
-# Make local @aws-amplify/react-ui unavailable for use
-pushd $dirpath/node_modules/@aws-amplify/react-ui
+# Remove usecloudfs's use of @aws-amplify/ui-react
+yarn unlink @aws-amplify/ui-react
+# Make local @aws-amplify/ui-react unavailable for use
+pushd $dirpath/node_modules/@aws-amplify/ui-react
 yarn unlink
 popd
