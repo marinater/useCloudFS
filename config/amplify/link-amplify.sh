@@ -31,8 +31,8 @@ popd
 yarn link aws-amplify
 
 # Make the demo app's reactfire package available for use
-pushd $dirpath/node_modules/@aws-amplify/react-ui
+pushd $dirpath/node_modules/@aws-amplify/ui-react
 yarn link
 popd
 # Add reactfire to usecloudfs
-yarn link @aws-amplify/react-ui
+yarn link @aws-amplify/ui-react
