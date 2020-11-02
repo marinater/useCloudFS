@@ -6,6 +6,7 @@ export const getBucket = /* GraphQL */ `
   query GetBucket($id: ID!) {
     getBucket(id: $id) {
       id
+      name
       bucketFiles {
         items {
           id
@@ -13,27 +14,6 @@ export const getBucket = /* GraphQL */ `
           createdAt
           updatedAt
           owner
-        }
-        nextToken
-      }
-      bucketMetadata {
-        items {
-          id
-          createdAt
-          name
-          parentFolder
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      bucketPermissions {
-        items {
-          id
-          autoDelete
-          owner
-          createdAt
-          updatedAt
         }
         nextToken
       }
@@ -62,13 +42,8 @@ export const listBuckets = /* GraphQL */ `
     listBuckets(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        name
         bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
           nextToken
         }
         bucketSubFolders {
@@ -89,13 +64,8 @@ export const getFiles = /* GraphQL */ `
       name
       bucket {
         id
+        name
         bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
           nextToken
         }
         bucketSubFolders {
@@ -123,6 +93,7 @@ export const listFiless = /* GraphQL */ `
         name
         bucket {
           id
+          name
           createdAt
           updatedAt
           owner
@@ -130,114 +101,6 @@ export const listFiless = /* GraphQL */ `
         createdAt
         updatedAt
         owner
-      }
-      nextToken
-    }
-  }
-`;
-export const getMetadata = /* GraphQL */ `
-  query GetMetadata($id: ID!) {
-    getMetadata(id: $id) {
-      id
-      createdAt
-      name
-      parentFolder
-      bucket {
-        id
-        bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
-          nextToken
-        }
-        bucketSubFolders {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      updatedAt
-      owner
-    }
-  }
-`;
-export const listMetadatas = /* GraphQL */ `
-  query ListMetadatas(
-    $filter: ModelMetadataFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listMetadatas(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        createdAt
-        name
-        parentFolder
-        bucket {
-          id
-          createdAt
-          updatedAt
-          owner
-        }
-        updatedAt
-        owner
-      }
-      nextToken
-    }
-  }
-`;
-export const getPermissions = /* GraphQL */ `
-  query GetPermissions($id: ID!) {
-    getPermissions(id: $id) {
-      id
-      autoDelete
-      owner
-      bucket {
-        id
-        bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
-          nextToken
-        }
-        bucketSubFolders {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listPermissionss = /* GraphQL */ `
-  query ListPermissionss(
-    $filter: ModelPermissionsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPermissionss(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        autoDelete
-        owner
-        bucket {
-          id
-          createdAt
-          updatedAt
-          owner
-        }
-        createdAt
-        updatedAt
       }
       nextToken
     }
@@ -250,13 +113,8 @@ export const getSubFolders = /* GraphQL */ `
       name
       bucket {
         id
+        name
         bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
           nextToken
         }
         bucketSubFolders {
@@ -284,6 +142,7 @@ export const listSubFolderss = /* GraphQL */ `
         name
         bucket {
           id
+          name
           createdAt
           updatedAt
           owner
@@ -291,6 +150,45 @@ export const listSubFolderss = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getPicture = /* GraphQL */ `
+  query GetPicture($id: ID!) {
+    getPicture(id: $id) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listPictures = /* GraphQL */ `
+  query ListPictures(
+    $filter: ModelPictureFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPictures(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        owner
+        file {
+          bucket
+          region
+          key
+        }
+        createdAt
+        updatedAt
       }
       nextToken
     }

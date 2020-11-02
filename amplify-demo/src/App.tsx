@@ -1,24 +1,42 @@
 
 import React, { Component } from "react";
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
-import { useCloudFS, useAmplifyController } from 'usecloudfs';
+import { Router, Route } from "react-router-dom";
 import './App.css';
-//import logo from './logo.svg';
 import Amplify from 'aws-amplify';
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+//import { useCloudFS, useAmplifyController } from 'usecloudfs';
+
+//import logo from './logo.svg';
+import awsExports from "./aws-exports";
 import awsconfig from './aws-exports';
 import * as queries from './graphql/queries';
-// import * as mutations from './graphql/mutations';
+//import * as mutations from './graphql/mutations';
 // import * as subscriptions from './graphql/subscriptions';
 import { API } from 'aws-amplify';
+import { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
+
+import { createBrowserHistory as createHistory } from 'history'
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+
+import UploadImage from './components/UploadImage';
+
+
 Amplify.configure(awsconfig);
+Amplify.configure(awsExports);
+
+Amplify.addPluggable(new AmazonAIPredictionsProvider());
+
+const history = createHistory();
 
 
 class App extends Component {
 
-    constructor(props: any) {
-        super(props);
-        const x = useCloudFS(useAmplifyController);
-    }
+
+    // constructor(props: any) {
+    //     super(props);
+    //     const x = useCloudFS(useAmplifyController);
+    // }
     // async function signIn() {
     //     try {
     //         const user = await Auth.signIn("test-email", "test-password");
@@ -50,42 +68,32 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <AmplifySignOut />
+                <Router history={history}>
+                    <Navbar bg="primary" expand="lg" variant="dark" >
+                        <Navbar.Brand href="/">Image Gallery App</Navbar.Brand>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav className="mr-auto">
+                                <Nav.Link href="/uploadImage">Upload Image</Nav.Link>
+
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Navbar>
+
+                    <Route path="/uploadImage" exact component={UploadImage} />
+
+                </Router>
+
                 <p> Click a button </p>
                 <button onClick={this.listBuckets}>List Buckets</button>
                 <button onClick={this.getBuckets}>Get Bucket</button>
+                <AmplifySignOut />
             </div>
+
         );
     }
 }
 
 export default withAuthenticator(App);
-
-// function App() {
-//     const x = useCloudFS
-
-//      console.log(x)
-
-
-//     return (
-//         <div className="App">
-//             <header className="App-header">
-//                 <img src={logo} className="App-logo" alt="logo" />
-//                 <p>
-//                     Edit <code>src/App.tsx</code> and save to reload.
-//                     </p>
-//                 <a
-//                     className="App-link"
-//                     href="https://reactjs.org"
-//                     target="_blank"
-//                     rel="noopener noreferrer"
-//                 >
-//                     Learn React
-//                     </a>
-//             </header>
-
-//         </div>
-//     );
-// }
 
 
