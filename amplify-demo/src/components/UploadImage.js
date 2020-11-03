@@ -27,26 +27,6 @@ class UploadImage extends React.Component {
         }
     }
 
-    findImageLabels = async (file) => {
-        console.log('find image labels');
-        return Predictions.identify({
-            labels: {
-                source: {
-                    file,
-                },
-                type: "LABELS"
-            }
-        })
-            .then(response => {
-                let labels = response.labels.map((label) => {
-                    if (label.metadata.confidence > 70)
-                        return label.name
-                });
-                return labels.filter(Boolean);
-            })
-            .catch(err => console.log({ err }));
-    }
-
     onChange(e) {
         const file = e.target.files[0];
         console.log(file);
@@ -54,22 +34,18 @@ class UploadImage extends React.Component {
         Storage.put(file.name, file, {
             contentType: 'image/png'
         }).then(() => {
-            this.findImageLabels(file).then(labels => {
-                this.setState({ file: URL.createObjectURL(file) })
+            this.setState({ file: URL.createObjectURL(file) })
 
-                const image = {
-                    name: file.name,
-                    labels: labels,
-                    file: {
-                        bucket: awsbucketcredentials.aws_user_files_s3_bucket,
-                        region: awsbucketcredentials.aws_user_files_s3_bucket_region,
-                        key: file.name
-                    }
+            const image = {
+                name: file.name,
+                file: {
+                    bucket: awsbucketcredentials.aws_user_files_s3_bucket,
+                    region: awsbucketcredentials.aws_user_files_s3_bucket_region,
+                    key: file.name
                 }
-
-                this.addImageToDB(image);
-                console.log('added completed')
-            })
+            }
+            this.addImageToDB(image);
+            console.log('added completed')
         })
             .catch(err => console.log(err));
     }

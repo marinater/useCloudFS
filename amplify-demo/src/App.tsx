@@ -71,7 +71,7 @@ class App extends Component {
             <div className="App">
                 <Router history={history}>
                     <Navbar bg="primary" expand="lg" variant="dark" >
-                        <Navbar.Brand href="/">Image Gallery App</Navbar.Brand>
+                        <Navbar.Brand href="/"></Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="mr-auto">
