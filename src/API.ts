@@ -3,7 +3,7 @@
 //  This file was automatically generated and should not be edited.
 
 export type CreateBucketInput = {
-  name: string,
+  id?: string | null,
 };
 
 export type ModelBucketConditionInput = {
@@ -228,6 +228,14 @@ export type ModelSubFoldersFilterInput = {
   and?: Array< ModelSubFoldersFilterInput | null > | null,
   or?: Array< ModelSubFoldersFilterInput | null > | null,
   not?: ModelSubFoldersFilterInput | null,
+};
+
+export type CreateFolderMutationVariables = {
+  folderName?: string | null,
+};
+
+export type CreateFolderMutation = {
+  createFolder: string | null,
 };
 
 export type CreateBucketMutationVariables = {

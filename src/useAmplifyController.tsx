@@ -50,33 +50,29 @@ const useAmplifyController: useCloudFSController_T<{ username: string }> = () =>
 		// console.log('signedUp', await signUp(), folderName);
 		// console.log('confirmSignUp', await confirmSignUp(), folderName);
 		console.log('signedIn', await signIn(), folderName);
-		const link = "https://cors-anywhere.herokuapp.com/" +
-			"https://7twfkdp9rj.execute-api.us-east-1.amazonaws.com/default/createFolder";
-		const bucketName = "amplify-usecloudfs-dev-182044-deployment";
-		try {
-			const response = await axios.post(link, null, {
-				params: {
-					folderName,
-					bucketName
-				}
-			});
-			console.log('CreateFolder: AXIOS Post Request Success.', response);
-		} catch (err) {
-			console.error('CreateFolder: AXIOS Post Request Failed.');
-		}
+		// const link = "https://cors-anywhere.herokuapp.com/" +
+		// 	"https://7twfkdp9rj.execute-api.us-east-1.amazonaws.com/default/createFolder";
+		// const bucketName = "amplify-usecloudfs-dev-182044-deployment";
+		// try {
+		// 	const response = await axios.post(link, null, {
+		// 		params: {
+		// 			folderName,
+		// 			bucketName
+		// 		}
+		// 	});
+		// 	console.log('CreateFolder: AXIOS Post Request Success.', response);
+		// } catch (err) {
+		// 	console.error('CreateFolder: AXIOS Post Request Failed.');
+		// }
 		// axios.post('API GATEWAY API/createFolder/folderName')
 		console.log(folderName);
 		// Call graphql mutation for createFile (contains createFile lambda)
-		// const inputData = {
-		// 	"folderName": folderName
-		// };
+		const inputData = {
+			"folderName": folderName
+		};
 
-		// const result = API.graphql(
-		// 	graphqlOperation(createFolder2, {
-		// 		input: inputData
-		// 	})
-		// );
-		// console.log('SUCCESS: createFolder LAMBDA', result);
+		const result = API.graphql(graphqlOperation(createFolder2, inputData));
+		console.log('SUCCESS: createFolder LAMBDA', result);
 		return
 	}
 
