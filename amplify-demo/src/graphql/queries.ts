@@ -194,3 +194,42 @@ export const listPictures = /* GraphQL */ `
     }
   }
 `;
+export const getTestFile = /* GraphQL */ `
+  query GetTestFile($id: ID!) {
+    getTestFile(id: $id) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listTestFiles = /* GraphQL */ `
+  query ListTestFiles(
+    $filter: ModelTestFileFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTestFiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        owner
+        file {
+          bucket
+          region
+          key
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;

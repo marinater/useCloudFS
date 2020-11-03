@@ -9,6 +9,7 @@ export const createBucket = /* GraphQL */ `
   ) {
     createBucket(input: $input, condition: $condition) {
       id
+      name
       bucketFiles {
         items {
           id
@@ -16,27 +17,6 @@ export const createBucket = /* GraphQL */ `
           createdAt
           updatedAt
           owner
-        }
-        nextToken
-      }
-      bucketMetadata {
-        items {
-          id
-          createdAt
-          name
-          parentFolder
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      bucketPermissions {
-        items {
-          id
-          autoDelete
-          owner
-          createdAt
-          updatedAt
         }
         nextToken
       }
@@ -63,6 +43,7 @@ export const updateBucket = /* GraphQL */ `
   ) {
     updateBucket(input: $input, condition: $condition) {
       id
+      name
       bucketFiles {
         items {
           id
@@ -70,27 +51,6 @@ export const updateBucket = /* GraphQL */ `
           createdAt
           updatedAt
           owner
-        }
-        nextToken
-      }
-      bucketMetadata {
-        items {
-          id
-          createdAt
-          name
-          parentFolder
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      bucketPermissions {
-        items {
-          id
-          autoDelete
-          owner
-          createdAt
-          updatedAt
         }
         nextToken
       }
@@ -117,6 +77,7 @@ export const deleteBucket = /* GraphQL */ `
   ) {
     deleteBucket(input: $input, condition: $condition) {
       id
+      name
       bucketFiles {
         items {
           id
@@ -124,27 +85,6 @@ export const deleteBucket = /* GraphQL */ `
           createdAt
           updatedAt
           owner
-        }
-        nextToken
-      }
-      bucketMetadata {
-        items {
-          id
-          createdAt
-          name
-          parentFolder
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      bucketPermissions {
-        items {
-          id
-          autoDelete
-          owner
-          createdAt
-          updatedAt
         }
         nextToken
       }
@@ -174,13 +114,8 @@ export const createFiles = /* GraphQL */ `
       name
       bucket {
         id
+        name
         bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
           nextToken
         }
         bucketSubFolders {
@@ -206,13 +141,8 @@ export const updateFiles = /* GraphQL */ `
       name
       bucket {
         id
+        name
         bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
           nextToken
         }
         bucketSubFolders {
@@ -238,13 +168,8 @@ export const deleteFiles = /* GraphQL */ `
       name
       bucket {
         id
+        name
         bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
           nextToken
         }
         bucketSubFolders {
@@ -257,201 +182,6 @@ export const deleteFiles = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-    }
-  }
-`;
-export const createMetadata = /* GraphQL */ `
-  mutation CreateMetadata(
-    $input: CreateMetadataInput!
-    $condition: ModelMetadataConditionInput
-  ) {
-    createMetadata(input: $input, condition: $condition) {
-      id
-      createdAt
-      name
-      parentFolder
-      bucket {
-        id
-        bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
-          nextToken
-        }
-        bucketSubFolders {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      updatedAt
-      owner
-    }
-  }
-`;
-export const updateMetadata = /* GraphQL */ `
-  mutation UpdateMetadata(
-    $input: UpdateMetadataInput!
-    $condition: ModelMetadataConditionInput
-  ) {
-    updateMetadata(input: $input, condition: $condition) {
-      id
-      createdAt
-      name
-      parentFolder
-      bucket {
-        id
-        bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
-          nextToken
-        }
-        bucketSubFolders {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      updatedAt
-      owner
-    }
-  }
-`;
-export const deleteMetadata = /* GraphQL */ `
-  mutation DeleteMetadata(
-    $input: DeleteMetadataInput!
-    $condition: ModelMetadataConditionInput
-  ) {
-    deleteMetadata(input: $input, condition: $condition) {
-      id
-      createdAt
-      name
-      parentFolder
-      bucket {
-        id
-        bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
-          nextToken
-        }
-        bucketSubFolders {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      updatedAt
-      owner
-    }
-  }
-`;
-export const createPermissions = /* GraphQL */ `
-  mutation CreatePermissions(
-    $input: CreatePermissionsInput!
-    $condition: ModelPermissionsConditionInput
-  ) {
-    createPermissions(input: $input, condition: $condition) {
-      id
-      autoDelete
-      owner
-      bucket {
-        id
-        bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
-          nextToken
-        }
-        bucketSubFolders {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updatePermissions = /* GraphQL */ `
-  mutation UpdatePermissions(
-    $input: UpdatePermissionsInput!
-    $condition: ModelPermissionsConditionInput
-  ) {
-    updatePermissions(input: $input, condition: $condition) {
-      id
-      autoDelete
-      owner
-      bucket {
-        id
-        bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
-          nextToken
-        }
-        bucketSubFolders {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deletePermissions = /* GraphQL */ `
-  mutation DeletePermissions(
-    $input: DeletePermissionsInput!
-    $condition: ModelPermissionsConditionInput
-  ) {
-    deletePermissions(input: $input, condition: $condition) {
-      id
-      autoDelete
-      owner
-      bucket {
-        id
-        bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
-          nextToken
-        }
-        bucketSubFolders {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -465,13 +195,8 @@ export const createSubFolders = /* GraphQL */ `
       name
       bucket {
         id
+        name
         bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
           nextToken
         }
         bucketSubFolders {
@@ -497,13 +222,8 @@ export const updateSubFolders = /* GraphQL */ `
       name
       bucket {
         id
+        name
         bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
           nextToken
         }
         bucketSubFolders {
@@ -529,13 +249,8 @@ export const deleteSubFolders = /* GraphQL */ `
       name
       bucket {
         id
+        name
         bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
           nextToken
         }
         bucketSubFolders {
@@ -548,6 +263,120 @@ export const deleteSubFolders = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+    }
+  }
+`;
+export const createPicture = /* GraphQL */ `
+  mutation CreatePicture(
+    $input: CreatePictureInput!
+    $condition: ModelPictureConditionInput
+  ) {
+    createPicture(input: $input, condition: $condition) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updatePicture = /* GraphQL */ `
+  mutation UpdatePicture(
+    $input: UpdatePictureInput!
+    $condition: ModelPictureConditionInput
+  ) {
+    updatePicture(input: $input, condition: $condition) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deletePicture = /* GraphQL */ `
+  mutation DeletePicture(
+    $input: DeletePictureInput!
+    $condition: ModelPictureConditionInput
+  ) {
+    deletePicture(input: $input, condition: $condition) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createTestFile = /* GraphQL */ `
+  mutation CreateTestFile(
+    $input: CreateTestFileInput!
+    $condition: ModelTestFileConditionInput
+  ) {
+    createTestFile(input: $input, condition: $condition) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateTestFile = /* GraphQL */ `
+  mutation UpdateTestFile(
+    $input: UpdateTestFileInput!
+    $condition: ModelTestFileConditionInput
+  ) {
+    updateTestFile(input: $input, condition: $condition) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteTestFile = /* GraphQL */ `
+  mutation DeleteTestFile(
+    $input: DeleteTestFileInput!
+    $condition: ModelTestFileConditionInput
+  ) {
+    deleteTestFile(input: $input, condition: $condition) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
     }
   }
 `;

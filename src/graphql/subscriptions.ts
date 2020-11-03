@@ -6,6 +6,7 @@ export const onCreateBucket = /* GraphQL */ `
   subscription OnCreateBucket($owner: String!) {
     onCreateBucket(owner: $owner) {
       id
+      name
       bucketFiles {
         items {
           id
@@ -13,27 +14,6 @@ export const onCreateBucket = /* GraphQL */ `
           createdAt
           updatedAt
           owner
-        }
-        nextToken
-      }
-      bucketMetadata {
-        items {
-          id
-          createdAt
-          name
-          parentFolder
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      bucketPermissions {
-        items {
-          id
-          autoDelete
-          owner
-          createdAt
-          updatedAt
         }
         nextToken
       }
@@ -57,6 +37,7 @@ export const onUpdateBucket = /* GraphQL */ `
   subscription OnUpdateBucket($owner: String!) {
     onUpdateBucket(owner: $owner) {
       id
+      name
       bucketFiles {
         items {
           id
@@ -64,27 +45,6 @@ export const onUpdateBucket = /* GraphQL */ `
           createdAt
           updatedAt
           owner
-        }
-        nextToken
-      }
-      bucketMetadata {
-        items {
-          id
-          createdAt
-          name
-          parentFolder
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      bucketPermissions {
-        items {
-          id
-          autoDelete
-          owner
-          createdAt
-          updatedAt
         }
         nextToken
       }
@@ -108,6 +68,7 @@ export const onDeleteBucket = /* GraphQL */ `
   subscription OnDeleteBucket($owner: String!) {
     onDeleteBucket(owner: $owner) {
       id
+      name
       bucketFiles {
         items {
           id
@@ -115,27 +76,6 @@ export const onDeleteBucket = /* GraphQL */ `
           createdAt
           updatedAt
           owner
-        }
-        nextToken
-      }
-      bucketMetadata {
-        items {
-          id
-          createdAt
-          name
-          parentFolder
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      bucketPermissions {
-        items {
-          id
-          autoDelete
-          owner
-          createdAt
-          updatedAt
         }
         nextToken
       }
@@ -162,13 +102,8 @@ export const onCreateFiles = /* GraphQL */ `
       name
       bucket {
         id
+        name
         bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
           nextToken
         }
         bucketSubFolders {
@@ -191,13 +126,8 @@ export const onUpdateFiles = /* GraphQL */ `
       name
       bucket {
         id
+        name
         bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
           nextToken
         }
         bucketSubFolders {
@@ -220,13 +150,8 @@ export const onDeleteFiles = /* GraphQL */ `
       name
       bucket {
         id
+        name
         bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
           nextToken
         }
         bucketSubFolders {
@@ -239,183 +164,6 @@ export const onDeleteFiles = /* GraphQL */ `
       createdAt
       updatedAt
       owner
-    }
-  }
-`;
-export const onCreateMetadata = /* GraphQL */ `
-  subscription OnCreateMetadata($owner: String!) {
-    onCreateMetadata(owner: $owner) {
-      id
-      createdAt
-      name
-      parentFolder
-      bucket {
-        id
-        bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
-          nextToken
-        }
-        bucketSubFolders {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onUpdateMetadata = /* GraphQL */ `
-  subscription OnUpdateMetadata($owner: String!) {
-    onUpdateMetadata(owner: $owner) {
-      id
-      createdAt
-      name
-      parentFolder
-      bucket {
-        id
-        bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
-          nextToken
-        }
-        bucketSubFolders {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onDeleteMetadata = /* GraphQL */ `
-  subscription OnDeleteMetadata($owner: String!) {
-    onDeleteMetadata(owner: $owner) {
-      id
-      createdAt
-      name
-      parentFolder
-      bucket {
-        id
-        bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
-          nextToken
-        }
-        bucketSubFolders {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onCreatePermissions = /* GraphQL */ `
-  subscription OnCreatePermissions($owner: String!) {
-    onCreatePermissions(owner: $owner) {
-      id
-      autoDelete
-      owner
-      bucket {
-        id
-        bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
-          nextToken
-        }
-        bucketSubFolders {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdatePermissions = /* GraphQL */ `
-  subscription OnUpdatePermissions($owner: String!) {
-    onUpdatePermissions(owner: $owner) {
-      id
-      autoDelete
-      owner
-      bucket {
-        id
-        bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
-          nextToken
-        }
-        bucketSubFolders {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeletePermissions = /* GraphQL */ `
-  subscription OnDeletePermissions($owner: String!) {
-    onDeletePermissions(owner: $owner) {
-      id
-      autoDelete
-      owner
-      bucket {
-        id
-        bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
-          nextToken
-        }
-        bucketSubFolders {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -426,13 +174,8 @@ export const onCreateSubFolders = /* GraphQL */ `
       name
       bucket {
         id
+        name
         bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
           nextToken
         }
         bucketSubFolders {
@@ -455,13 +198,8 @@ export const onUpdateSubFolders = /* GraphQL */ `
       name
       bucket {
         id
+        name
         bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
           nextToken
         }
         bucketSubFolders {
@@ -484,13 +222,8 @@ export const onDeleteSubFolders = /* GraphQL */ `
       name
       bucket {
         id
+        name
         bucketFiles {
-          nextToken
-        }
-        bucketMetadata {
-          nextToken
-        }
-        bucketPermissions {
           nextToken
         }
         bucketSubFolders {
@@ -503,6 +236,102 @@ export const onDeleteSubFolders = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+    }
+  }
+`;
+export const onCreatePicture = /* GraphQL */ `
+  subscription OnCreatePicture($owner: String!) {
+    onCreatePicture(owner: $owner) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdatePicture = /* GraphQL */ `
+  subscription OnUpdatePicture($owner: String!) {
+    onUpdatePicture(owner: $owner) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeletePicture = /* GraphQL */ `
+  subscription OnDeletePicture($owner: String!) {
+    onDeletePicture(owner: $owner) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateTestFile = /* GraphQL */ `
+  subscription OnCreateTestFile($owner: String!) {
+    onCreateTestFile(owner: $owner) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateTestFile = /* GraphQL */ `
+  subscription OnUpdateTestFile($owner: String!) {
+    onUpdateTestFile(owner: $owner) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteTestFile = /* GraphQL */ `
+  subscription OnDeleteTestFile($owner: String!) {
+    onDeleteTestFile(owner: $owner) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
     }
   }
 `;

@@ -287,3 +287,51 @@ export const onDeletePicture = /* GraphQL */ `
     }
   }
 `;
+export const onCreateTestFile = /* GraphQL */ `
+  subscription OnCreateTestFile($owner: String!) {
+    onCreateTestFile(owner: $owner) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateTestFile = /* GraphQL */ `
+  subscription OnUpdateTestFile($owner: String!) {
+    onUpdateTestFile(owner: $owner) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteTestFile = /* GraphQL */ `
+  subscription OnDeleteTestFile($owner: String!) {
+    onDeleteTestFile(owner: $owner) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;

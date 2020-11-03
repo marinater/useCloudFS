@@ -20,6 +20,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
 import UploadImage from './components/UploadImage';
+import UploadFile from './components/UploadFile';
 
 
 Amplify.configure(awsconfig);
@@ -75,14 +76,17 @@ class App extends Component {
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="mr-auto">
                                 <Nav.Link href="/uploadImage">Upload Image</Nav.Link>
-
+                                <Nav.Link href="/uploadFile">Upload File</Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
                     </Navbar>
 
                     <Route path="/uploadImage" exact component={UploadImage} />
+                    <Route path="/uploadFile" exact component={UploadFile} />
 
                 </Router>
+
+
 
                 <p> Click a button </p>
                 <button onClick={this.listBuckets}>List Buckets</button>

@@ -323,3 +323,60 @@ export const deletePicture = /* GraphQL */ `
     }
   }
 `;
+export const createTestFile = /* GraphQL */ `
+  mutation CreateTestFile(
+    $input: CreateTestFileInput!
+    $condition: ModelTestFileConditionInput
+  ) {
+    createTestFile(input: $input, condition: $condition) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateTestFile = /* GraphQL */ `
+  mutation UpdateTestFile(
+    $input: UpdateTestFileInput!
+    $condition: ModelTestFileConditionInput
+  ) {
+    updateTestFile(input: $input, condition: $condition) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteTestFile = /* GraphQL */ `
+  mutation DeleteTestFile(
+    $input: DeleteTestFileInput!
+    $condition: ModelTestFileConditionInput
+  ) {
+    deleteTestFile(input: $input, condition: $condition) {
+      id
+      name
+      owner
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
