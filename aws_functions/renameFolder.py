@@ -11,11 +11,11 @@ def renameFolder(oldName, newName):
 			srcKey = object.key
 			if not srcKey.endswith('/'):
 					fileName = srcKey.split('/')[-1]
-					destFileKey = newFolderKey + '/' + fileName
+					destFileKey = newName + '/' + fileName
 					copySource = s3BucketName + '/' + srcKey         
 					s3.Object(s3BucketName, destFileKey).copy_from(CopySource=copySource)
 					s3.Object(s3BucketName, srcKey).delete()
 	s3.Object(s3BucketName, f'{newName}/').copy_from(CopySource=f'{s3BucketName}/{oldName}/')
 	s3.Object(s3BucketName, f'{oldName}/').delete()
 
-renameFolder('folder-a', 'hola')
+renameFolder('testFolder', 'holA')
