@@ -1,2 +1,3 @@
-export { useCloudFS } from './useCloudFS'
-export { useFirebaseController } from './useFirebaseController'
+export * from './useCloudFS'
+export * as useCloudFSTypes from './useCloudFSTypes'
+export * from './useFirebaseController'
