@@ -3,9 +3,7 @@ import boto3
 import json
 from botocore.exceptions import ClientError
 
-s3BucketName = 'amplify-usecloudfs-dev-182044-deployment'
-ACCESS_KEY = "AKIATVTUEGHOHP56V3XN"
-SECRET_KEY = "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"
+
 
 def create_presigned_post(bucket_name, object_name,
                           fields=None, conditions=None, expiration=3600):

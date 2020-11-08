@@ -77,17 +77,20 @@ const useAmplifyController: useCloudFSController_T<{ username: string }> = () =>
 	}
 
 	const renameFolder: fsOps_T['renameFolder'] = async (oldName, newName) => {
+		// https://5vrgzud3gf.execute-api.us-east-1.amazonaws.com/default/renameFolder?oldName=d&newName=good&bucketName=amplify-usecloudfs-dev-182044-deployment
 		console.log(oldName);
 		console.log(newName);
 		return
 	}
 
 	const deleteFolder: fsOps_T['deleteFolder'] = async (folderName) => {
+		// https://2rbj2v86d7.execute-api.us-east-1.amazonaws.com/default/deleteFolder?folderName=testName&bucketName=amplify-usecloudfs-dev-182044-deployment
 		console.log(folderName);
 		return
 	}
 	const uploadFile: fsOps_T['uploadFile'] = async (folderName, file) => {
 		// TODO: use signed URL
+		// https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions/uploadFile?tab=configuration
 		console.log(file);
 		console.log(folderName);
 		return
@@ -101,11 +104,13 @@ const useAmplifyController: useCloudFSController_T<{ username: string }> = () =>
 	// }
 
 	const deleteFile: fsOps_T['deleteFile'] = async (fileName) => {
+		// https://cilym49iqh.execute-api.us-east-1.amazonaws.com/default/deleteFile?fileName=yassss.txt&bucketName=amplify-usecloudfs-dev-182044-deployment
 		console.log(fileName);
 		return
 	}
 
 	const getDownloadURL: fsOps_T['getDownloadURL'] = async (fileName) => {
+		// https://bskjrhckfc.execute-api.us-east-1.amazonaws.com/default/getDownloadURL?fileName=3.pdf&bucketName=amplify-usecloudfs-dev-182044-deployment
 		console.log(fileName);
 		return 'https://www.improgrammer.net/wp-content/uploads/2016/02/16-1.gif'
 	}
