@@ -6,6 +6,7 @@ from botocore.exceptions import ClientError
 
 s3BucketName = 'amplify-usecloudfs-dev-182044-deployment'
 
+# Source: https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3-presigned-urls.html
 def create_presigned_url(bucket_name, object_name, expiration=3600):
     """Generate a presigned URL to share an S3 object
 
