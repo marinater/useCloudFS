@@ -4,8 +4,7 @@ from botocore.exceptions import ClientError
 import json
 
 s3BucketName = 'amplify-usecloudfs-dev-182044-deployment'
-ACCESS_KEY = "AKIATVTUEGHOHP56V3XN"
-SECRET_KEY = "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"
+
 def create_presigned_post(bucket_name, object_name,
                           fields=None, conditions=None, expiration=3600):
     """Generate a presigned URL S3 POST request to upload a file
