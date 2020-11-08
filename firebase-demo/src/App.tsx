@@ -38,8 +38,10 @@ function App() {
 	const [signedIn, setSignedIn] = useState(false)
 
 	useEffect(() => {
-		if (!auth.currentUser)
+		if (!auth.currentUser){
+			console.log("login")
 			auth.signInWithEmailAndPassword("test-email@gmail.com", "test-password")
+		}
 
 		auth.onAuthStateChanged(user => {
 			setSignedIn(!!user)
@@ -87,7 +89,7 @@ function App() {
 					cloudFS.signedIn && <TreeView indent={1} data={cloudFS.fileTree} />
 				}
 				</div>
-				<FirebaseTester cloudFS={cloudFS}/>
+				<FirebaseTester cloudFS={cloudFS} auth={auth} />
 			</header>
 		</div>
   );
