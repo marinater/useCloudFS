@@ -11,7 +11,8 @@ def createFolder(folderName):
 	return folderName
 
 def lambda_handler(event, context):
-    createdFolder = createFolder(event['folderName'])
+    # event.queryStringParameters.folderName
+    createdFolder = createFolder(event["queryStringParameters"]['folderName'])
     return {
         'statusCode': 200,
         'body': createdFolder

@@ -9,9 +9,14 @@ function App() {
     const auth = useAuth()
 
     if (cloudFS.signedIn) {
-        cloudFS.fsOps.createFolder('willsee-e')
-        // cloudFS.fsOps.deleteFolder('folder-a')
-        // cloudFS.fsOps.deleteFile('file-1.txt')
+        // cloudFS.fsOps.createFolder('willsee-e')
+        // cloudFS.fsOps.deleteFolder('willsee-e')
+        // cloudFS.fsOps.renameFolder('hola', 'renamed')
+        // cloudFS.fsOps.deleteFile('runnn.txt')
+        // cloudFS.fsOps.renameFile('3.pdf', '2.pdf')
+        // console.log("DOWNLOAD URL",
+        //     cloudFS.fsOps.getDownloadURL('bro.txt').then((data) => console.log(data))
+        // )
     }
 
     const inputRef = useRef<HTMLInputElement>(null)
@@ -26,7 +31,7 @@ function App() {
         console.log(`useCloudFS.signedIn: ${cloudFS.signedIn}`)
         if (cloudFS.signedIn) {
             console.log(`useCloudFS.user: ${cloudFS.user.username}`)
-            // cloudFS.fsOps.uploadFile('folder-a', files[0])
+            cloudFS.fsOps.uploadFile('', files[0])
         }
     }
 
