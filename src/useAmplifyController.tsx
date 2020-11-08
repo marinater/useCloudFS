@@ -51,7 +51,7 @@ const useAmplifyController: useCloudFSController_T<{ username: string }> = () =>
 		// console.log('confirmSignUp', await confirmSignUp(), folderName);
 		console.log('signedIn', await signIn(), folderName);
 		// const link = "https://cors-anywhere.herokuapp.com/" +
-		// 	"https://7twfkdp9rj.execute-api.us-east-1.amazonaws.com/default/createFolder";
+		// 	"https://mwhdj2nwv3.execute-api.us-east-1.amazonaws.com/default/createFolder";
 		// const bucketName = "amplify-usecloudfs-dev-182044-deployment";
 		// try {
 		// 	const response = await axios.post(link, null, {
@@ -77,40 +77,41 @@ const useAmplifyController: useCloudFSController_T<{ username: string }> = () =>
 	}
 
 	const renameFolder: fsOps_T['renameFolder'] = async (oldName, newName) => {
-		// https://5vrgzud3gf.execute-api.us-east-1.amazonaws.com/default/renameFolder?oldName=d&newName=good&bucketName=amplify-usecloudfs-dev-182044-deployment
+		// https://8qm2qjzkg0.execute-api.us-east-1.amazonaws.com/default/renameFolder?oldName=test&newName=ohh&bucketName=amplify-usecloudfs-dev-182044-deployment
 		console.log(oldName);
 		console.log(newName);
 		return
 	}
 
 	const deleteFolder: fsOps_T['deleteFolder'] = async (folderName) => {
-		// https://2rbj2v86d7.execute-api.us-east-1.amazonaws.com/default/deleteFolder?folderName=testName&bucketName=amplify-usecloudfs-dev-182044-deployment
+		// https://ue0h5vq049.execute-api.us-east-1.amazonaws.com/default/deleteFolder?folderName=testName&bucketName=amplify-usecloudfs-dev-182044-deployment
 		console.log(folderName);
 		return
 	}
 	const uploadFile: fsOps_T['uploadFile'] = async (folderName, file) => {
 		// TODO: use signed URL
-		// https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions/uploadFile?tab=configuration
+		// https://emrwbr16gh.execute-api.us-east-1.amazonaws.com/default/uploadFile?bucketName=amplify-usecloudfs-dev-182044-deployment&fileName=document.pdf&folderName=good.pdf
 		console.log(file);
 		console.log(folderName);
 		return
 	}
 
-	// const renameFile: fsOps_T['renameFile'] = async (oldName, newName) => {
-
-	// 	const args = { oldName, newName };
-	// 	const data = await API.graphql(graphqlOperation(renameFile, args));
-	// 	return data;
-	// }
+	const renameFile: fsOps_T['renameFile'] = async (oldName, newName) => {
+		// https://hflstwfuxd.execute-api.us-east-1.amazonaws.com/default/renameFile?oldName=hola&newName=test1&bucketName=amplify-usecloudfs-dev-182044-deployment
+		console.log(oldName, newName);
+		// const args = { oldName, newName };
+		// const data = await API.graphql(graphqlOperation(renameFile, args));
+		// return data;
+	}
 
 	const deleteFile: fsOps_T['deleteFile'] = async (fileName) => {
-		// https://cilym49iqh.execute-api.us-east-1.amazonaws.com/default/deleteFile?fileName=yassss.txt&bucketName=amplify-usecloudfs-dev-182044-deployment
+		// https://hrju8sovxi.execute-api.us-east-1.amazonaws.com/default/deleteFile?fileName=yassss.txt&bucketName=amplify-usecloudfs-dev-182044-deployment
 		console.log(fileName);
 		return
 	}
 
 	const getDownloadURL: fsOps_T['getDownloadURL'] = async (fileName) => {
-		// https://bskjrhckfc.execute-api.us-east-1.amazonaws.com/default/getDownloadURL?fileName=3.pdf&bucketName=amplify-usecloudfs-dev-182044-deployment
+		// https://obw4xgu950.execute-api.us-east-1.amazonaws.com/default/getDownloadURL?fileName=3.pdf&bucketName=amplify-usecloudfs-dev-182044-deployment
 		console.log(fileName);
 		return 'https://www.improgrammer.net/wp-content/uploads/2016/02/16-1.gif'
 	}
@@ -128,7 +129,7 @@ const useAmplifyController: useCloudFSController_T<{ username: string }> = () =>
 			renameFolder,
 			deleteFolder,
 			uploadFile,
-			//renameFile,
+			renameFile,
 			deleteFile,
 			getDownloadURL,
 			setAutoDelete

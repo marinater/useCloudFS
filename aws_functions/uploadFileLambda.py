@@ -2,8 +2,11 @@ import logging
 import boto3
 import json
 from botocore.exceptions import ClientError
+import os
 
-
+s3BucketName = os.environ.get('userBucket')
+ACCESS_KEY = os.environ.get('ACCESS_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 def create_presigned_post(bucket_name, object_name,
                           fields=None, conditions=None, expiration=3600):
