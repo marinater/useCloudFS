@@ -22,49 +22,59 @@ function FirebaseTester(props: any) {
         }
     }
 
-    const runPermTests = async (tests: (()=>void)[]) => {
-        for(const test of tests){
-            await test();
-        }
+
+    const switchUser = async (permtestarr: any) => {
+        await props.auth.signOut().then(()=>props.auth.signInWithEmailAndPassword("test-email2@gmail.com", "test-password")).then(() => {runTests(permtestarr); console.log(props.auth.currentUser);})
+        await props.auth.signOut().then(()=>props.auth.signInWithEmailAndPassword("test-email@gmail.com", "test-password"));
+        console.log(props.auth.currentUser);
     }
+
+    const user1TestOps = () =>{
+        
+        console.log(props.auth.currentUser);
+
+        const sampleFile =  new File([], 'test-upload2.txt',{
+            type: "text/plain",
+          });
+        console.log(sampleFile.type)
+
+        const calltest1 = () => props.cloudFS.fsOps.uploadFile('bucket1',sampleFile).catch((err:any) => setTest1(false) )
+
+        const calltest2 = () => props.cloudFS.fsOps.getDownloadURL('bucket1/test-upload2.txt').catch((err:any) => {console.info(err);setTest2(false);}).then((url:any) => setUrl(url))
+
+        const calltest3 = () => props.cloudFS.fsOps.renameFile('bucket1/test-upload2.txt','bucket1/renamed-test-upload2.txt').catch((err:any) => setTest3(false) )
+
+        const calltest4 = () => props.cloudFS.fsOps.deleteFile('bucket1/test-upload2.txt').catch((err:any) => {console.info(err);setTest4(false);} )
+
+        const calltest5 = () => props.cloudFS.fsOps.createFolder('bucket3').catch((err:any) => {console.info(err);setTest5(false);})
+            .then(
+                () => {
+                    props.cloudFS.fsOps.createFolder('bucket3/subBucket1').catch((err:any) => {console.info(err);setTest5(false);})
+                    props.cloudFS.fsOps.createFolder('bucket3/subBucket2').catch((err:any) => {console.info(err);setTest5(false);})
+                }
+            )
+        const testDate = new Date();
+        testDate.setDate(testDate.getDate() + 1);
+        const calltest6 = () =>  props.cloudFS.fsOps.setAutoDelete('bucket3',testDate).catch( (err:any) =>{console.info(err);setTest6(false);} )
+        const calltest7 = () => props.cloudFS.fsOps.deleteFolder('bucket3').catch( (err:any) =>{console.info(err);setTest7(false);} )
+       
+        const testarr = [calltest1,calltest2, calltest3, calltest4, calltest5, calltest6, calltest7];
+
+        runTests(testarr);
+        settestsRan(true);
+        
+    }
+    const user1Tests = async () => {
+        await user1TestOps()
+    }
+
 
     useEffect(() => {
         if (props.cloudFS.signedIn && !testsRan && props.auth.currentUser.uid  === "nZjFOjp1fjcV3EVbQ4Xm9IWFTQk2") {
             
+            //user1Tests();
 
-            console.log(props.auth.currentUser);
-
-            const sampleFile =  new File([], 'test-upload2.txt',{
-                type: "text/plain",
-              });
-            console.log(sampleFile.type)
-
-            const calltest1 = () => props.cloudFS.fsOps.uploadFile('bucket1',sampleFile).catch((err:any) => setTest1(false) )
-
-            const calltest2 = () => props.cloudFS.fsOps.getDownloadURL('bucket1/test-upload2.txt').catch((err:any) => {console.info(err);setTest2(false);}).then((url:any) => setUrl(url))
-
-            const calltest3 = () => props.cloudFS.fsOps.renameFile('bucket1/test-upload2.txt','bucket1/renamed-test-upload2.txt').catch((err:any) => setTest3(false) )
-
-            const calltest4 = () => props.cloudFS.fsOps.deleteFile('bucket1/test-upload2.txt').catch((err:any) => {console.info(err);setTest4(false);} )
-
-            const calltest5 = () => props.cloudFS.fsOps.createFolder('bucket3').catch((err:any) => {console.info(err);setTest5(false);})
-			    .then(
-			        () => {
-			            props.cloudFS.fsOps.createFolder('bucket3/subBucket1').catch((err:any) => {console.info(err);setTest5(false);})
-			            props.cloudFS.fsOps.createFolder('bucket3/subBucket2').catch((err:any) => {console.info(err);setTest5(false);})
-			        }
-                )
-            const testDate = new Date();
-            testDate.setDate(testDate.getDate() + 1);
-            const calltest6 = () =>  props.cloudFS.fsOps.setAutoDelete('bucket3',testDate).catch( (err:any) =>{console.info(err);setTest6(false);} )
-            const calltest7 = () => props.cloudFS.fsOps.deleteFolder('bucket3').catch( (err:any) =>{console.info(err);setTest7(false);} )
-           
-            const testarr = [calltest1,calltest2, calltest3, calltest4, calltest5, calltest6, calltest7];
-
-            runTests(testarr);
             settestsRan(true);
-            //props.auth.signOut().then(()=>props.auth.signInWithEmailAndPassword("test-email2@gmail.com", "test-password"));
-
         }
 
         if (props.cloudFS.signedIn && !permTestsRan) {
@@ -75,15 +85,12 @@ function FirebaseTester(props: any) {
                 type: "text/plain",
               });
             
-            const callpermtest1 = () => props.cloudFS.fsOps.uploadFile('bucket1',sampleFile).catch((err:any) => setTest1(true) )
+            const callpermtest1 = async () => await props.cloudFS.fsOps.uploadFile('bucket1',sampleFile).catch((err:any) => setTest1(true) )
             console.log("Permissions Tests")
             const permtestarr = [callpermtest1];
-            //props.auth.signInWithEmailAndPassword("test-email2@gmail.com", "test-password").then(runPermTests(permtestarr))
-            props.auth.signOut().then(()=>props.auth.signInWithEmailAndPassword("test-email2@gmail.com", "test-password")).then(runPermTests(permtestarr))
-            console.log(props.auth.currentUser);
-            props.auth.signOut().then(()=>props.auth.signInWithEmailAndPassword("test-email@gmail.com", "test-password"));
-            console.log(props.auth.currentUser);
-
+            
+            switchUser(permtestarr);
+ 
         } 
         
     },[props.cloudFS.signedIn]);

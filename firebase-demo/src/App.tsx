@@ -4,6 +4,7 @@ import { useCloudFS, useFirebaseController } from 'usecloudfs';
 import './App.css';
 import logo from './logo.svg';
 import { TreeView } from './TreeView';
+import FirebaseTester from  './Firebase-tester';
 
 function App() {
 	const cloudFS = useCloudFS('bucket2', useFirebaseController)
@@ -37,10 +38,10 @@ function App() {
 			// cloudFS.fsOps.getDownloadURL('bucket1/TeamDeliverable1.pdf').catch(err => console.info(err)).then(url => console.log(url))
 			// cloudFS.fsOps.deleteFile('bucket1/Team Deliverable1.pdf').catch(err => console.info(err) )
 		}
-	}, [cloudFS.signedIn])
+	}, [])
 
-	if (cloudFS.signedIn)
-		console.log(cloudFS.fileTree)
+	//if (cloudFS.signedIn)
+		//console.log(cloudFS.fileTree)
 
 	const uploadFile = () => {
 		if (!cloudFS.signedIn || !inputRef.current?.files)
