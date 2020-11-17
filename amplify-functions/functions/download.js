@@ -25,15 +25,18 @@ const url = s3.getSignedUrl('getObject', {
     Expires: signedUrlExpireSeconds
 })
 
-// Front-end trigger
-function download(url) {
-    $('<iframe>', { id: 'idown', src: url }).hide().appendTo('body').click();
-}
-$("#downloadButton").click(function () {
-    $.ajax({
-        url: 'example.com/your_end_point',
-        success: function (url) {
-            download(url);
-        }
-    })
-});
+
+
+
+// // Front-end trigger
+// function download(url) {
+//     $('<iframe>', { id: 'idown', src: url }).hide().appendTo('body').click();
+// }
+// $("#downloadButton").click(function () {
+//     $.ajax({
+//         url: 'example.com/your_end_point',
+//         success: function (url) {
+//             download(url);
+//         }
+//     })
+// });
