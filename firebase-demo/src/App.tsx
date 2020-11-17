@@ -61,7 +61,7 @@ function App() {
 				<input ref={inputRef} type='file' onChange={uploadFile} />
 				<div style={{ width: '100%' }}>
 				{
-					cloudFS.signedIn && <TreeView indent={1} data={cloudFS.fileTree} />
+					cloudFS.signedIn && <div id="treeView"><TreeView indent={1} data={cloudFS.fileTree} display={true} /></div>
 				}
 				</div>
 				<FirebaseTester cloudFS={cloudFS} auth={auth} />
