@@ -46,3 +46,25 @@ Use a Cognito user pool configured as a part of this project.
 ? Do you want to configure advanced settings for the GraphQL API No, I am done.
 ? Do you have an annotated GraphQL schema? No
 ? Choose a schema template: One-to-many relationship (e.g., “Blogs” with “Posts” and “Comments”)
+
+## Add lambda function
+amplify add function
+? Select which capability you want to add: Lambda function (serverless function)
+? Provide a friendly name for your resource to be used as a label for this category in the project: usecloudfsf
+ffdb4fc
+? Provide the AWS Lambda function name: usecloudfsfffdb4fc
+? Choose the runtime that you want to use: NodeJS
+? Choose the function template that you want to use: Hello World
+? Do you want to access other resources in this project from your Lambda function? No
+? Do you want to invoke this function on a recurring schedule? No
+? Do you want to configure Lambda layers for this function? Yes
+? Enter up to 5 existing Lambda layer ARNs (comma-separated): 
+No Lambda layers were selected
+? Do you want to edit the local lambda function now? Yes
+Please edit the file in your editor: /mnt/c/Projects/useCloudFS-2/useCloudFS/amplify/backend/function/usecloudfsfffdb4fc/src/index.js
+
+Check out sample function code generated in <project-dir>/amplify/backend/function/usecloudfsfffdb4fc/src
+"amplify function build" builds all of your functions currently in the project
+"amplify mock function <functionName>" runs your function locally
+"amplify push" builds all of your local backend resources and provisions them in the cloud
+"amplify publish" builds all of your local backend and front-end resources (if you added hosting category) and provisions them in the cloud
