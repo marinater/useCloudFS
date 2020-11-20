@@ -5,10 +5,11 @@ import Amplify from 'aws-amplify';
 import { Storage, API, graphqlOperation } from 'aws-amplify';
 import Predictions from '@aws-amplify/predictions';
 import { createTestFile } from '../graphql/mutations';
-import awsExports from "../aws-exports";
+//import awsmobile from './aws-exports';
 import awsbucketcredentials from "../aws-bucket-credentials";
 
 Amplify.configure(awsbucketcredentials);
+
 class UploadFile extends React.Component {
 
     constructor(props) {
@@ -21,7 +22,7 @@ class UploadFile extends React.Component {
     addFileToDB = async (file) => {
 
         try {
-            await API.graphql(graphqlOperation(createTestFile, { input: file }));
+            await API.graphql(graphqlOperation(createFile, { input: file }));
             console.log('add file to db')
         } catch (error) {
             console.log(error)
