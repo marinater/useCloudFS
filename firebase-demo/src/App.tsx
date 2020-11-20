@@ -43,7 +43,7 @@ function App() {
 	//if (cloudFS.signedIn)
 		//console.log(cloudFS.fileTree)
 
-	const uploadFile = () => {
+	const uploadFile = (path: string) => {
 		if (!cloudFS.signedIn || !inputRef.current?.files)
 			return
 
@@ -51,14 +51,13 @@ function App() {
 		if (!file)
 			return
 
-		cloudFS.fsOps.uploadFile('bucket2/subBucket2', file).catch(err => console.info(err))
+		cloudFS.fsOps.uploadFile(path, file).catch(err => console.info(err))
 	}
 
 	return (
 		<div className="App">
 			<header className="App-header">
 				<img src={logo} className="App-logo" alt="logo" />
-				<input ref={inputRef} type='file' onChange={uploadFile} />
 				<div style={{ width: '100%' }}>
 				{
 					cloudFS.signedIn && <div id="treeView"><TreeView indent={1} data={cloudFS.fileTree} display={true} /></div>

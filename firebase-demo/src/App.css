@@ -51,10 +51,15 @@
   border-radius: 25px;
   border: 2px solid #4d79ff;
   background-color: #002080;
+  min-height: 300px;
 
 }
 
-.bi-file-plus:hover, .bi-file-minus:hover {
+.bi:hover {
  fill:#4d79ff;
  cursor: pointer;
+}
+
+.bi-file-earmark-plus {
+  margin-top: 1px;
 }
