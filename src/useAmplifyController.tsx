@@ -6,31 +6,64 @@ import { API, graphqlOperation } from 'aws-amplify';
 import axios from 'axios';
 API.configure(awsconfig);
 Auth.configure(awsconfig);
+// for older browsers, due to fetch API use in amazon-cognito-identity-js
+// import 'cross-fetch/polyfill';
+import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 
+// Amazon Cognito creates a session which includes the id, access, and refresh tokens of an authenticated user.
 
+// const authenticationData = {
+// 	Username : 'test-email3', 
+// 	Password : 'test-password',
+// };
+// const authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
+// const poolData = { UserPoolId : awsconfig.aws_user_pools_id,
+// 	ClientId : awsconfig.aws_user_pools_web_client_id
+// };
+// const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+// const userData = {
+// 	Username : 'test-email3',
+// 	Pool : userPool
+// };
+// const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+// cognitoUser.authenticateUser(authenticationDetails, {
+// 	onSuccess: result => {
+// 			const accessToken = result.getAccessToken().getJwtToken();
+
+// 			console.log('JWT', accessToken);
+// 	},
+
+// 	onFailure: err => {
+// 			alert(err);
+// 	}
+// });
+
+// JWT https://www.jeremydaly.com/verifying-self-signed-jwt-tokens-with-aws-http-apis/
+// openssl genrsa -out private.key 4096
+// openssl rsa -in private.key -pubout -out public.key
 //const ROOT_NAME = 'useCloudFS'
-async function signUp() {
-	try {
-			const { user } = await Auth.signUp({
-					username: 'test-email2',
-					password: 'test-password',
-					attributes: {
-							email: 'omarlcobas@gmail.com' // optional
-					}
-			});
-			console.log(user);
-	} catch (error) {
-			console.log('error signing up:', error);
-	}
-}
+// async function signUp() {
+// 	try {
+// 			const { user } = await Auth.signUp({
+// 					username: 'test-email2',
+// 					password: 'test-password',
+// 					attributes: {
+// 							email: 'omarlcobas@gmail.com' // optional
+// 					}
+// 			});
+// 			console.log(user);
+// 	} catch (error) {
+// 			console.log('error signing up:', error);
+// 	}
+// }
 
-async function confirmSignUp() {
-	try {
-		await Auth.confirmSignUp('test-email2', '985319');
-	} catch (error) {
-			console.log('error confirming sign up', error);
-	}
-}
+// async function confirmSignUp() {
+// 	try {
+// 		await Auth.confirmSignUp('test-email2', '985319');
+// 	} catch (error) {
+// 			console.log('error confirming sign up', error);
+// 	}
+// }
 
 async function signIn() {
 	try {
@@ -50,29 +83,30 @@ const useAmplifyController: useCloudFSController_T<{ username: string }> = () =>
 		// console.log('signedUp', await signUp(), folderName);
 		// console.log('confirmSignUp', await confirmSignUp(), folderName);
 		// console.log('signedIn', await signIn(), folderName);
-		const link = "https://cors-anywhere.herokuapp.com/" +
-			"https://mwhdj2nwv3.execute-api.us-east-1.amazonaws.com/default/createFolder";
-		const bucketName = "amplify-usecloudfs-dev-182044-deployment";
-		try {
-			const response = await axios.post(link, null, {
-				params: {
-					folderName,
-					bucketName
-				}
-			});
-			console.log('CreateFolder: AXIOS Post Request Success.', response);
-		} catch (err) {
-			console.error('CreateFolder: AXIOS Post Request Failed.');
-		}
+		// https://mwhdj2nwv3.execute-api.us-east-1.amazonaws.com/default/createFolder?folderName=ss&bucketName=amplify-usecloudfs-dev-182044-deployment
+		// const link = "https://cors-anywhere.herokuapp.com/" +
+		// 	"https://mwhdj2nwv3.execute-api.us-east-1.amazonaws.com/default/createFolder";
+		// const bucketName = awsconfig.aws_user_files_s3_bucket;
+		// try {
+		// 	const response = await axios.post(link, null, {
+		// 		params: {
+		// 			folderName,
+		// 			bucketName
+		// 		}
+		// 	});
+		// 	console.log('CreateFolder: AXIOS Post Request Success.', response);
+		// } catch (err) {
+		// 	console.error('CreateFolder: AXIOS Post Request Failed.');
+		// }
 		// axios.post('API GATEWAY API/createFolder/folderName')
 		console.log(folderName);
 		// Call graphql mutation for createFile (contains createFile lambda)
-		// const inputData = {
-		// 	"folderName": folderName
-		// };
+		const inputData = {
+			"folderName": folderName
+		};
 
-		// const result = API.graphql(graphqlOperation(createFolder2, inputData));
-		// console.log('SUCCESS: createFolder LAMBDA', result);
+		const result = API.graphql(graphqlOperation(createFolder2, inputData));
+		console.log('SUCCESS: createFolder LAMBDA', result);
 		return
 	}
 
@@ -82,7 +116,7 @@ const useAmplifyController: useCloudFSController_T<{ username: string }> = () =>
 		console.log(newName);
 		const link = "https://cors-anywhere.herokuapp.com/" +
 		"https://8qm2qjzkg0.execute-api.us-east-1.amazonaws.com/default/renameFolder";
-		const bucketName = "amplify-usecloudfs-dev-182044-deployment";
+		const bucketName = awsconfig.aws_user_files_s3_bucket;
 		try {
 			const response = await axios.post(link, null, {
 				params: {
@@ -104,7 +138,7 @@ const useAmplifyController: useCloudFSController_T<{ username: string }> = () =>
 		console.log(folderName);
 		const link = "https://cors-anywhere.herokuapp.com/" +
 		"https://ue0h5vq049.execute-api.us-east-1.amazonaws.com/default/deleteFolder";
-		const bucketName = "amplify-usecloudfs-dev-182044-deployment";
+		const bucketName = awsconfig.aws_user_files_s3_bucket;
 		try {
 			const response = await axios.post(link, null, {
 				params: {
@@ -126,7 +160,7 @@ const useAmplifyController: useCloudFSController_T<{ username: string }> = () =>
 		console.log(folderName);
 		const link = "https://cors-anywhere.herokuapp.com/" +
 		"https://emrwbr16gh.execute-api.us-east-1.amazonaws.com/default/uploadFile";
-		const bucketName = "amplify-usecloudfs-dev-182044-deployment";
+		const bucketName = awsconfig.aws_user_files_s3_bucket;
 		try {
 			const response = await axios.post(link, null, {
 				params: {
@@ -147,7 +181,7 @@ const useAmplifyController: useCloudFSController_T<{ username: string }> = () =>
 		console.log(oldName, newName);
 		const link = "https://cors-anywhere.herokuapp.com/" +
 		"https://hflstwfuxd.execute-api.us-east-1.amazonaws.com/default/renameFile";
-		const bucketName = "amplify-usecloudfs-dev-182044-deployment";
+		const bucketName = awsconfig.aws_user_files_s3_bucket;
 		try {
 			const response = await axios.post(link, null, {
 				params: {
@@ -170,7 +204,7 @@ const useAmplifyController: useCloudFSController_T<{ username: string }> = () =>
 		console.log(fileName);
 		const link = "https://cors-anywhere.herokuapp.com/" +
 		"https://hrju8sovxi.execute-api.us-east-1.amazonaws.com/default/deleteFile";
-		const bucketName = "amplify-usecloudfs-dev-182044-deployment";
+		const bucketName = awsconfig.aws_user_files_s3_bucket;
 		try {
 			const response = await axios.post(link, null, {
 				params: {
@@ -190,7 +224,7 @@ const useAmplifyController: useCloudFSController_T<{ username: string }> = () =>
 		console.log(fileName);
 		const link = "https://cors-anywhere.herokuapp.com/" +
 		"https://obw4xgu950.execute-api.us-east-1.amazonaws.com/default/getDownloadURL";
-		const bucketName = "amplify-usecloudfs-dev-182044-deployment";
+		const bucketName = awsconfig.aws_user_files_s3_bucket;
 		try {
 			const response = await axios.post(link, null, {
 				params: {
