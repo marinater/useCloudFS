@@ -50,7 +50,7 @@
 		"setup:amplify-dev": "cd ./amplify-demo && yarn install && cd ../ && yarn setup:link-amplify-demo && yarn setup:amplify",
 		"setup:link-amplify-demo": "./config/amplify/link-amplify.sh",
 		"setup:unlink-amplify-demo": "./config/amplify/unlink-amplify.sh",
-		"setup:amplify": "cd amplify-demo && node ../config/usecloudfs-setup.js",
+		"setup:amplify": "cd amplify-demo && amplify init --app git@github.com:marinater/useCloudFSAmplify-Config.git",
 		"build": "rollup -c",
 		"start": "rollup -c -w",
 		"check-style": "eslint ./src --ext .js,.jsx,.ts,.tsx",
