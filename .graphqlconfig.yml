@@ -1,5 +1,5 @@
 projects:
-  usecloudfs2:
+  usecloudfs3:
     schemaPath: src/graphql/schema.json
     includes:
       - src/graphql/**/*.ts

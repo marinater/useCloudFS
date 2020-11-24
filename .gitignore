@@ -18,6 +18,3 @@ amplifyconfiguration.json
 amplify-build-config.json
 amplify-gradle-config.json
 amplifytools.xcconfig
-openid-configuration
-private.key
-public.key

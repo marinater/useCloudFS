@@ -230,12 +230,12 @@ export type ModelSubFoldersFilterInput = {
   not?: ModelSubFoldersFilterInput | null,
 };
 
-export type CreateFolderMutationVariables = {
+export type CreateFolder6MutationVariables = {
   folderName?: string | null,
 };
 
-export type CreateFolderMutation = {
-  createFolder: string | null,
+export type CreateFolder6Mutation = {
+  createFolder6: string | null,
 };
 
 export type CreateBucketMutationVariables = {

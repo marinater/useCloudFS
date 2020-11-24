@@ -1,0 +1,5 @@
+const component = (test) => {
+    console.log("welcome to react babyy");
+};
+
+export default component;

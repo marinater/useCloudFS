@@ -20,8 +20,9 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
     "reactfire": "^2.0.3",
-    "typescript": "~3.7.2",
-    "usecloudfs": "^1.0.1"
+    "typescript": "^3.7.2",
+    "usecloudfs": "^1.0.1",
+    "jest-diff": "26.6.2"
   },
   "scripts": {
     "start": "SKIP_PREFLIGHT_CHECK=true react-scripts start",
@@ -43,5 +44,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "resolutions": {
+    "jest-diff": "^26.6.2"
   }
 }

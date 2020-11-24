@@ -2,9 +2,9 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createFolder = /* GraphQL */ `
-  mutation CreateFolder($folderName: String) {
-    createFolder(folderName: $folderName)
+export const createFolder6 = /* GraphQL */ `
+  mutation CreateFolder6($folderName: String) {
+    createFolder6(folderName: $folderName)
   }
 `;
 export const createBucket = /* GraphQL */ `
