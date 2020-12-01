@@ -72,12 +72,13 @@ function FirebaseTester(props: any) {
     useEffect(() => {
         if (props.cloudFS.signedIn && !testsRan && props.auth.currentUser.uid  === "nZjFOjp1fjcV3EVbQ4Xm9IWFTQk2") {
             
-            //user1Tests();
+            user1Tests();
 
             settestsRan(true);
+            return;
         }
 
-        if (props.cloudFS.signedIn && !permTestsRan) {
+       /* if (props.cloudFS.signedIn && !permTestsRan) {
             
             setpermTestsRan(true);
 
@@ -91,7 +92,7 @@ function FirebaseTester(props: any) {
             
             switchUser(permtestarr);
  
-        } 
+        }*/
         
     },[props.cloudFS.signedIn]);
 

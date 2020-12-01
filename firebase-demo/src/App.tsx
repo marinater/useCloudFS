@@ -30,18 +30,11 @@ function App() {
 			            cloudFS.fsOps.createFolder('bucket2/subBucket2').catch(err => console.info(err))
 			        }
 			    )
-			// cloudFS.fsOps.renameFolder('bucket1','bucket1').catch(err => console.info(err))
-			// cloudFS.fsOps.deleteFolder('bucket2').catch( err => console.info(err) )
-		//    // cloudFS.fsOps.setAutoDelete('bucket1', new Date()).catch( err => console.info(err) )
-			// cloudFS.fsOps.uploadFile('bucket1', new File([], 'test-upload2.txt')).catch(err => console.info(err) )
-			// cloudFS.fsOps.renameFile('bucket1/Team Deliverable (1).pdf','bucket1/TeamDeliverable1.pdf').catch(err => console.info(err) )
-			// cloudFS.fsOps.getDownloadURL('bucket1/TeamDeliverable1.pdf').catch(err => console.info(err)).then(url => console.log(url))
-			// cloudFS.fsOps.deleteFile('bucket1/Team Deliverable1.pdf').catch(err => console.info(err) )
+
 		}
 	}, [])
 
-	//if (cloudFS.signedIn)
-		//console.log(cloudFS.fileTree)
+
 
 	const uploadFile = (path: string) => {
 		if (!cloudFS.signedIn || !inputRef.current?.files)
@@ -57,8 +50,8 @@ function App() {
 	return (
 		<div className="App">
 			<header className="App-header">
-				<img src={logo} className="App-logo" alt="logo" />
-				<div style={{ width: '100%' }}>
+				<h2 style={{fontSize:"64px"}}><span style={{color:"#4dd0e1"}}>use</span><span style={{color:"#ffab40"}}>Cloud</span><span>FS</span></h2>
+				<div style={{ width: '100%',marginBottom:"200px" }}>
 				{
 					cloudFS.signedIn && <div id="treeView"><TreeView indent={1} data={cloudFS.fileTree} display={true} /></div>
 				}
