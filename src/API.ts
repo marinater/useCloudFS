@@ -238,6 +238,57 @@ export type CreateFolder6Mutation = {
   createFolder6: string | null,
 };
 
+export type DeleteFolder2MutationVariables = {
+  folderName?: string | null,
+};
+
+export type DeleteFolder2Mutation = {
+  deleteFolder2: string | null,
+};
+
+export type DeleteFile2MutationVariables = {
+  fileName?: string | null,
+};
+
+export type DeleteFile2Mutation = {
+  deleteFile2: string | null,
+};
+
+export type GetDownloadUrl2MutationVariables = {
+  fileName?: string | null,
+};
+
+export type GetDownloadUrl2Mutation = {
+  getDownloadURL2: string | null,
+};
+
+export type RenameFile2MutationVariables = {
+  oldName?: string | null,
+  newName?: string | null,
+};
+
+export type RenameFile2Mutation = {
+  renameFile2: string | null,
+};
+
+export type RenameFolder2MutationVariables = {
+  oldName?: string | null,
+  newName?: string | null,
+};
+
+export type RenameFolder2Mutation = {
+  renameFolder2: string | null,
+};
+
+export type UploadFile2MutationVariables = {
+  folderName?: string | null,
+  fileName?: string | null,
+};
+
+export type UploadFile2Mutation = {
+  uploadFile2: string | null,
+};
+
 export type CreateBucketMutationVariables = {
   input: CreateBucketInput,
   condition?: ModelBucketConditionInput | null,

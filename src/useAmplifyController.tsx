@@ -1,5 +1,11 @@
 import { fsOps_T, useCloudFSController_T } from './useCloudFSTypes'
 import { createFolder6 as createFolder2 } from './graphql/mutations';
+import { deleteFolder2 as deleteFolder2 } from './graphql/mutations';
+import { deleteFile2 as deleteFile2 } from './graphql/mutations';
+import { renameFile2 as renameFile2 } from './graphql/mutations';
+import { getDownloadUrl2 as getDownloadURL2 } from './graphql/mutations';
+import { renameFolder2 as renameFolder2 } from './graphql/mutations';
+import { uploadFile2 as uploadFile2 } from './graphql/mutations';
 import awsconfig from './aws-exports';
 import { Auth } from '@aws-amplify/auth';
 import { API, graphqlOperation } from 'aws-amplify';
@@ -7,10 +13,6 @@ import axios from 'axios';
 API.configure(awsconfig);
 Auth.configure(awsconfig);
 
-// JWT https://www.jeremydaly.com/verifying-self-signed-jwt-tokens-with-aws-http-apis/
-// openssl genrsa -out private.key 4096
-// openssl rsa -in private.key -pubout -out public.key
-//const ROOT_NAME = 'useCloudFS'
 async function signUp() {
     try {
         const { user } = await Auth.signUp({
@@ -49,25 +51,8 @@ const useAmplifyController: useCloudFSController_T<{ username: string }> = () =>
     }
 
     const createFolder: fsOps_T['createFolder'] = async (folderName) => {
-        //console.log('signedUp', await signUp(), folderName);
-        //console.log('confirmSignUp', await confirmSignUp(), folderName);
+        // needs create (C) permissions on lambda
         console.log('signedIn', await signIn(), folderName);
-        // https://mwhdj2nwv3.execute-api.us-east-1.amazonaws.com/default/createFolder?folderName=ss&bucketName=amplify-usecloudfs-dev-182044-deployment
-        // const link = "https://cors-anywhere.herokuapp.com/" +
-        // 	"https://mwhdj2nwv3.execute-api.us-east-1.amazonaws.com/default/createFolder";
-        // const bucketName = awsconfig.aws_user_files_s3_bucket;
-        // try {
-        // 	const response = await axios.post(link, null, {
-        // 		params: {
-        // 			folderName,
-        // 			bucketName
-        // 		}
-        // 	});
-        // 	console.log('CreateFolder: AXIOS Post Request Success.', response);
-        // } catch (err) {
-        // 	console.error('CreateFolder: AXIOS Post Request Failed.');
-        // }
-        // axios.post('API GATEWAY API/createFolder/folderName')
         console.log(folderName);
         // Call graphql mutation for createFile (contains createFile lambda)
         const inputData = {
@@ -80,133 +65,81 @@ const useAmplifyController: useCloudFSController_T<{ username: string }> = () =>
     }
 
     const renameFolder: fsOps_T['renameFolder'] = async (oldName, newName) => {
-        // https://8qm2qjzkg0.execute-api.us-east-1.amazonaws.com/default/renameFolder?oldName=test&newName=ohh&bucketName=amplify-usecloudfs-dev-182044-deployment
         console.log(oldName);
         console.log(newName);
-        const link = "https://cors-anywhere.herokuapp.com/" +
-            "https://8qm2qjzkg0.execute-api.us-east-1.amazonaws.com/default/renameFolder";
-        const bucketName = awsconfig.aws_user_files_s3_bucket;
-        try {
-            const response = await axios.post(link, null, {
-                params: {
-                    oldName,
-                    newName,
-                    bucketName
-                }
-            });
-            console.log('renameFolder: AXIOS Post Request Success.', response);
-        } catch (err) {
-            console.error('renameFolder: AXIOS Post Request Failed.');
-        }
-        // axios.post('API GATEWAY API/renameFolder/folderName')
+
+        const inputData = {
+            "oldName": oldName,
+            "newName": newName
+        };
+
+        const result = API.graphql(graphqlOperation(renameFolder2, inputData));
+        console.log('SUCCESS: renameFolder LAMBDA', result);
         return
     }
 
     const deleteFolder: fsOps_T['deleteFolder'] = async (folderName) => {
         // https://ue0h5vq049.execute-api.us-east-1.amazonaws.com/default/deleteFolder?folderName=testName&bucketName=amplify-usecloudfs-dev-182044-deployment
         console.log(folderName);
-        const link = "https://cors-anywhere.herokuapp.com/" +
-            "https://ue0h5vq049.execute-api.us-east-1.amazonaws.com/default/deleteFolder";
-        const bucketName = awsconfig.aws_user_files_s3_bucket;
-        try {
-            const response = await axios.post(link, null, {
-                params: {
-                    folderName,
-                    bucketName
-                }
-            });
-            console.log('deleteFolder: AXIOS Post Request Success.', response);
-        } catch (err) {
-            console.error('deleteFolder: AXIOS Post Request Failed.');
-        }
-        // axios.post('API GATEWAY API/deleteFolder/folderName')
+        // needs create, read (C, R) permissions on lambda
+        // Call graphql mutation for createFile (contains createFile lambda)
+        const inputData = {
+            "folderName": folderName
+        };
+
+        const result = API.graphql(graphqlOperation(deleteFolder2, inputData));
+        console.log('SUCCESS: deleteFolder LAMBDA', result);
         return
     }
+
     const uploadFile: fsOps_T['uploadFile'] = async (folderName, file) => {
-        // TODO: use signed URL
-        // https://emrwbr16gh.execute-api.us-east-1.amazonaws.com/default/uploadFile?bucketName=amplify-usecloudfs-dev-182044-deployment&fileName=document.pdf&folderName=good.pdf
         console.log(file);
         console.log(folderName);
-        const link = "https://cors-anywhere.herokuapp.com/" +
-            "https://emrwbr16gh.execute-api.us-east-1.amazonaws.com/default/uploadFile";
-        const bucketName = awsconfig.aws_user_files_s3_bucket;
-        try {
-            const response = await axios.post(link, null, {
-                params: {
-                    folderName,
-                    fileName: file,
-                    bucketName
-                }
-            });
-            console.log('uploadFile: AXIOS Post Request Success.', response);
-        } catch (err) {
-            console.error('uploadFile: AXIOS Post Request Failed.');
-        }
+        const inputData = {
+            "folderName": folderName,
+            "fileName": file
+        };
+
+        const result = API.graphql(graphqlOperation(uploadFile2, inputData));
+        console.log('SUCCESS: uploadFile LAMBDA', result);
+
         return
     }
 
     const renameFile: fsOps_T['renameFile'] = async (oldName, newName) => {
         // https://hflstwfuxd.execute-api.us-east-1.amazonaws.com/default/renameFile?oldName=hola&newName=test1&bucketName=amplify-usecloudfs-dev-182044-deployment
         console.log(oldName, newName);
-        const link = "https://cors-anywhere.herokuapp.com/" +
-            "https://hflstwfuxd.execute-api.us-east-1.amazonaws.com/default/renameFile";
-        const bucketName = awsconfig.aws_user_files_s3_bucket;
-        try {
-            const response = await axios.post(link, null, {
-                params: {
-                    oldName,
-                    newName,
-                    bucketName
-                }
-            });
-            console.log('renameFile: AXIOS Post Request Success.', response);
-        } catch (err) {
-            console.error('renameFile: AXIOS Post Request Failed.');
-        }
+        const inputData = {
+            "oldName": oldName,
+            "newName": newName
+        };
+
+        const result = API.graphql(graphqlOperation(renameFile2, inputData));
+        console.log('SUCCESS: renameFile LAMBDA', result);
         // const args = { oldName, newName };
         // const data = await API.graphql(graphqlOperation(renameFile, args));
         // return data;
     }
 
     const deleteFile: fsOps_T['deleteFile'] = async (fileName) => {
-        // https://hrju8sovxi.execute-api.us-east-1.amazonaws.com/default/deleteFile?fileName=yassss.txt&bucketName=amplify-usecloudfs-dev-182044-deployment
-        console.log(fileName);
-        const link = "https://cors-anywhere.herokuapp.com/" +
-            "https://hrju8sovxi.execute-api.us-east-1.amazonaws.com/default/deleteFile";
-        const bucketName = awsconfig.aws_user_files_s3_bucket;
-        try {
-            const response = await axios.post(link, null, {
-                params: {
-                    fileName,
-                    bucketName
-                }
-            });
-            console.log('deleteFile: AXIOS Post Request Success.', response);
-        } catch (err) {
-            console.error('deleteFile: AXIOS Post Request Failed.');
-        }
+        const inputData = {
+            "fileName": fileName
+        };
+
+        const result = API.graphql(graphqlOperation(deleteFile2, inputData));
+        console.log('SUCCESS: deleteFile LAMBDA', result);
         return
     }
 
     const getDownloadURL: fsOps_T['getDownloadURL'] = async (fileName) => {
-        // https://obw4xgu950.execute-api.us-east-1.amazonaws.com/default/getDownloadURL?fileName=3.pdf&bucketName=amplify-usecloudfs-dev-182044-deployment
-        console.log(fileName);
-        const link = "https://cors-anywhere.herokuapp.com/" +
-            "https://obw4xgu950.execute-api.us-east-1.amazonaws.com/default/getDownloadURL";
-        const bucketName = awsconfig.aws_user_files_s3_bucket;
-        try {
-            const response = await axios.post(link, null, {
-                params: {
-                    fileName,
-                    bucketName
-                }
-            });
-            console.log('getDownloadURL: AXIOS Post Request Success.', response);
-            return response.data;
-        } catch (err) {
-            console.error('getDownloadURL: AXIOS Post Request Failed.');
-        }
-        return 'https://www.improgrammer.net/wp-content/uploads/2016/02/16-1.gif'
+        const inputData = {
+            "fileName": fileName
+        };
+
+        const result = API.graphql(graphqlOperation(getDownloadURL2, inputData));
+        console.log('SUCCESS: getDownloadURL LAMBDA', result);
+        // TODO: result needs to be returned here, promise return type vs string
+        return "http://test.com";
     }
 
     const setAutoDelete: fsOps_T['setAutoDelete'] = async (folderName) => {

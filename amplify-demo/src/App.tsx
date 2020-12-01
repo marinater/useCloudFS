@@ -9,11 +9,12 @@ function App() {
     const auth = useAuth()
 
     if (cloudFS.signedIn) {
-        cloudFS.fsOps.createFolder('willee-e')
-        // cloudFS.fsOps.deleteFolder('willsee-e')
+        // cloudFS.fsOps.createFolder('testFs')
+        // cloudFS.fsOps.deleteFolder('testFs')
         // cloudFS.fsOps.renameFolder('hola', 'renamed')
-        // cloudFS.fsOps.deleteFile('runnn.txt')
-        // cloudFS.fsOps.renameFile('3.pdf', '2.pdf')
+        //cloudFS.fsOps.deleteFile('main.cpp')
+        //cloudFS.fsOps.renameFile('yay.cpp','sup.cpp')
+        // cloudFS.fsOps.getDownloadURL('main.cpp')
         // console.log("DOWNLOAD URL",
         //     cloudFS.fsOps.getDownloadURL('bro.txt').then((data) => console.log(data))
         // )

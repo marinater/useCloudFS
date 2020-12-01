@@ -7,6 +7,36 @@ export const createFolder6 = /* GraphQL */ `
     createFolder6(folderName: $folderName)
   }
 `;
+export const deleteFolder2 = /* GraphQL */ `
+  mutation DeleteFolder2($folderName: String) {
+    deleteFolder2(folderName: $folderName)
+  }
+`;
+export const deleteFile2 = /* GraphQL */ `
+  mutation DeleteFile2($fileName: String) {
+    deleteFile2(fileName: $fileName)
+  }
+`;
+export const getDownloadUrl2 = /* GraphQL */ `
+  mutation GetDownloadUrl2($fileName: String) {
+    getDownloadURL2(fileName: $fileName)
+  }
+`;
+export const renameFile2 = /* GraphQL */ `
+  mutation RenameFile2($oldName: String, $newName: String) {
+    renameFile2(oldName: $oldName, newName: $newName)
+  }
+`;
+export const renameFolder2 = /* GraphQL */ `
+  mutation RenameFolder2($oldName: String, $newName: String) {
+    renameFolder2(oldName: $oldName, newName: $newName)
+  }
+`;
+export const uploadFile2 = /* GraphQL */ `
+  mutation UploadFile2($folderName: String, $fileName: String) {
+    uploadFile2(folderName: $folderName, fileName: $fileName)
+  }
+`;
 export const createBucket = /* GraphQL */ `
   mutation CreateBucket(
     $input: CreateBucketInput!
