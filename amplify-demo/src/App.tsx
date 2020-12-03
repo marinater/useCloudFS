@@ -79,19 +79,13 @@ class App extends Component {
                             </Nav>
                         </Navbar.Collapse>
                     </Navbar>
-
                     <Route path="/uploadFile" exact component={UploadFile} />
-
                 </Router>
-
-
-
                 <p> Click a button </p>
                 {/* <button onClick={this.listBuckets}>List Buckets</button>
                 <button onClick={this.getBuckets}>Get Bucket</button> */}
                 <AmplifySignOut />
             </div>
-
         );
     }
 }

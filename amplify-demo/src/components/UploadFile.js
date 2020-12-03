@@ -5,7 +5,6 @@ import Amplify from 'aws-amplify';
 import { Storage, API, graphqlOperation } from 'aws-amplify';
 import Predictions from '@aws-amplify/predictions';
 import { createTestFile } from '../graphql/mutations';
-//import awsmobile from './aws-exports';
 import awsbucketcredentials from "../aws-bucket-credentials";
 
 Amplify.configure(awsbucketcredentials);
@@ -49,7 +48,6 @@ class UploadFile extends React.Component {
 
             this.addFileToDB(image);
             console.log('added completed')
-
         })
             .catch(err => console.log(err));
     }
