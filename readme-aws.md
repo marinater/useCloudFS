@@ -59,3 +59,16 @@ Only accessible through Functions
 Amplify supports running a local server for mocking and testing the application before pushing to the cloud with certain categories, including API (AWS AppSync), Storage (Amazon DynamoDB and Amazon S3), Functions (AWS Lambda), and Hosting. After running amplify init you can run the following to start a mock server.
 - amplify mock api
 
+## Folder Structure
+`amplify`
+- apmlify configuration files
+`amplify-demo`
+- demo of amplify app
+`amplify-functions`
+- amplify controllers
+`aws`
+- AWS CLI
+`aws_functions`
+
+
+
