@@ -33,13 +33,13 @@ Do you want to use the default authentication and security configuration? Defaul
 ## Add S3 Storage
 ```cmd
 ? Please provide a friendly name for your resource that will be used to label this category in the project: useCloudFSProject
-? Please provide bucket name: usecloudfsc59f10979622411784a81271197fa1d4
+? Please provide bucket name: 
 ? Who should have access: Auth users only
 ? What kind of access do you want for Authenticated users? create/update, read, delete
 ? Do you want to add a Lambda Trigger for your S3 Bucket? Yes
 ? Select from the following options Create a new function
-Successfully added resource S3Trigger1e0f16e5 locally
-? Do you want to edit the local S3Trigger1e0f16e5 lambda function now? No
+Successfully added resource ... locally
+? Do you want to edit the local ... lambda function now? No
 Successfully added resource useCloudFSProject locally
 ```
 ## Add GraphQL API
@@ -56,9 +56,8 @@ Use a Cognito user pool configured as a part of this project.
 ```cmd
 amplify add function
 ? Select which capability you want to add: Lambda function (serverless function)
-? Provide a friendly name for your resource to be used as a label for this category in the project: usecloudfsf
-ffdb4fc
-? Provide the AWS Lambda function name: usecloudfsfffdb4fc
+? Provide a friendly name for your resource to be used as a label for this category in the project: 
+? Provide the AWS Lambda function name: 
 ? Choose the runtime that you want to use: NodeJS
 ? Choose the function template that you want to use: Hello World
 ? Do you want to access other resources in this project from your Lambda function? No
@@ -67,11 +66,6 @@ ffdb4fc
 ? Enter up to 5 existing Lambda layer ARNs (comma-separated): 
 No Lambda layers were selected
 ? Do you want to edit the local lambda function now? Yes
-Please edit the file in your editor: /mnt/c/Projects/useCloudFS-2/useCloudFS/amplify/backend/function/usecloudfsfffdb4fc/src/index.js
+Please edit the file in your editor: 
 
-Check out sample function code generated in <project-dir>/amplify/backend/function/usecloudfsfffdb4fc/src
-"amplify function build" builds all of your functions currently in the project
-"amplify mock function <functionName>" runs your function locally
-"amplify push" builds all of your local backend resources and provisions them in the cloud
-"amplify publish" builds all of your local backend and front-end resources (if you added hosting category) and provisions them in the cloud
 ```
