@@ -1,6 +1,6 @@
 projects:
   usecloudfs:
-    schemaPath: src/graphql/schema.json
+    schemaPath: amplify/backend/api/usecloudfs/build/schema.graphql
     includes:
       - src/graphql/**/*.js
     excludes:

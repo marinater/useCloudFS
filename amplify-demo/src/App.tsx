@@ -10,10 +10,10 @@ import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 import awsmobile from './aws-exports';
 // import awsExports from "./aws-exports";
 // import awsconfig from './aws-exports';
-//import * as queries from './graphql/queries';
+import * as queries from './graphql/queries';
 //import * as mutations from './graphql/mutations';
 // import * as subscriptions from './graphql/subscriptions';
-//import { API } from 'aws-amplify';
+import { API } from 'aws-amplify';
 import { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
 
 import { createBrowserHistory as createHistory } from 'history'
@@ -46,45 +46,42 @@ class App extends Component {
     //     }
     // }
 
-    // listBuckets = async () => {
-    //     console.log('listing buckets');
-    //     try {
-    //         const buckets = await API.graphql({ query: queries.listBuckets });
-    //         alert(JSON.stringify(buckets))
-    //     } catch (error) {
-    //         console.log('error listing buckets', error);
-    //     }
-    // };
+    listFiles = async () => {
+        console.log('listing buckets');
+        try {
+            const buckets = await API.graphql({ query: queries.listFiles });
+            alert(JSON.stringify(buckets))
+        } catch (error) {
+            console.log('error listing buckets', error);
+        }
+    };
 
-    // getBuckets = async () => {
-    //     console.log('getting buckets');
-    //     try {
-    //         const buckets = await API.graphql({ query: queries.getBucket, variables: { id: '1' } });
-    //         alert(JSON.stringify(buckets))
-    //     } catch (error) {
-    //         console.log('error getting buckets', error);
-    //     }
-    // };
+    getFiles = async () => {
+        console.log('getting buckets');
+        try {
+            const buckets = await API.graphql({ query: queries.getFile, variables: { id: '1' } });
+            alert(JSON.stringify(buckets))
+        } catch (error) {
+            console.log('error getting buckets', error);
+        }
+    };
 
     render() {
         return (
             <div className="App">
-                <Router history={history}>
-                    <Navbar bg="primary" expand="lg" variant="dark" >
-                        <Navbar.Brand href="/"></Navbar.Brand>
-                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                        <Navbar.Collapse id="basic-navbar-nav">
+                <div>
+                    <Router history={history}>
+                        <Navbar bg="primary" expand="lg" variant="dark" >
                             <Nav className="mr-auto">
                                 <Nav.Link href="/uploadFile">Upload File</Nav.Link>
                             </Nav>
-                        </Navbar.Collapse>
-                    </Navbar>
-                    <Route path="/uploadFile" exact component={UploadFile} />
-                </Router>
-                <p> Click a button </p>
-                {/* <button onClick={this.listBuckets}>List Buckets</button>
-                <button onClick={this.getBuckets}>Get Bucket</button> */}
-                <AmplifySignOut />
+                        </Navbar>
+                        <Route path="/uploadFile" exact component={UploadFile} />
+                    </Router>
+                    <button onClick={this.listFiles}>List Files</button>
+                    <button onClick={this.getFiles}>Get Files</button>
+                    <AmplifySignOut />
+                </div>
             </div>
         );
     }
